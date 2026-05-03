@@ -1,0 +1,39 @@
+{
+  "projectState": "existing",
+  "task": "Audit and improve this repo",
+  "riskLevel": "medium",
+  "recommendedSkills": [
+    {
+      "skill": "reposentinel-orchestrator",
+      "reason": "Coordinates project detection, planning, audits, and evidence-backed outputs.",
+      "required": true
+    },
+    {
+      "skill": "enterprise-code-quality",
+      "reason": "Applies RepoSentinel maintainability standards and typed-boundary expectations.",
+      "required": true
+    },
+    {
+      "skill": "nextjs-security-review",
+      "reason": "Next.js route, middleware, server action, and env checks are required.",
+      "required": true
+    }
+  ],
+  "requiredWorkflow": "repo_audit_then_issue_pr_plan",
+  "requiredOutputs": [
+    "AUDIT_REPORT.md",
+    "ISSUES.md",
+    "PR_PLAN.md",
+    "SECURITY_REVIEW.md",
+    "DOCS_CLAIMS_EVIDENCE_MAP.md"
+  ],
+  "strictAgentInstructions": [
+    "Call detect_project before project-changing work and call route_skills before choosing an implementation path.",
+    "For existing projects, audit and cite file evidence before refactoring."
+  ],
+  "disallowedActions": [
+    "No unrestricted shell execution.",
+    "No raw environment variable dumps.",
+    "No auto-push, auto-delete, auto-merge, or remote mutation without explicit user approval."
+  ]
+}
