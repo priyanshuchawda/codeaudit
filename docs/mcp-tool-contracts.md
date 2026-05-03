@@ -4,6 +4,8 @@ All tool inputs and outputs are defined with zod in `apps/mcp-server/src/schemas
 
 ## Tools
 
+See `clients.md` for MCP client configuration examples.
+
 - `detect_project(projectPath)`
 - `route_skills(projectPath, userTask, detectedProject?)`
 - `scan_repo(projectPath, maxDepth, includePatterns, excludePatterns)`

@@ -38,6 +38,12 @@ Example MCP Inspector command:
 npx @modelcontextprotocol/inspector pnpm --filter @reposentinel/mcp-server dev
 ```
 
+## Documentation
+
+- Start with `docs/llms.txt` for the complete documentation index.
+- Use `docs/clients.md` for Codex, Claude Code, Cursor, VS Code, Claude Desktop, Gemini CLI, and MCP Inspector setup examples.
+- RepoSentinel currently supports local stdio MCP connections; remote HTTP and OAuth are not implemented yet.
+
 ## Safety Model
 
 - Tools are registered with read-only annotations.

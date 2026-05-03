@@ -1,0 +1,67 @@
+# RepoSentinel MCP Documentation Index
+
+Use this file to discover the available RepoSentinel documentation before exploring further.
+
+## Start Here
+
+- README: ../README.md
+  Overview, setup, safety model, skills pack, and example workflow.
+
+- Agent operating manual: ../AGENTS.md
+  Required read order, engineering rules, security rules, workflow, and Git rules.
+
+- Tool policy: ../TOOLS.md
+  Allowed MCP tools, disallowed actions, capability boundaries, and future tool rules.
+
+- Agent soul: ../SOUL.md
+  RepoSentinel tone, priorities, and operating boundaries.
+
+## MCP Setup
+
+- MCP clients: clients.md
+  Local stdio setup examples for OpenAI Codex, Claude Code, Cursor, VS Code, Claude Desktop, Gemini CLI, Cline/Roo/Windsurf-style clients, and MCP Inspector.
+
+- MCP tool contracts: mcp-tool-contracts.md
+  Tool inputs, outputs, output rules, and schema expectations.
+
+## Design And Safety
+
+- Architecture: architecture.md
+  Server structure, schemas, tools, policies, skills, and data flow.
+
+- Security model: security-model.md
+  Read-only safety model, redaction, filesystem boundaries, and skill audit boundaries.
+
+- Threat model: threat-model.md
+  Main threats, mitigations, and residual risks.
+
+- Skill routing design: skill-routing-design.md
+  Route manifest fields, workflow phases, routing inputs, and workflow intent.
+
+- Official docs integration: official-docs-integration.md
+  How RepoSentinel routes agents to current official documentation.
+
+- Roadmap: roadmap.md
+  Planned improvements and future capabilities.
+
+## Built-In Skills
+
+- reposentinel-orchestrator: ../skills/reposentinel-orchestrator/SKILL.md
+- enterprise-code-quality: ../skills/enterprise-code-quality/SKILL.md
+- nextjs-security-review: ../skills/nextjs-security-review/SKILL.md
+- ai-app-security-review: ../skills/ai-app-security-review/SKILL.md
+- docs-claims-evidence-review: ../skills/docs-claims-evidence-review/SKILL.md
+- refactor-with-tests: ../skills/refactor-with-tests/SKILL.md
+- github-issue-pr-workflow: ../skills/github-issue-pr-workflow/SKILL.md
+- official-docs-grounding: ../skills/official-docs-grounding/SKILL.md
+- skill-supply-chain-auditor: ../skills/skill-supply-chain-auditor/SKILL.md
+
+## Recommended Agent Workflow
+
+1. Read README, AGENTS, TOOLS, and this index.
+2. Configure the MCP server using docs/clients.md.
+3. Call detect_project on the target project.
+4. Call route_skills with the user task and detected project.
+5. Follow workflowPhases, recommendedToolSequence, skillActivationOrder, and qualityGates.
+6. Run relevant audit tools before edits in existing projects.
+7. Do not claim secure, production-ready, enterprise-grade, or fully tested without evidence.
