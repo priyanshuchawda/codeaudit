@@ -1,0 +1,20 @@
+{
+  "name": "fixture-nextjs-app",
+  "private": true,
+  "scripts": {
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "latest",
+    "better-auth": "latest",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@playwright/test": "latest",
+    "typescript": "latest",
+    "vitest": "latest"
+  }
+}

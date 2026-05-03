@@ -11,7 +11,10 @@ type PackageJson = {
 export async function detectProject(projectPath: string): Promise<DetectedProject> {
   const root = await resolveProjectRoot(projectPath);
   const { files } = await listFiles(root, { maxDepth: 5 });
-  const meaningfulFiles = files.filter((file) => !file.relativePath.startsWith(".git/"));
+  const meaningfulFiles = files.filter((file) => {
+    const name = path.basename(file.relativePath);
+    return !file.relativePath.startsWith(".git/") && name !== ".gitkeep" && name !== ".keep";
+  });
   const packageJson = await readJsonFile<PackageJson>(root, "package.json");
   const deps = dependencyNames(packageJson);
 
