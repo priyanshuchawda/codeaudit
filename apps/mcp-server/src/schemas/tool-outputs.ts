@@ -24,12 +24,26 @@ export const SkillRecommendationSchema = z.object({
   required: z.boolean(),
 });
 
+export const WorkflowPhaseSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  objective: z.string(),
+  skills: z.array(z.string()),
+  tools: z.array(z.string()),
+  requiredEvidence: z.array(z.string()),
+  exitCriteria: z.array(z.string()),
+});
+
 export const SkillRoutingManifestSchema = z.object({
   projectState: ProjectStateSchema,
   task: z.string(),
   riskLevel: z.enum(["low", "medium", "high"]),
   recommendedSkills: z.array(SkillRecommendationSchema),
   requiredWorkflow: z.string(),
+  workflowPhases: z.array(WorkflowPhaseSchema),
+  recommendedToolSequence: z.array(z.string()),
+  skillActivationOrder: z.array(z.string()),
+  qualityGates: z.array(z.string()),
   requiredOutputs: z.array(z.string()),
   strictAgentInstructions: z.array(z.string()),
   disallowedActions: z.array(z.string()),
@@ -148,6 +162,7 @@ export const GenerateReportOutputSchema = z.object({
 
 export type DetectedProject = z.infer<typeof DetectedProjectSchema>;
 export type SkillRoutingManifest = z.infer<typeof SkillRoutingManifestSchema>;
+export type WorkflowPhase = z.infer<typeof WorkflowPhaseSchema>;
 export type ScanRepoOutput = z.infer<typeof ScanRepoOutputSchema>;
 export type DocsClaim = z.infer<typeof DocsClaimSchema>;
 export type Issue = z.infer<typeof IssueSchema>;

@@ -9,10 +9,18 @@ description: Coordinates RepoSentinel project detection, skill routing, audits, 
 
 1. Call `detect_project` before project-changing work.
 2. Call `route_skills` with the detected project and user task.
-3. Create a short plan before editing files.
-4. For existing projects, audit before refactoring.
-5. For empty projects, create a secure baseline before feature work.
-6. Keep audit, refactor, docs, tests, and PR planning as separate steps.
+3. Follow the returned `workflowPhases` in order unless the user explicitly narrows scope.
+4. Activate skills in `skillActivationOrder`.
+5. Use `recommendedToolSequence` as the default tool order.
+6. Treat `qualityGates` as completion gates, not suggestions.
+7. Keep audit, refactor, docs, tests, and PR planning as separate steps.
+
+## Greenfield Projects
+
+- Clarify intent, stack, auth, database, AI, deployment, and non-goals before scaffolding.
+- Create architecture, security, test, docs, and CI baselines before feature depth.
+- Add typed validation at external boundaries.
+- Add threat model and environment documentation without exposing secrets.
 
 ## Evidence Rules
 

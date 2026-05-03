@@ -20,6 +20,7 @@ All tool inputs and outputs are defined with zod in `apps/mcp-server/src/schemas
 ## Output Rules
 
 - Findings include severity, category, evidence, recommendation, and confidence.
+- Skill routing outputs include ordered workflow phases, tool sequence, skill activation order, and quality gates.
 - File paths are project-relative.
 - Secret-like values are redacted.
 - Report generation returns markdown strings and does not write files.

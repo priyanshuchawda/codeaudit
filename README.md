@@ -7,7 +7,7 @@ The current MVP is read-only by default. It does not implement unrestricted shel
 ## What Works
 
 - `detect_project` identifies empty/existing projects, package manager, framework, language, tests, auth, database, deployment, CI, and risk notes.
-- `route_skills` returns a skill-routing manifest with recommended skills, workflow, required outputs, strict instructions, and disallowed actions.
+- `route_skills` returns a skill-routing manifest with workflow phases, recommended tool sequence, skill activation order, quality gates, required outputs, strict instructions, and disallowed actions.
 - `scan_repo` summarizes trees and classifies important, risk, docs, test, and config files.
 - `audit_code_quality` checks maintainability signals such as long files, weak schema boundaries, missing tests, and weak error handling.
 - `audit_nextjs_security` checks Next.js route, middleware, env, headers, validation, logging, redirect, SSRF, upload, rate-limit, and auth indicators.
@@ -63,7 +63,7 @@ Custom skills live in `skills/`:
 - `official-docs-grounding`
 - `skill-supply-chain-auditor`
 
-These skills are written so clients that cannot literally activate skills can still use `route_skills` as a manifest of recommended skills, workflow, outputs, and guardrails.
+These skills are written so clients that cannot literally activate skills can still use `route_skills` as a manifest of recommended skills, ordered workflow phases, tool sequence, outputs, and guardrails.
 
 ## Example Workflow
 
