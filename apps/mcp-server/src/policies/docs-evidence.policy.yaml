@@ -1,0 +1,25 @@
+name: docs-claims-evidence
+version: 0.1.0
+strongClaims:
+  secure:
+    evidence:
+      - middleware or route-level auth
+      - rate limiting
+      - security headers
+      - input validation
+      - security tests or threat model
+  production-ready:
+    evidence:
+      - deployment docs
+      - environment docs
+      - smoke tests
+      - error handling
+      - observability notes
+  enterprise-grade:
+    evidence:
+      - policies
+      - audits
+      - CI
+      - tests
+      - security documentation
+rule: Keep docs positive but weaken or remove unsupported strong claims.

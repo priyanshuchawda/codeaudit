@@ -1,0 +1,14 @@
+name: github-issue-pr-workflow
+version: 0.1.0
+workflow:
+  - create issue plan before implementation
+  - create scoped branch from clean base
+  - commit focused changes
+  - list tests run in PR
+  - document security and docs impact
+  - link PR to issue
+restrictions:
+  - no auto-push without explicit user approval
+  - no auto-delete branches without explicit user approval
+  - no auto-merge
+  - no destructive git commands

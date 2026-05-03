@@ -1,0 +1,14 @@
+name: enterprise-code-quality
+version: 0.1.0
+principles:
+  - small focused files
+  - typed boundaries and schema validation at inputs
+  - clear names over clever abstractions
+  - no god files or mixed responsibilities
+  - behavior-preserving refactors with tests
+checks:
+  longFileWarningLines: 350
+  strictLongFileWarningLines: 250
+  requireTestsForRefactors: true
+  flagEmptyCatchBlocks: true
+  flagApiRoutesWithoutSchemas: true

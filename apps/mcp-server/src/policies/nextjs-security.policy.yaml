@@ -1,0 +1,19 @@
+name: nextjs-security
+version: 0.1.0
+checks:
+  middleware:
+    requireEvidenceOrJustification: true
+  routeHandlers:
+    requireInputValidationForMutations: true
+    requireAuthEvidenceForSensitiveRoutes: true
+    requireRateLimitEvidenceForPublicRoutes: true
+  headers:
+    requireSecurityHeadersOrDeploymentEvidence: true
+  environment:
+    requireSchemaValidation: true
+  unsafePatterns:
+    - raw provider error leakage
+    - request-controlled redirects
+    - request-controlled outbound fetches
+    - unvalidated file uploads
+    - raw request/header/body logging

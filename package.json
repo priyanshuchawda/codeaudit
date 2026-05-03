@@ -1,0 +1,20 @@
+{
+  "name": "reposentinel",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Skills-driven MCP system for project detection, audits, documentation evidence, and PR planning.",
+  "type": "module",
+  "packageManager": "pnpm@10.33.2",
+  "scripts": {
+    "build": "pnpm --filter @reposentinel/mcp-server build",
+    "dev": "pnpm --filter @reposentinel/mcp-server dev",
+    "typecheck": "pnpm --filter @reposentinel/mcp-server typecheck",
+    "test": "pnpm --filter @reposentinel/mcp-server test",
+    "lint": "pnpm --filter @reposentinel/mcp-server lint",
+    "format": "prettier --write .",
+    "check": "pnpm typecheck && pnpm lint && pnpm test"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}

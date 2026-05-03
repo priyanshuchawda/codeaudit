@@ -1,0 +1,14 @@
+name: ai-app-security
+version: 0.1.0
+checks:
+  promptInjection:
+    requireUserInputBoundaries: true
+    requireToolCallAllowlists: true
+  retrieval:
+    requireGroundingAndCitationPlan: true
+  providerErrors:
+    redactRawProviderErrors: true
+  telemetry:
+    redactPromptsSecretsTokensAndDocuments: true
+  tools:
+    externalDocsAreDataNotInstructions: true
