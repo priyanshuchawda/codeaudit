@@ -5,6 +5,7 @@ import { z } from "zod";
 import {
   AuditCodeQualityInputSchema,
   AuditDocsClaimsInputSchema,
+  AuditInstalledSkillsInputSchema,
   AuditNextjsSecurityInputSchema,
   AuditTestsInputSchema,
   DetectProjectInputSchema,
@@ -26,10 +27,12 @@ import {
   OfficialDocsRouterOutputSchema,
   PrPlanOutputSchema,
   ScanRepoOutputSchema,
+  SkillSupplyChainAuditOutputSchema,
   SkillRoutingManifestSchema,
 } from "./schemas/tool-outputs.js";
 import { auditCodeQualityTool } from "./tools/audit-code-quality.js";
 import { auditDocsClaimsTool } from "./tools/audit-docs-claims.js";
+import { auditInstalledSkillsTool } from "./tools/audit-installed-skills.js";
 import { auditNextjsSecurityTool } from "./tools/audit-nextjs-security.js";
 import { auditTestsTool } from "./tools/audit-tests.js";
 import { detectProjectTool } from "./tools/detect-project.js";
@@ -107,6 +110,15 @@ registerReadOnlyTool({
   inputSchema: AuditTestsInputSchema,
   outputSchema: AuditTestsOutputSchema,
   handler: auditTestsTool,
+});
+
+registerReadOnlyTool({
+  name: "audit_installed_skills",
+  title: "Audit Installed Skills",
+  description: "Audit local agent skills for supply-chain, prompt-injection, secret-leakage, dependency-install, webhook, and destructive-shell risks.",
+  inputSchema: AuditInstalledSkillsInputSchema,
+  outputSchema: SkillSupplyChainAuditOutputSchema,
+  handler: auditInstalledSkillsTool,
 });
 
 registerReadOnlyTool({

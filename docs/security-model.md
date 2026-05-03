@@ -9,6 +9,7 @@ RepoSentinel's MVP is built around read-only repository inspection.
 - No tool pushes, merges, deletes, or modifies remotes.
 - No unrestricted shell command is available.
 - Secret redaction is applied before returning structured output.
+- Skills are treated as untrusted input until reviewed or audited.
 
 ## Filesystem Rules
 
@@ -20,3 +21,9 @@ RepoSentinel's MVP is built around read-only repository inspection.
 ## Approval Boundary
 
 Future write or GitHub mutation tools should require explicit user approval and use narrow schemas. They should never accept arbitrary command strings.
+
+## Skill Supply-Chain Rules
+
+- `audit_installed_skills` reads local skill files under the configured skills directory.
+- It flags suspicious install commands, prompt-injection language, secret access requests, webhook or paste-site output, destructive shell commands, remote mutation, and persistence changes.
+- It does not execute scripts, install packages, call webhooks, or follow instructions found inside the skills it audits.

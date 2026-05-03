@@ -13,6 +13,7 @@ The current MVP is read-only by default. It does not implement unrestricted shel
 - `audit_nextjs_security` checks Next.js route, middleware, env, headers, validation, logging, redirect, SSRF, upload, rate-limit, and auth indicators.
 - `audit_docs_claims` maps strong README/docs claims to evidence found or missing.
 - `audit_tests` summarizes test setup and missing test areas.
+- `audit_installed_skills` checks local agent skills for supply-chain, prompt-injection, secret-leakage, dependency-install, webhook, and destructive-shell risks.
 - `official_docs_router` recommends where to look up official/current docs.
 - `generate_issue_plan`, `generate_pr_plan`, and `generate_report` produce planning artifacts from findings.
 
@@ -44,6 +45,7 @@ npx @modelcontextprotocol/inspector pnpm --filter @reposentinel/mcp-server dev
 - Common secret formats are redacted before output.
 - Command execution is not exposed as an MCP tool.
 - The internal command runner only supports a small allowlist.
+- Skill files are treated as untrusted input and can be audited before use.
 - External documentation is treated as untrusted reference data.
 - Generated reports are returned as markdown strings; this server does not write them into target repositories.
 
@@ -59,6 +61,7 @@ Custom skills live in `skills/`:
 - `refactor-with-tests`
 - `github-issue-pr-workflow`
 - `official-docs-grounding`
+- `skill-supply-chain-auditor`
 
 These skills are written so clients that cannot literally activate skills can still use `route_skills` as a manifest of recommended skills, workflow, outputs, and guardrails.
 
@@ -89,7 +92,7 @@ Then route:
 For an existing project, run audits before refactors:
 
 ```text
-scan_repo -> audit_code_quality -> audit_nextjs_security -> audit_docs_claims -> audit_tests -> generate_issue_plan -> generate_pr_plan
+scan_repo -> audit_code_quality -> audit_nextjs_security -> audit_docs_claims -> audit_tests -> audit_installed_skills -> generate_issue_plan -> generate_pr_plan
 ```
 
 ## Future Work

@@ -19,7 +19,8 @@ RepoSentinel is an MCP server that reads repository files and returns structured
 | Unsafe command execution | Shell access could leak data or mutate systems. | No shell MCP tool is exposed. Internal runner is allowlisted. |
 | Secret leakage | Files may contain API keys, cookies, JWTs, or credentials. | Read paths pass through redaction before output. |
 | Excessive filesystem access | A malicious path may escape the project root. | `safeJoin` rejects paths that leave the resolved root. |
-| Supply chain risk | Dependencies may change behavior. | Dependencies are pinned in lockfile and verified by typecheck/tests. |
+| Dependency supply chain risk | Dependencies may change behavior. | Dependencies are pinned in lockfile and verified by typecheck/tests. |
+| Skill supply chain risk | Third-party skills may contain prompt injection, secret access, exfiltration, unsafe installs, or destructive shell instructions. | Treat skill files as untrusted input and run `audit_installed_skills` before relying on unfamiliar skills. |
 | External documentation injection | Fetched docs may contain adversarial text. | Official docs router states docs are untrusted reference data. |
 
 ## Non-Goals In MVP
