@@ -52,7 +52,8 @@ const server = new McpServer({
 registerReadOnlyTool({
   name: "detect_project",
   title: "Detect Project",
-  description: "Detect project state, stack, package manager, tests, auth, database, deployment, CI, and risk notes.",
+  description:
+    "Detect project state, stack, package manager, tests, auth, database, deployment, CI, and risk notes.",
   inputSchema: DetectProjectInputSchema,
   outputSchema: DetectedProjectSchema,
   handler: detectProjectTool,
@@ -61,7 +62,8 @@ registerReadOnlyTool({
 registerReadOnlyTool({
   name: "route_skills",
   title: "Route Skills",
-  description: "Return a skill-routing manifest with recommended skills, workflow, required outputs, instructions, and disallowed actions.",
+  description:
+    "Return a skill-routing manifest with recommended skills, workflow, required outputs, instructions, and disallowed actions.",
   inputSchema: RouteSkillsInputSchema,
   outputSchema: SkillRoutingManifestSchema,
   handler: routeSkillsTool,
@@ -70,7 +72,8 @@ registerReadOnlyTool({
 registerReadOnlyTool({
   name: "scan_repo",
   title: "Scan Repository",
-  description: "Summarize a repository tree and classify important, risk, docs, test, and config files.",
+  description:
+    "Summarize a repository tree and classify important, risk, docs, test, and config files.",
   inputSchema: ScanRepoInputSchema,
   outputSchema: ScanRepoOutputSchema,
   handler: scanRepoTool,
@@ -79,7 +82,8 @@ registerReadOnlyTool({
 registerReadOnlyTool({
   name: "audit_code_quality",
   title: "Audit Code Quality",
-  description: "Find maintainability risks including long files, mixed responsibilities, missing tests, weak schema boundaries, and error-handling smells.",
+  description:
+    "Find maintainability risks including long files, mixed responsibilities, missing tests, weak schema boundaries, and error-handling smells.",
   inputSchema: AuditCodeQualityInputSchema,
   outputSchema: CodeQualityAuditOutputSchema,
   handler: auditCodeQualityTool,
@@ -88,7 +92,8 @@ registerReadOnlyTool({
 registerReadOnlyTool({
   name: "audit_nextjs_security",
   title: "Audit Next.js Security",
-  description: "Audit Next.js middleware, route handlers, input validation, auth, rate limits, headers, env safety, logging, SSRF, redirects, and upload risks.",
+  description:
+    "Audit Next.js middleware, route handlers, input validation, auth, rate limits, headers, env safety, logging, SSRF, redirects, and upload risks.",
   inputSchema: AuditNextjsSecurityInputSchema,
   outputSchema: NextjsSecurityAuditOutputSchema,
   handler: auditNextjsSecurityTool,
@@ -106,7 +111,8 @@ registerReadOnlyTool({
 registerReadOnlyTool({
   name: "audit_tests",
   title: "Audit Tests",
-  description: "Detect test frameworks, test files, weak tests, missing areas, and recommended tests.",
+  description:
+    "Detect test frameworks, test files, weak tests, missing areas, and recommended tests.",
   inputSchema: AuditTestsInputSchema,
   outputSchema: AuditTestsOutputSchema,
   handler: auditTestsTool,
@@ -115,7 +121,8 @@ registerReadOnlyTool({
 registerReadOnlyTool({
   name: "audit_installed_skills",
   title: "Audit Installed Skills",
-  description: "Audit local agent skills for supply-chain, prompt-injection, secret-leakage, dependency-install, webhook, and destructive-shell risks.",
+  description:
+    "Audit local agent skills for supply-chain, prompt-injection, secret-leakage, dependency-install, webhook, destructive-shell, manifest-quality, duplicate-name, auxiliary-doc, and resource-discovery risks.",
   inputSchema: AuditInstalledSkillsInputSchema,
   outputSchema: SkillSupplyChainAuditOutputSchema,
   handler: auditInstalledSkillsTool,
@@ -124,7 +131,8 @@ registerReadOnlyTool({
 registerReadOnlyTool({
   name: "official_docs_router",
   title: "Official Docs Router",
-  description: "Route technology questions to preferred official docs sources and safe query guidance.",
+  description:
+    "Route technology questions to preferred official docs sources and safe query guidance.",
   inputSchema: OfficialDocsRouterInputSchema,
   outputSchema: OfficialDocsRouterOutputSchema,
   handler: officialDocsRouterTool,
@@ -133,7 +141,8 @@ registerReadOnlyTool({
 registerReadOnlyTool({
   name: "generate_issue_plan",
   title: "Generate Issue Plan",
-  description: "Group findings into prioritized GitHub issue candidates with labels and branch names.",
+  description:
+    "Group findings into prioritized GitHub issue candidates with labels and branch names.",
   inputSchema: GenerateIssuePlanInputSchema,
   outputSchema: IssuePlanOutputSchema,
   handler: generateIssuePlanTool,
@@ -151,7 +160,8 @@ registerReadOnlyTool({
 registerReadOnlyTool({
   name: "generate_report",
   title: "Generate Report",
-  description: "Generate report markdown strings for audit, security, code quality, docs evidence, issue, and PR plan outputs.",
+  description:
+    "Generate report markdown strings for audit, security, code quality, docs evidence, issue, and PR plan outputs.",
   inputSchema: GenerateReportInputSchema,
   outputSchema: GenerateReportOutputSchema,
   handler: generateReportTool,
@@ -166,9 +176,10 @@ type ToolDefinition<Input extends z.ZodTypeAny, Output extends z.ZodTypeAny> = {
   handler: (input: z.infer<Input>) => Promise<z.infer<Output>>;
 };
 
-function registerReadOnlyTool<Input extends z.ZodObject<z.ZodRawShape>, Output extends z.ZodTypeAny>(
-  definition: ToolDefinition<Input, Output>,
-): void {
+function registerReadOnlyTool<
+  Input extends z.ZodObject<z.ZodRawShape>,
+  Output extends z.ZodTypeAny,
+>(definition: ToolDefinition<Input, Output>): void {
   server.registerTool(
     definition.name,
     {

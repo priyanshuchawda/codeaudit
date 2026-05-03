@@ -95,6 +95,10 @@ export const SkillSupplyChainAuditOutputSchema = z.object({
   secretAccessRequests: z.array(z.string()),
   externalNetworkRisks: z.array(z.string()),
   destructiveOperationRisks: z.array(z.string()),
+  manifestQualityRisks: z.array(z.string()),
+  duplicateSkillRisks: z.array(z.string()),
+  resourceDiscoveryRisks: z.array(z.string()),
+  auxiliaryDocRisks: z.array(z.string()),
   riskSummary: z.object({
     critical: z.number().int().min(0),
     high: z.number().int().min(0),

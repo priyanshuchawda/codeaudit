@@ -9,7 +9,7 @@
 - `audit_nextjs_security`: inspect Next.js route, middleware, auth, validation, rate limit, headers, env, logging, SSRF, redirect, and upload risks.
 - `audit_docs_claims`: map README/docs claims to evidence or missing evidence.
 - `audit_tests`: summarize test setup, weak tests, missing test areas, and recommended tests.
-- `audit_installed_skills`: inspect local agent skills for supply-chain and prompt-injection risks.
+- `audit_installed_skills`: inspect local agent skills for supply-chain, prompt-injection, manifest-quality, duplicate-name, auxiliary-doc, and resource-discovery risks.
 - `official_docs_router`: recommend official docs sources and safe query guidance.
 - `generate_issue_plan`: group findings into prioritized issue candidates.
 - `generate_pr_plan`: create scoped PR workflow from findings or issue candidates.

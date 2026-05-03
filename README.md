@@ -13,7 +13,7 @@ The current MVP is read-only by default. It does not implement unrestricted shel
 - `audit_nextjs_security` checks Next.js route, middleware, env, headers, validation, logging, redirect, SSRF, upload, rate-limit, and auth indicators.
 - `audit_docs_claims` maps strong README/docs claims to evidence found or missing.
 - `audit_tests` summarizes test setup and missing test areas.
-- `audit_installed_skills` checks local agent skills for supply-chain, prompt-injection, secret-leakage, dependency-install, webhook, and destructive-shell risks.
+- `audit_installed_skills` checks local agent skills for supply-chain, prompt-injection, secret-leakage, dependency-install, webhook, destructive-shell, manifest-quality, duplicate-name, auxiliary-doc, and resource-discovery risks.
 - `official_docs_router` recommends where to look up official/current docs.
 - `generate_issue_plan`, `generate_pr_plan`, and `generate_report` produce planning artifacts from findings.
 

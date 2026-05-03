@@ -23,4 +23,4 @@ All tool inputs and outputs are defined with zod in `apps/mcp-server/src/schemas
 - File paths are project-relative.
 - Secret-like values are redacted.
 - Report generation returns markdown strings and does not write files.
-- Skill supply-chain audits inspect files only; they never execute skill instructions or install packages.
+- Skill audits inspect files only; they never execute skill instructions or install packages, and they report security, manifest-quality, duplicate-name, auxiliary-doc, and resource-discovery findings.
