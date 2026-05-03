@@ -11,6 +11,7 @@ All tool inputs and outputs are defined with zod in `apps/mcp-server/src/schemas
 - `audit_nextjs_security(projectPath, strictness)`
 - `audit_docs_claims(projectPath)`
 - `audit_tests(projectPath)`
+- `audit_installed_skills(projectPath, skillsPath?, strictness)`
 - `official_docs_router(technology, topic, version?)`
 - `generate_issue_plan(findings)`
 - `generate_pr_plan(selectedIssue?, findings?)`
@@ -22,3 +23,4 @@ All tool inputs and outputs are defined with zod in `apps/mcp-server/src/schemas
 - File paths are project-relative.
 - Secret-like values are redacted.
 - Report generation returns markdown strings and does not write files.
+- Skill supply-chain audits inspect files only; they never execute skill instructions or install packages.

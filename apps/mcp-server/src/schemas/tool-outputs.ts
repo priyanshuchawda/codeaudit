@@ -87,6 +87,23 @@ export const AuditTestsOutputSchema = z.object({
   recommendedTests: z.array(z.string()),
 });
 
+export const SkillSupplyChainAuditOutputSchema = z.object({
+  findings: z.array(FindingSchema),
+  auditedSkills: z.array(z.string()),
+  auditedFiles: z.array(z.string()),
+  suspiciousCommands: z.array(z.string()),
+  secretAccessRequests: z.array(z.string()),
+  externalNetworkRisks: z.array(z.string()),
+  destructiveOperationRisks: z.array(z.string()),
+  riskSummary: z.object({
+    critical: z.number().int().min(0),
+    high: z.number().int().min(0),
+    medium: z.number().int().min(0),
+    low: z.number().int().min(0),
+    info: z.number().int().min(0),
+  }),
+});
+
 export const OfficialDocsRouterOutputSchema = z.object({
   preferredDocsSource: z.string(),
   queryGuidance: z.array(z.string()),
@@ -130,3 +147,4 @@ export type SkillRoutingManifest = z.infer<typeof SkillRoutingManifestSchema>;
 export type ScanRepoOutput = z.infer<typeof ScanRepoOutputSchema>;
 export type DocsClaim = z.infer<typeof DocsClaimSchema>;
 export type Issue = z.infer<typeof IssueSchema>;
+export type SkillSupplyChainAuditOutput = z.infer<typeof SkillSupplyChainAuditOutputSchema>;
