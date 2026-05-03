@@ -4,6 +4,17 @@ RepoSentinel MCP is a TypeScript MCP server and skills pack for AI coding agents
 
 The current MVP is read-only by default. It supports local stdio and Streamable HTTP transports. It does not implement unrestricted shell execution, remote repository mutation, auto-push, auto-delete, or auto-merge.
 
+## Production Status
+
+RepoSentinel is usable now for production-style read-only repository inspection and agent workflow routing when deployed with the documented controls:
+
+- use `stdio` for local trusted agent clients, or Streamable HTTP behind HTTPS for remote clients
+- set `REPOSENTINEL_API_KEY` for any HTTP deployment that is not strictly local
+- restrict `REPOSENTINEL_ALLOWED_ORIGINS` for browser-accessible deployments
+- keep the server read-only; do not add write/GitHub mutation tools without an approval model
+
+Validated in this repository with `pnpm check`, `pnpm build`, HTTP health/metadata smoke testing, docs-claims audit, and installed-skill audit. OAuth multi-user identity is not implemented yet; use API-key/Bearer protection for hosted HTTP deployments.
+
 ## What Works
 
 - `detect_project` identifies empty/existing projects, package manager, framework, language, tests, auth, database, deployment, CI, and risk notes.
@@ -18,27 +29,37 @@ The current MVP is read-only by default. It supports local stdio and Streamable 
 - `generate_issue_plan`, `generate_pr_plan`, and `generate_report` produce planning artifacts from findings.
 - Resources expose `reposentinel://docs/llms` and `reposentinel://skills/index` for MCP-native discovery.
 
-## Setup
+## Quick Start
 
 ```bash
 pnpm install
-pnpm typecheck
-pnpm test
 pnpm build
 ```
 
-Run the stdio server:
+Run local stdio:
+
+```bash
+pnpm --filter @reposentinel/mcp-server start
+```
+
+Run local development stdio:
 
 ```bash
 pnpm --filter @reposentinel/mcp-server dev
 ```
 
-Run the HTTP server:
+Run Streamable HTTP with API-key protection:
 
 ```bash
 pnpm build
 REPOSENTINEL_API_KEY=change-me pnpm --filter @reposentinel/mcp-server start:http
 ```
+
+HTTP endpoints:
+
+- MCP: `http://127.0.0.1:3000/mcp`
+- health: `http://127.0.0.1:3000/health`
+- metadata: `http://127.0.0.1:3000/.well-known/reposentinel-mcp`
 
 Example MCP Inspector command:
 
@@ -46,10 +67,57 @@ Example MCP Inspector command:
 npx @modelcontextprotocol/inspector pnpm --filter @reposentinel/mcp-server dev
 ```
 
+## Add To Codex
+
+Local stdio config for `~/.codex/config.toml` or project-local `.codex/config.toml`:
+
+```toml
+[mcp_servers.reposentinel]
+command = "pnpm"
+args = [
+  "--dir",
+  "/absolute/path/to/reposentinel-mcp",
+  "--filter",
+  "@reposentinel/mcp-server",
+  "start"
+]
+startup_timeout_sec = 40
+```
+
+Windows example:
+
+```toml
+[mcp_servers.reposentinel]
+command = "pnpm"
+args = [
+  "--dir",
+  "C:\\Users\\Admin\\Desktop\\skills\\reposentinel",
+  "--filter",
+  "@reposentinel/mcp-server",
+  "start"
+]
+startup_timeout_sec = 40
+```
+
+HTTP config:
+
+```toml
+[mcp_servers.reposentinel]
+url = "https://your-reposentinel-host.example.com/mcp"
+http_headers = { "Authorization" = "Bearer YOUR_API_KEY" }
+```
+
+Recommended first prompt after connecting:
+
+```text
+Use RepoSentinel MCP on this local project. First call detect_project, then route_skills. Follow workflowPhases, recommendedToolSequence, skillActivationOrder, and qualityGates before making any changes.
+```
+
 ## Documentation
 
 - Start with `docs/llms.txt` for the complete documentation index.
 - Use `docs/clients.md` for Codex, Claude Code, Cursor, VS Code, Claude Desktop, Gemini CLI, and MCP Inspector setup examples.
+- Use `docs/deployment.md` for production HTTP deployment, Docker, environment variables, and verification.
 - RepoSentinel supports local stdio and Streamable HTTP MCP connections. HTTP deployments can be protected with an API key or Bearer token.
 
 ## Safety Model

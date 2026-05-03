@@ -24,6 +24,9 @@ Use this file to discover the available RepoSentinel documentation before explor
 - MCP tool contracts: mcp-tool-contracts.md
   Tool inputs, outputs, output rules, and schema expectations.
 
+- Deployment: deployment.md
+  Production HTTP deployment, Docker, environment variables, verification, and current limits.
+
 ## Design And Safety
 
 - Architecture: architecture.md

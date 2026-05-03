@@ -44,6 +44,8 @@ The default HTTP endpoint is:
 http://127.0.0.1:3000/mcp
 ```
 
+For production deployment details, Docker, environment variables, and verification, see `docs/deployment.md`.
+
 ## OpenAI Codex
 
 Add this to your Codex configuration file, either `~/.codex/config.toml` or a project-local `.codex/config.toml`.
@@ -296,6 +298,17 @@ Use RepoSentinel MCP on this local project. First call detect_project, then rout
 | Streamable HTTP | Supported       | Use `/mcp`; protect hosted deployments with `REPOSENTINEL_API_KEY`.  |
 | OAuth           | Not implemented | Use API-key/Bearer auth until an identity provider is added.         |
 | API key headers | Supported       | Use `Authorization: Bearer`, `X-API-Key`, or `RepoSentinel-API-Key`. |
+
+## Tested Status
+
+The current repository verifies RepoSentinel with:
+
+- `pnpm check`
+- `pnpm build`
+- built HTTP `/health` and `/.well-known/reposentinel-mcp` smoke test
+- MCP in-memory tool/resource test
+- docs claims audit
+- installed skill audit
 
 ## Troubleshooting
 

@@ -31,6 +31,11 @@ Future write or GitHub mutation tools should require explicit user approval and 
 - Set `REPOSENTINEL_API_KEY` for any non-local HTTP deployment.
 - Prefer a narrow `REPOSENTINEL_ALLOWED_ORIGINS` list instead of `*` for browser-accessible deployments.
 - Do not expose RepoSentinel HTTP directly to the public internet without authentication.
+- Treat API keys as secrets. Do not commit real keys to `.env`, docs, client configs, screenshots, or issue reports.
+
+## Production Status
+
+RepoSentinel is production-usable for read-only repository inspection and workflow routing when the HTTP deployment rules above are followed. OAuth, multi-tenant authorization, and write-side tools are intentionally outside the current production surface.
 
 ## Skill Supply-Chain Rules
 
