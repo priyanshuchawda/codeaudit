@@ -15,15 +15,17 @@ Publishing is configured through `.github/workflows/publish-npm.yml`.
 Before the first publish:
 
 1. Create or log in to an npm account.
-2. Create an npm automation token.
+2. Create a granular npm access token with package publish/write access and bypass 2FA enabled.
 3. Add it to GitHub repository secrets as `NPM_TOKEN`.
 4. Create a GitHub release such as `v0.1.0`.
 
 The package publishes as public/free via:
 
 ```bash
-pnpm --filter reposentinel-mcp publish --access public --no-git-checks
+pnpm --filter reposentinel-mcp publish --access public --provenance --no-git-checks
 ```
+
+If npm returns `Two-factor authentication or granular access token with bypass 2fa enabled is required`, replace `NPM_TOKEN` with a granular token that has bypass 2FA enabled, then rerun the failed GitHub Actions job.
 
 ## Production Recommendation
 

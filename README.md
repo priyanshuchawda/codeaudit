@@ -142,7 +142,7 @@ Use RepoSentinel MCP on this local project. First call detect_project, then rout
 - Npm public package: `reposentinel-mcp`
 - Npm public packages are free to publish with `npm publish --access public`.
 - Release publishing is configured through `.github/workflows/publish-npm.yml`.
-- To publish, add an npm automation token as the GitHub secret `NPM_TOKEN`, then create a GitHub release.
+- To publish, add a granular npm write token with bypass 2FA enabled as the GitHub secret `NPM_TOKEN`, then create a GitHub release.
 - The package name is currently available on npm, but it is not live until the first publish succeeds.
 
 ## Safety Model
