@@ -1,17 +1,44 @@
 {
-  "name": "@reposentinel/mcp-server",
+  "name": "reposentinel-mcp",
   "version": "0.1.0",
-  "private": true,
   "description": "RepoSentinel read-only MCP server for project audits and skill routing.",
   "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/priyanshuchawda/reposentinel-mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/priyanshuchawda/reposentinel-mcp.git",
+    "directory": "apps/mcp-server"
+  },
+  "bugs": {
+    "url": "https://github.com/priyanshuchawda/reposentinel-mcp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai-agent",
+    "codex",
+    "claude",
+    "repository-audit",
+    "skills"
+  ],
   "bin": {
     "reposentinel-mcp": "./dist/server.js"
   },
   "main": "./dist/server.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "tsx src/server.ts",
     "dev:http": "tsx src/server.ts --transport http --port 3000",
     "build": "tsup src/server.ts --format esm --dts --clean",
+    "prepack": "pnpm build",
     "start": "node dist/server.js",
     "start:http": "node dist/server.js --transport http",
     "typecheck": "tsc --noEmit",

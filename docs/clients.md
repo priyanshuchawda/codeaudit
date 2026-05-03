@@ -9,6 +9,8 @@ Use this file to discover all available RepoSentinel pages before exploring furt
 
 RepoSentinel supports local stdio and Streamable HTTP connections. HTTP deployments can be protected with `REPOSENTINEL_API_KEY` and client headers. RepoSentinel does not expose an OAuth flow, auto-push tool, auto-merge tool, or unrestricted shell execution.
 
+> **Free npm package**: After the first release is published, use `npx -y reposentinel-mcp` for local stdio setup. Until then, use the local checkout commands below.
+
 > **Tip**: Build once before using the stable `start` command:
 >
 > ```sh
@@ -20,22 +22,34 @@ RepoSentinel supports local stdio and Streamable HTTP connections. HTTP deployme
 
 ## Server Command
 
+Use this command after the npm package is published:
+
+```sh
+npx -y reposentinel-mcp
+```
+
 Use this command for most local MCP clients after `pnpm build`:
 
 ```sh
-pnpm --dir /absolute/path/to/reposentinel-mcp --filter @reposentinel/mcp-server start
+pnpm --dir /absolute/path/to/reposentinel-mcp --filter reposentinel-mcp start
 ```
 
 For development, use the TypeScript entrypoint:
 
 ```sh
-pnpm --dir /absolute/path/to/reposentinel-mcp --filter @reposentinel/mcp-server dev
+pnpm --dir /absolute/path/to/reposentinel-mcp --filter reposentinel-mcp dev
 ```
 
 Run the Streamable HTTP server:
 
 ```sh
-REPOSENTINEL_TRANSPORT=http REPOSENTINEL_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/reposentinel-mcp --filter @reposentinel/mcp-server start:http
+REPOSENTINEL_TRANSPORT=http REPOSENTINEL_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/reposentinel-mcp --filter reposentinel-mcp start:http
+```
+
+Or from npm after publishing:
+
+```sh
+REPOSENTINEL_API_KEY=YOUR_API_KEY npx -y reposentinel-mcp --transport http
 ```
 
 The default HTTP endpoint is:
@@ -50,6 +64,17 @@ For production deployment details, Docker, environment variables, and verificati
 
 Add this to your Codex configuration file, either `~/.codex/config.toml` or a project-local `.codex/config.toml`.
 
+Npm package:
+
+```toml
+[mcp_servers.reposentinel]
+command = "npx"
+args = ["-y", "reposentinel-mcp"]
+startup_timeout_sec = 40
+```
+
+Local checkout:
+
 ```toml
 [mcp_servers.reposentinel]
 command = "pnpm"
@@ -57,7 +82,7 @@ args = [
   "--dir",
   "/absolute/path/to/reposentinel-mcp",
   "--filter",
-  "@reposentinel/mcp-server",
+  "reposentinel-mcp",
   "start"
 ]
 startup_timeout_sec = 20
@@ -72,7 +97,7 @@ args = [
   "--dir",
   "C:\\Users\\Admin\\Desktop\\skills\\reposentinel",
   "--filter",
-  "@reposentinel/mcp-server",
+  "reposentinel-mcp",
   "start"
 ]
 startup_timeout_sec = 40
@@ -91,13 +116,19 @@ http_headers = { "Authorization" = "Bearer YOUR_API_KEY" }
 Run this command:
 
 ```sh
-claude mcp add --scope user reposentinel -- pnpm --dir /absolute/path/to/reposentinel-mcp --filter @reposentinel/mcp-server start
+claude mcp add --scope user reposentinel -- npx -y reposentinel-mcp
+```
+
+Local checkout:
+
+```sh
+claude mcp add --scope user reposentinel -- pnpm --dir /absolute/path/to/reposentinel-mcp --filter reposentinel-mcp start
 ```
 
 Project-local setup:
 
 ```sh
-claude mcp add --scope project reposentinel -- pnpm --dir /absolute/path/to/reposentinel-mcp --filter @reposentinel/mcp-server start
+claude mcp add --scope project reposentinel -- pnpm --dir /absolute/path/to/reposentinel-mcp --filter reposentinel-mcp start
 ```
 
 ## Cursor
@@ -108,18 +139,14 @@ Add this to your Cursor MCP config. Use `~/.cursor/mcp.json` for global setup or
 {
   "mcpServers": {
     "reposentinel": {
-      "command": "pnpm",
-      "args": [
-        "--dir",
-        "/absolute/path/to/reposentinel-mcp",
-        "--filter",
-        "@reposentinel/mcp-server",
-        "start"
-      ]
+      "command": "npx",
+      "args": ["-y", "reposentinel-mcp"]
     }
   }
 }
 ```
+
+For local checkout development, replace the command with the `pnpm --dir ... start` shape shown above.
 
 Remote HTTP connection:
 
@@ -145,14 +172,8 @@ Add this to `.vscode/mcp.json`:
   "servers": {
     "reposentinel": {
       "type": "stdio",
-      "command": "pnpm",
-      "args": [
-        "--dir",
-        "/absolute/path/to/reposentinel-mcp",
-        "--filter",
-        "@reposentinel/mcp-server",
-        "start"
-      ]
+      "command": "npx",
+      "args": ["-y", "reposentinel-mcp"]
     }
   }
 }
@@ -182,14 +203,8 @@ Edit `claude_desktop_config.json`:
 {
   "mcpServers": {
     "reposentinel": {
-      "command": "pnpm",
-      "args": [
-        "--dir",
-        "/absolute/path/to/reposentinel-mcp",
-        "--filter",
-        "@reposentinel/mcp-server",
-        "start"
-      ]
+      "command": "npx",
+      "args": ["-y", "reposentinel-mcp"]
     }
   }
 }
@@ -203,14 +218,8 @@ Open `~/.gemini/settings.json` and add:
 {
   "mcpServers": {
     "reposentinel": {
-      "command": "pnpm",
-      "args": [
-        "--dir",
-        "/absolute/path/to/reposentinel-mcp",
-        "--filter",
-        "@reposentinel/mcp-server",
-        "start"
-      ]
+      "command": "npx",
+      "args": ["-y", "reposentinel-mcp"]
     }
   }
 }
@@ -224,14 +233,8 @@ Use this stdio configuration shape for clients that accept `mcpServers`:
 {
   "mcpServers": {
     "reposentinel": {
-      "command": "pnpm",
-      "args": [
-        "--dir",
-        "/absolute/path/to/reposentinel-mcp",
-        "--filter",
-        "@reposentinel/mcp-server",
-        "start"
-      ],
+      "command": "npx",
+      "args": ["-y", "reposentinel-mcp"],
       "disabled": false
     }
   }
@@ -243,13 +246,19 @@ Use this stdio configuration shape for clients that accept `mcpServers`:
 Use MCP Inspector to verify the server locally:
 
 ```sh
-npx @modelcontextprotocol/inspector pnpm --dir /absolute/path/to/reposentinel-mcp --filter @reposentinel/mcp-server start
+npx @modelcontextprotocol/inspector npx -y reposentinel-mcp
+```
+
+For local checkout development:
+
+```sh
+npx @modelcontextprotocol/inspector pnpm --dir /absolute/path/to/reposentinel-mcp --filter reposentinel-mcp start
 ```
 
 For HTTP:
 
 ```sh
-REPOSENTINEL_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/reposentinel-mcp --filter @reposentinel/mcp-server start:http
+REPOSENTINEL_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/reposentinel-mcp --filter reposentinel-mcp start:http
 ```
 
 Then connect Inspector to `http://127.0.0.1:3000/mcp` and pass:
@@ -305,6 +314,7 @@ The current repository verifies RepoSentinel with:
 
 - `pnpm check`
 - `pnpm build`
+- `npm pack --dry-run` for npm package contents
 - built HTTP `/health` and `/.well-known/reposentinel-mcp` smoke test
 - MCP in-memory tool/resource test
 - docs claims audit

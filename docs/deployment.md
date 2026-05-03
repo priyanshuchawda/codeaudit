@@ -2,6 +2,29 @@
 
 RepoSentinel can run as a local stdio MCP server or as a Streamable HTTP MCP server. The tool surface is read-only in both modes.
 
+## Free Public npm Distribution
+
+The cheapest production distribution is a public npm package. It lets users run RepoSentinel locally against their own filesystem without paid hosting:
+
+```bash
+npx -y reposentinel-mcp
+```
+
+Publishing is configured through `.github/workflows/publish-npm.yml`.
+
+Before the first publish:
+
+1. Create or log in to an npm account.
+2. Create an npm automation token.
+3. Add it to GitHub repository secrets as `NPM_TOKEN`.
+4. Create a GitHub release such as `v0.1.0`.
+
+The package publishes as public/free via:
+
+```bash
+pnpm --filter reposentinel-mcp publish --access public --no-git-checks
+```
+
 ## Production Recommendation
 
 Use Streamable HTTP behind HTTPS when multiple machines or remote clients need access.

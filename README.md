@@ -31,6 +31,14 @@ Validated in this repository with `pnpm check`, `pnpm build`, HTTP health/metada
 
 ## Quick Start
 
+After the first npm release, run the free public package directly:
+
+```bash
+npx -y reposentinel-mcp
+```
+
+Until the package is published, use the GitHub checkout:
+
 ```bash
 pnpm install
 pnpm build
@@ -39,20 +47,20 @@ pnpm build
 Run local stdio:
 
 ```bash
-pnpm --filter @reposentinel/mcp-server start
+pnpm --filter reposentinel-mcp start
 ```
 
 Run local development stdio:
 
 ```bash
-pnpm --filter @reposentinel/mcp-server dev
+pnpm --filter reposentinel-mcp dev
 ```
 
 Run Streamable HTTP with API-key protection:
 
 ```bash
 pnpm build
-REPOSENTINEL_API_KEY=change-me pnpm --filter @reposentinel/mcp-server start:http
+REPOSENTINEL_API_KEY=change-me pnpm --filter reposentinel-mcp start:http
 ```
 
 HTTP endpoints:
@@ -64,12 +72,21 @@ HTTP endpoints:
 Example MCP Inspector command:
 
 ```bash
-npx @modelcontextprotocol/inspector pnpm --filter @reposentinel/mcp-server dev
+npx @modelcontextprotocol/inspector pnpm --filter reposentinel-mcp dev
 ```
 
 ## Add To Codex
 
-Local stdio config for `~/.codex/config.toml` or project-local `.codex/config.toml`:
+Npm stdio config for `~/.codex/config.toml` or project-local `.codex/config.toml`:
+
+```toml
+[mcp_servers.reposentinel]
+command = "npx"
+args = ["-y", "reposentinel-mcp"]
+startup_timeout_sec = 40
+```
+
+Local checkout stdio config:
 
 ```toml
 [mcp_servers.reposentinel]
@@ -78,7 +95,7 @@ args = [
   "--dir",
   "/absolute/path/to/reposentinel-mcp",
   "--filter",
-  "@reposentinel/mcp-server",
+  "reposentinel-mcp",
   "start"
 ]
 startup_timeout_sec = 40
@@ -93,7 +110,7 @@ args = [
   "--dir",
   "C:\\Users\\Admin\\Desktop\\skills\\reposentinel",
   "--filter",
-  "@reposentinel/mcp-server",
+  "reposentinel-mcp",
   "start"
 ]
 startup_timeout_sec = 40
@@ -119,6 +136,14 @@ Use RepoSentinel MCP on this local project. First call detect_project, then rout
 - Use `docs/clients.md` for Codex, Claude Code, Cursor, VS Code, Claude Desktop, Gemini CLI, and MCP Inspector setup examples.
 - Use `docs/deployment.md` for production HTTP deployment, Docker, environment variables, and verification.
 - RepoSentinel supports local stdio and Streamable HTTP MCP connections. HTTP deployments can be protected with an API key or Bearer token.
+
+## Free Public Distribution
+
+- Npm public package: `reposentinel-mcp`
+- Npm public packages are free to publish with `npm publish --access public`.
+- Release publishing is configured through `.github/workflows/publish-npm.yml`.
+- To publish, add an npm automation token as the GitHub secret `NPM_TOKEN`, then create a GitHub release.
+- The package name is currently available on npm, but it is not live until the first publish succeeds.
 
 ## Safety Model
 
