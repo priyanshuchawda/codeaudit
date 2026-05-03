@@ -101,4 +101,25 @@ describe("route_skills", () => {
     );
     expect(result.qualityGates.join(" ")).toContain("Existing project is scanned and audited");
   });
+
+  test("routes Python MCP server work to Python and MCP skills", async () => {
+    const projectPath = path.join(fixtures, "python-mcp");
+    const detectedProject = await detectProjectTool({ projectPath });
+    const result = await routeSkillsTool({
+      projectPath,
+      userTask: "Audit this Python MCP server and make it production ready",
+      detectedProject,
+    });
+
+    expect(result.recommendedSkills.map((item) => item.skill)).toEqual(
+      expect.arrayContaining([
+        "python-backend-quality",
+        "python-mcp-server-quality",
+        "python-mcp-server-generator",
+        "mcp-builder",
+      ]),
+    );
+    expect(result.qualityGates.join(" ")).toContain("Python packaging");
+    expect(result.qualityGates.join(" ")).toContain("MCP tools are focused");
+  });
 });

@@ -27,6 +27,36 @@ export async function routeSkillsTool(input: RouteSkillsInput) {
     true,
   );
 
+  if (isPythonProject(detected, task)) {
+    add(
+      recommendations,
+      "python-backend-quality",
+      "Python packaging, typing, test, framework, and service-boundary guidance is required.",
+      true,
+    );
+  }
+
+  if (isPythonMcpWork(detected, task)) {
+    add(
+      recommendations,
+      "python-mcp-server-quality",
+      "Python MCP work needs FastMCP, transport, structured-output, and stdio/HTTP guardrails.",
+      true,
+    );
+    add(
+      recommendations,
+      "python-mcp-server-generator",
+      "Python MCP server generation or scaffolding was detected or requested.",
+      detected.state === "empty" || task.includes("create") || task.includes("from scratch"),
+    );
+    add(
+      recommendations,
+      "mcp-builder",
+      "MCP server work must follow MCP tool/resource/prompt and deployment practices.",
+      true,
+    );
+  }
+
   if (detected.state === "empty") {
     add(
       recommendations,
@@ -275,6 +305,10 @@ function greenfieldPhases(
         "Create the minimal secure project structure, typed boundaries, configuration, and development scripts.",
       skills: skillsPresent(recommendations, [
         "senior-fullstack",
+        "python-backend-quality",
+        "python-mcp-server-quality",
+        "python-mcp-server-generator",
+        "mcp-builder",
         "next-best-practices",
         "nextjs-app-router-patterns",
         "enterprise-code-quality",
@@ -301,6 +335,8 @@ function greenfieldPhases(
         "ai-app-security-review",
         "nextjs-security-review",
         "better-auth-best-practices",
+        "python-backend-quality",
+        "python-mcp-server-quality",
         "enterprise-code-quality",
       ]),
       tools: ["audit_nextjs_security", "audit_code_quality"],
@@ -558,6 +594,16 @@ function qualityGatesFor(workflow: string, detected: DetectedProject): string[] 
       "AI prompt, retrieval, tool-call, provider-error, and telemetry boundaries are reviewed.",
     );
   }
+  if (detected.language === "python") {
+    gates.push(
+      "Python packaging, pyproject/lockfile, type checking, linting, tests, and boundary models are reviewed.",
+    );
+  }
+  if (detected.appType === "mcp-server") {
+    gates.push(
+      "MCP tools are focused, read/write hints are accurate, schemas are typed, and stdio does not log to stdout.",
+    );
+  }
 
   return gates;
 }
@@ -590,6 +636,8 @@ function skillsForDetectedProject(detected: DetectedProject, extra: string[] = [
     "enterprise-code-quality",
     ...extra,
     ...(detected.framework === "nextjs" ? ["next-best-practices", "nextjs-security-review"] : []),
+    ...(detected.language === "python" ? ["python-backend-quality"] : []),
+    ...(detected.appType === "mcp-server" ? ["python-mcp-server-quality", "mcp-builder"] : []),
     ...(detected.appType === "ai-app" ? ["ai-app-security-review"] : []),
     "docs-claims-evidence-review",
   ];
@@ -618,4 +666,22 @@ function requiredOutputsFor(task: string, detected: DetectedProject): string[] {
   if (task.includes("doc") || task.includes("claim") || task.includes("audit"))
     outputs.push("DOCS_CLAIMS_EVIDENCE_MAP.md");
   return [...new Set(outputs)];
+}
+
+function isPythonProject(detected: DetectedProject, task: string): boolean {
+  return (
+    detected.language === "python" ||
+    task.includes("python") ||
+    task.includes("fastapi") ||
+    task.includes("django") ||
+    task.includes("flask")
+  );
+}
+
+function isPythonMcpWork(detected: DetectedProject, task: string): boolean {
+  return (
+    detected.appType === "mcp-server" ||
+    (isPythonProject(detected, task) &&
+      (task.includes("mcp") || task.includes("model context protocol")))
+  );
 }

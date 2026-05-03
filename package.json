@@ -1,6 +1,6 @@
 {
   "name": "reposentinel",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Skills-driven MCP system for project detection, audits, documentation evidence, and PR planning.",
   "type": "module",

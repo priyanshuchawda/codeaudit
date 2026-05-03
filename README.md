@@ -18,6 +18,7 @@ Validated in this repository with `pnpm check`, `pnpm build`, HTTP health/metada
 ## What Works
 
 - `detect_project` identifies empty/existing projects, package manager, framework, language, tests, auth, database, deployment, CI, and risk notes.
+- Python detection covers `pyproject.toml`, `uv.lock`, FastAPI, Django, Flask, Python MCP SDK, pytest, typing/lint tooling, auth, database, and deployment indicators.
 - `route_skills` returns a skill-routing manifest with workflow phases, recommended tool sequence, skill activation order, quality gates, required outputs, strict instructions, and disallowed actions.
 - `scan_repo` summarizes trees and classifies important, risk, docs, test, and config files.
 - `audit_code_quality` checks maintainability signals such as long files, weak schema boundaries, missing tests, and weak error handling.
@@ -140,7 +141,7 @@ Use RepoSentinel MCP on this local project. First call detect_project, then rout
 ## Free Public Distribution
 
 - Npm public package: `reposentinel-mcp`
-- Current npm version: `0.1.0`
+- Current npm version: `0.1.1`
 - Npm public packages are free to publish with `npm publish --access public`.
 - Release publishing is configured through `.github/workflows/publish-npm.yml`.
 - To publish, add a granular npm write token with bypass 2FA enabled as the GitHub secret `NPM_TOKEN`, then create a GitHub release.
@@ -162,6 +163,8 @@ Use RepoSentinel MCP on this local project. First call detect_project, then rout
 Custom skills live in `skills/`:
 
 - `reposentinel-orchestrator`
+- `python-backend-quality`
+- `python-mcp-server-quality`
 - `enterprise-code-quality`
 - `nextjs-security-review`
 - `ai-app-security-review`

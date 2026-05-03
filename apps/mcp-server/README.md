@@ -2,6 +2,8 @@
 
 RepoSentinel is a read-only MCP server for local project inspection, skill routing, repository audits, documentation evidence checks, and issue/PR planning.
 
+It detects and routes JavaScript/TypeScript and Python projects, including FastAPI, Django, Flask, and Python MCP SDK servers.
+
 ## Install
 
 Run directly from npm:

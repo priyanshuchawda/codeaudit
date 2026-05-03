@@ -1,6 +1,6 @@
 {
   "name": "reposentinel-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "RepoSentinel read-only MCP server for project audits and skill routing.",
   "type": "module",
   "license": "MIT",

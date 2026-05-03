@@ -10,7 +10,7 @@ The cheapest production distribution is the public npm package `reposentinel-mcp
 npx -y reposentinel-mcp
 ```
 
-Current npm version: `0.1.0`.
+Current npm version: `0.1.1`.
 
 Publishing future versions is configured through `.github/workflows/publish-npm.yml`.
 
@@ -20,7 +20,7 @@ Before publishing a future version:
 2. Create a granular npm access token with package publish/write access and bypass 2FA enabled.
 3. Add it to GitHub repository secrets as `NPM_TOKEN`.
 4. Bump the package version.
-5. Create a GitHub release such as `v0.1.1`.
+5. Create a GitHub release such as `v0.1.2`.
 
 The package publishes as public/free via:
 

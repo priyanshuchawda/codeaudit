@@ -19,7 +19,7 @@
 
 ## Routing Inputs
 
-The router considers project state, framework, router type, auth, app type, risk notes, and task keywords such as security, docs, refactor, issue, PR, and audit.
+The router considers project state, framework, router type, language, package manager, auth, app type, risk notes, and task keywords such as security, docs, refactor, issue, PR, Python, MCP, and audit.
 
 ## Workflow Intent
 
@@ -28,3 +28,5 @@ The router considers project state, framework, router type, auth, app type, risk
 - Security requests prioritize trust boundaries and remediation planning.
 - Docs requests map claims to code, tests, or documentation evidence before allowing strong claims.
 - Refactor requests require audit evidence and tests before internal changes.
+- Python projects route to `python-backend-quality` for packaging, typing, test, framework, and runtime checks.
+- Python MCP projects route to `python-mcp-server-quality`, `python-mcp-server-generator`, and `mcp-builder` for FastMCP, transport, schema, stdio, and resource guidance.

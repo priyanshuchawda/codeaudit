@@ -50,6 +50,8 @@ Use this file to discover the available RepoSentinel documentation before explor
 ## Built-In Skills
 
 - reposentinel-orchestrator: ../skills/reposentinel-orchestrator/SKILL.md
+- python-backend-quality: ../skills/python-backend-quality/SKILL.md
+- python-mcp-server-quality: ../skills/python-mcp-server-quality/SKILL.md
 - enterprise-code-quality: ../skills/enterprise-code-quality/SKILL.md
 - nextjs-security-review: ../skills/nextjs-security-review/SKILL.md
 - ai-app-security-review: ../skills/ai-app-security-review/SKILL.md

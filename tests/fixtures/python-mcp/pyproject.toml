@@ -1,0 +1,17 @@
+[project]
+name = "python-mcp-fixture"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+  "mcp[cli]>=1.9",
+  "fastapi>=0.115",
+  "pydantic>=2.8",
+  "sqlalchemy>=2.0",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.8",
+  "mypy>=1.13",
+]
