@@ -31,13 +31,13 @@ Validated in this repository with `pnpm check`, `pnpm build`, HTTP health/metada
 
 ## Quick Start
 
-After the first npm release, run the free public package directly:
+Run the free public npm package directly:
 
 ```bash
 npx -y reposentinel-mcp
 ```
 
-Until the package is published, use the GitHub checkout:
+For local development from the GitHub checkout:
 
 ```bash
 pnpm install
@@ -140,10 +140,11 @@ Use RepoSentinel MCP on this local project. First call detect_project, then rout
 ## Free Public Distribution
 
 - Npm public package: `reposentinel-mcp`
+- Current npm version: `0.1.0`
 - Npm public packages are free to publish with `npm publish --access public`.
 - Release publishing is configured through `.github/workflows/publish-npm.yml`.
 - To publish, add a granular npm write token with bypass 2FA enabled as the GitHub secret `NPM_TOKEN`, then create a GitHub release.
-- The package name is currently available on npm, but it is not live until the first publish succeeds.
+- Users can install and run without cloning GitHub by using `npx -y reposentinel-mcp`.
 
 ## Safety Model
 

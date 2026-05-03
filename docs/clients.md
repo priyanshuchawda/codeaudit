@@ -7,11 +7,11 @@ Use this file to discover all available RepoSentinel pages before exploring furt
 
 > Local stdio and Streamable HTTP installation examples for RepoSentinel MCP clients.
 
-RepoSentinel supports local stdio and Streamable HTTP connections. HTTP deployments can be protected with `REPOSENTINEL_API_KEY` and client headers. RepoSentinel does not expose an OAuth flow, auto-push tool, auto-merge tool, or unrestricted shell execution.
+RepoSentinel supports local stdio and Streamable HTTP connections. The recommended setup is the public npm package `reposentinel-mcp`, which users can run without cloning the GitHub repository. HTTP deployments can be protected with `REPOSENTINEL_API_KEY` and client headers. RepoSentinel does not expose an OAuth flow, auto-push tool, auto-merge tool, or unrestricted shell execution.
 
-> **Free npm package**: After the first release is published, use `npx -y reposentinel-mcp` for local stdio setup. Until then, use the local checkout commands below.
+> **Free npm package**: Use `npx -y reposentinel-mcp` for local stdio setup.
 
-> **Tip**: Build once before using the stable `start` command:
+> **Tip**: The `pnpm` commands are only needed for local checkout development:
 >
 > ```sh
 > pnpm install
@@ -22,13 +22,13 @@ RepoSentinel supports local stdio and Streamable HTTP connections. HTTP deployme
 
 ## Server Command
 
-Use this command after the npm package is published:
+Use this command for most local MCP clients:
 
 ```sh
 npx -y reposentinel-mcp
 ```
 
-Use this command for most local MCP clients after `pnpm build`:
+For local checkout development after `pnpm build`:
 
 ```sh
 pnpm --dir /absolute/path/to/reposentinel-mcp --filter reposentinel-mcp start
@@ -46,7 +46,7 @@ Run the Streamable HTTP server:
 REPOSENTINEL_TRANSPORT=http REPOSENTINEL_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/reposentinel-mcp --filter reposentinel-mcp start:http
 ```
 
-Or from npm after publishing:
+Or from npm:
 
 ```sh
 REPOSENTINEL_API_KEY=YOUR_API_KEY npx -y reposentinel-mcp --transport http
@@ -324,10 +324,10 @@ The current repository verifies RepoSentinel with:
 
 If the client reports a startup timeout:
 
-1. Run `pnpm install`.
-2. Run `pnpm build`.
-3. Run the server command manually in a terminal.
+1. Run `npx -y reposentinel-mcp` manually in a terminal.
+2. Confirm Node.js `20` or newer is installed.
+3. Clear the npm cache if `npx` downloads an old or corrupt package.
 4. Increase the client startup timeout to `40` seconds.
-5. Confirm the path in `--dir` points to the RepoSentinel checkout, not the target project being audited.
+5. If using local checkout development, run `pnpm install`, `pnpm build`, and confirm the path in `--dir` points to the RepoSentinel checkout, not the target project being audited.
 
 If tools are visible but return path errors, pass an absolute `projectPath` inside the target project you want RepoSentinel to inspect.
