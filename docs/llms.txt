@@ -19,7 +19,7 @@ Use this file to discover the available RepoSentinel documentation before explor
 ## MCP Setup
 
 - MCP clients: clients.md
-  Local stdio setup examples for OpenAI Codex, Claude Code, Cursor, VS Code, Claude Desktop, Gemini CLI, Cline/Roo/Windsurf-style clients, and MCP Inspector.
+  Local stdio and Streamable HTTP setup examples for OpenAI Codex, Claude Code, Cursor, VS Code, Claude Desktop, Gemini CLI, Cline/Roo/Windsurf-style clients, and MCP Inspector.
 
 - MCP tool contracts: mcp-tool-contracts.md
   Tool inputs, outputs, output rules, and schema expectations.

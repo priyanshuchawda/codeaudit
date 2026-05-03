@@ -8,6 +8,8 @@
   "scripts": {
     "build": "pnpm --filter @reposentinel/mcp-server build",
     "dev": "pnpm --filter @reposentinel/mcp-server dev",
+    "dev:http": "pnpm --filter @reposentinel/mcp-server dev:http",
+    "start:http": "pnpm --filter @reposentinel/mcp-server start:http",
     "typecheck": "pnpm --filter @reposentinel/mcp-server typecheck",
     "test": "pnpm --filter @reposentinel/mcp-server test",
     "lint": "pnpm --filter @reposentinel/mcp-server lint",

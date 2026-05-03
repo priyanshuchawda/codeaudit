@@ -4,7 +4,10 @@ RepoSentinel is split into a TypeScript MCP server and a reusable skills pack.
 
 ## Components
 
-- `apps/mcp-server/src/server.ts` registers read-only MCP tools over stdio.
+- `apps/mcp-server/src/server.ts` starts the selected runtime transport.
+- `apps/mcp-server/src/mcp-server.ts` creates the MCP server and registers read-only tools.
+- `apps/mcp-server/src/http-server.ts` exposes Streamable HTTP, health, metadata, CORS, and API-key enforcement.
+- `apps/mcp-server/src/runtime-config.ts` parses CLI and environment runtime configuration.
 - `apps/mcp-server/src/tools/` contains one module per tool.
 - `apps/mcp-server/src/schemas/` contains zod input, output, and finding contracts.
 - `apps/mcp-server/src/lib/` contains safe filesystem, detection, redaction, markdown, and command-runner utilities.
@@ -18,6 +21,8 @@ RepoSentinel is split into a TypeScript MCP server and a reusable skills pack.
 - Tool responses include both text JSON and structured content.
 - The MVP returns generated reports as strings rather than writing into target projects.
 - The server is read-only by default and exposes no unrestricted shell tool.
+- The same tool registry is used for stdio and Streamable HTTP transports.
+- HTTP deployments can require API-key/Bearer authentication with `REPOSENTINEL_API_KEY`.
 
 ## Data Flow
 

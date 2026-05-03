@@ -2,7 +2,7 @@
 
 RepoSentinel MCP is a TypeScript MCP server and skills pack for AI coding agents that need to inspect projects, route to the right engineering skills, run structured audits, map documentation claims to evidence, and prepare issue/PR plans.
 
-The current MVP is read-only by default. It does not implement unrestricted shell execution, remote repository mutation, auto-push, auto-delete, or auto-merge.
+The current MVP is read-only by default. It supports local stdio and Streamable HTTP transports. It does not implement unrestricted shell execution, remote repository mutation, auto-push, auto-delete, or auto-merge.
 
 ## What Works
 
@@ -16,6 +16,7 @@ The current MVP is read-only by default. It does not implement unrestricted shel
 - `audit_installed_skills` checks local agent skills for supply-chain, prompt-injection, secret-leakage, dependency-install, webhook, destructive-shell, manifest-quality, duplicate-name, auxiliary-doc, and resource-discovery risks.
 - `official_docs_router` recommends where to look up official/current docs.
 - `generate_issue_plan`, `generate_pr_plan`, and `generate_report` produce planning artifacts from findings.
+- Resources expose `reposentinel://docs/llms` and `reposentinel://skills/index` for MCP-native discovery.
 
 ## Setup
 
@@ -32,6 +33,13 @@ Run the stdio server:
 pnpm --filter @reposentinel/mcp-server dev
 ```
 
+Run the HTTP server:
+
+```bash
+pnpm build
+REPOSENTINEL_API_KEY=change-me pnpm --filter @reposentinel/mcp-server start:http
+```
+
 Example MCP Inspector command:
 
 ```bash
@@ -42,7 +50,7 @@ npx @modelcontextprotocol/inspector pnpm --filter @reposentinel/mcp-server dev
 
 - Start with `docs/llms.txt` for the complete documentation index.
 - Use `docs/clients.md` for Codex, Claude Code, Cursor, VS Code, Claude Desktop, Gemini CLI, and MCP Inspector setup examples.
-- RepoSentinel currently supports local stdio MCP connections; remote HTTP and OAuth are not implemented yet.
+- RepoSentinel supports local stdio and Streamable HTTP MCP connections. HTTP deployments can be protected with an API key or Bearer token.
 
 ## Safety Model
 
@@ -108,3 +116,4 @@ scan_repo -> audit_code_quality -> audit_nextjs_security -> audit_docs_claims ->
 - Optional report writer tool gated by explicit approval.
 - Optional GitHub issue/PR creation gated by explicit approval.
 - Broader security policy packs for Firebase, Azure, and AI agents.
+- Optional OAuth provider integration for hosted multi-user deployments.

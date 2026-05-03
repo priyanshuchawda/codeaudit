@@ -10,6 +10,9 @@ RepoSentinel's MVP is built around read-only repository inspection.
 - No unrestricted shell command is available.
 - Secret redaction is applied before returning structured output.
 - Skills are treated as untrusted input until reviewed or audited.
+- Stdio is the default transport for local use.
+- Streamable HTTP can require API-key/Bearer authentication with `REPOSENTINEL_API_KEY`.
+- HTTP CORS is configurable with `REPOSENTINEL_ALLOWED_ORIGINS`.
 
 ## Filesystem Rules
 
@@ -21,6 +24,13 @@ RepoSentinel's MVP is built around read-only repository inspection.
 ## Approval Boundary
 
 Future write or GitHub mutation tools should require explicit user approval and use narrow schemas. They should never accept arbitrary command strings.
+
+## HTTP Deployment Rules
+
+- Use HTTPS at the reverse proxy or hosting layer for remote deployments.
+- Set `REPOSENTINEL_API_KEY` for any non-local HTTP deployment.
+- Prefer a narrow `REPOSENTINEL_ALLOWED_ORIGINS` list instead of `*` for browser-accessible deployments.
+- Do not expose RepoSentinel HTTP directly to the public internet without authentication.
 
 ## Skill Supply-Chain Rules
 

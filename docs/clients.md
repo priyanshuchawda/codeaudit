@@ -5,9 +5,9 @@ Use this file to discover all available RepoSentinel pages before exploring furt
 
 # MCP Clients
 
-> Local stdio installation examples for RepoSentinel MCP clients.
+> Local stdio and Streamable HTTP installation examples for RepoSentinel MCP clients.
 
-RepoSentinel currently supports local MCP connections over stdio. It does not expose a hosted remote HTTP endpoint, OAuth flow, auto-push tool, auto-merge tool, or unrestricted shell execution.
+RepoSentinel supports local stdio and Streamable HTTP connections. HTTP deployments can be protected with `REPOSENTINEL_API_KEY` and client headers. RepoSentinel does not expose an OAuth flow, auto-push tool, auto-merge tool, or unrestricted shell execution.
 
 > **Tip**: Build once before using the stable `start` command:
 >
@@ -30,6 +30,18 @@ For development, use the TypeScript entrypoint:
 
 ```sh
 pnpm --dir /absolute/path/to/reposentinel-mcp --filter @reposentinel/mcp-server dev
+```
+
+Run the Streamable HTTP server:
+
+```sh
+REPOSENTINEL_TRANSPORT=http REPOSENTINEL_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/reposentinel-mcp --filter @reposentinel/mcp-server start:http
+```
+
+The default HTTP endpoint is:
+
+```text
+http://127.0.0.1:3000/mcp
 ```
 
 ## OpenAI Codex
@@ -62,6 +74,14 @@ args = [
   "start"
 ]
 startup_timeout_sec = 40
+```
+
+Remote HTTP connection:
+
+```toml
+[mcp_servers.reposentinel]
+url = "https://your-reposentinel-host.example.com/mcp"
+http_headers = { "Authorization" = "Bearer YOUR_API_KEY" }
 ```
 
 ## Claude Code
@@ -99,6 +119,21 @@ Add this to your Cursor MCP config. Use `~/.cursor/mcp.json` for global setup or
 }
 ```
 
+Remote HTTP connection:
+
+```json
+{
+  "mcpServers": {
+    "reposentinel": {
+      "url": "https://your-reposentinel-host.example.com/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
 ## VS Code
 
 Add this to `.vscode/mcp.json`:
@@ -116,6 +151,22 @@ Add this to `.vscode/mcp.json`:
         "@reposentinel/mcp-server",
         "start"
       ]
+    }
+  }
+}
+```
+
+Remote HTTP connection:
+
+```json
+{
+  "servers": {
+    "reposentinel": {
+      "type": "http",
+      "url": "https://your-reposentinel-host.example.com/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
     }
   }
 }
@@ -193,6 +244,18 @@ Use MCP Inspector to verify the server locally:
 npx @modelcontextprotocol/inspector pnpm --dir /absolute/path/to/reposentinel-mcp --filter @reposentinel/mcp-server start
 ```
 
+For HTTP:
+
+```sh
+REPOSENTINEL_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/reposentinel-mcp --filter @reposentinel/mcp-server start:http
+```
+
+Then connect Inspector to `http://127.0.0.1:3000/mcp` and pass:
+
+```text
+Authorization: Bearer YOUR_API_KEY
+```
+
 Then call:
 
 ```json
@@ -227,12 +290,12 @@ Use RepoSentinel MCP on this local project. First call detect_project, then rout
 
 ## Current Transport Support
 
-| Transport       | Status          | Notes                                                               |
-| --------------- | --------------- | ------------------------------------------------------------------- |
-| Local stdio     | Supported       | Recommended for current use.                                        |
-| Remote HTTP     | Not implemented | Do not configure a remote URL until the server adds HTTP transport. |
-| OAuth           | Not implemented | Only relevant after remote HTTP support exists.                     |
-| API key headers | Not required    | Current server is local and read-only.                              |
+| Transport       | Status          | Notes                                                                |
+| --------------- | --------------- | -------------------------------------------------------------------- |
+| Local stdio     | Supported       | Recommended for current use.                                         |
+| Streamable HTTP | Supported       | Use `/mcp`; protect hosted deployments with `REPOSENTINEL_API_KEY`.  |
+| OAuth           | Not implemented | Use API-key/Bearer auth until an identity provider is added.         |
+| API key headers | Supported       | Use `Authorization: Bearer`, `X-API-Key`, or `RepoSentinel-API-Key`. |
 
 ## Troubleshooting
 

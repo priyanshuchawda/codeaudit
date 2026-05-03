@@ -10,19 +10,23 @@
   "main": "./dist/server.js",
   "scripts": {
     "dev": "tsx src/server.ts",
+    "dev:http": "tsx src/server.ts --transport http --port 3000",
     "build": "tsup src/server.ts --format esm --dts --clean",
     "start": "node dist/server.js",
+    "start:http": "node dist/server.js --transport http",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "lint": "eslint . --max-warnings=0"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.21.0",
+    "express": "^5.2.1",
     "yaml": "^2.8.1",
     "zod": "^3.25.76"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@types/express": "^5.0.6",
     "@types/node": "^24.10.1",
     "eslint": "^9.39.1",
     "tsup": "^8.5.0",

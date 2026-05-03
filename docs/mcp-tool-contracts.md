@@ -19,6 +19,11 @@ See `clients.md` for MCP client configuration examples.
 - `generate_pr_plan(selectedIssue?, findings?)`
 - `generate_report(findings, projectMetadata)`
 
+## Resources
+
+- `reposentinel://docs/llms`: documentation index and required agent workflow.
+- `reposentinel://skills/index`: built-in skill list and routing rule.
+
 ## Output Rules
 
 - Findings include severity, category, evidence, recommendation, and confidence.
@@ -27,3 +32,4 @@ See `clients.md` for MCP client configuration examples.
 - Secret-like values are redacted.
 - Report generation returns markdown strings and does not write files.
 - Skill audits inspect files only; they never execute skill instructions or install packages, and they report security, manifest-quality, duplicate-name, auxiliary-doc, and resource-discovery findings.
+- The server supports stdio and Streamable HTTP. HTTP deployments may require an API key via `Authorization: Bearer`, `X-API-Key`, or `RepoSentinel-API-Key`.
