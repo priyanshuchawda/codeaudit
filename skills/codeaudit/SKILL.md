@@ -16,7 +16,7 @@ npx skills add priyanshuchawda/codeaudit --skill codeaudit
 Use the MCP server for tool-backed audits:
 
 ```bash
-npx -y codeaudit
+npx -y @priyanshuchawda/codeaudit
 ```
 
 ## Required Workflow

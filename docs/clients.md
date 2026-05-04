@@ -7,9 +7,9 @@ Use this file to discover all available CodeAudit pages before exploring further
 
 > Local stdio and Streamable HTTP installation examples for CodeAudit MCP clients.
 
-CodeAudit supports local stdio and Streamable HTTP connections. The recommended setup is the public npm package `codeaudit`, which users can run without cloning the GitHub repository. HTTP deployments can be protected with `CODEAUDIT_API_KEY` and client headers. CodeAudit does not expose an OAuth flow, auto-push tool, auto-merge tool, or unrestricted shell execution.
+CodeAudit supports local stdio and Streamable HTTP connections. The recommended setup is the public npm package `@priyanshuchawda/codeaudit`, which users can run without cloning the GitHub repository. HTTP deployments can be protected with `CODEAUDIT_API_KEY` and client headers. CodeAudit does not expose an OAuth flow, auto-push tool, auto-merge tool, or unrestricted shell execution.
 
-> **Free npm package**: Use `npx -y codeaudit` for local stdio setup.
+> **Free npm package**: Use `npx -y @priyanshuchawda/codeaudit` for local stdio setup.
 
 > **Tip**: The `pnpm` commands are only needed for local checkout development:
 >
@@ -25,31 +25,31 @@ CodeAudit supports local stdio and Streamable HTTP connections. The recommended 
 Use this command for most local MCP clients:
 
 ```sh
-npx -y codeaudit
+npx -y @priyanshuchawda/codeaudit
 ```
 
 For local checkout development after `pnpm build`:
 
 ```sh
-pnpm --dir /absolute/path/to/codeaudit --filter codeaudit start
+pnpm --dir /absolute/path/to/codeaudit --filter @priyanshuchawda/codeaudit start
 ```
 
 For development, use the TypeScript entrypoint:
 
 ```sh
-pnpm --dir /absolute/path/to/codeaudit --filter codeaudit dev
+pnpm --dir /absolute/path/to/codeaudit --filter @priyanshuchawda/codeaudit dev
 ```
 
 Run the Streamable HTTP server:
 
 ```sh
-CODEAUDIT_TRANSPORT=http CODEAUDIT_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/codeaudit --filter codeaudit start:http
+CODEAUDIT_TRANSPORT=http CODEAUDIT_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/codeaudit --filter @priyanshuchawda/codeaudit start:http
 ```
 
 Or from npm:
 
 ```sh
-CODEAUDIT_API_KEY=YOUR_API_KEY npx -y codeaudit --transport http
+CODEAUDIT_API_KEY=YOUR_API_KEY npx -y @priyanshuchawda/codeaudit --transport http
 ```
 
 The default HTTP endpoint is:
@@ -69,7 +69,7 @@ Npm package:
 ```toml
 [mcp_servers.codeaudit]
 command = "npx"
-args = ["-y", "codeaudit"]
+args = ["-y", "@priyanshuchawda/codeaudit"]
 startup_timeout_sec = 40
 ```
 
@@ -82,7 +82,7 @@ args = [
   "--dir",
   "/absolute/path/to/codeaudit",
   "--filter",
-  "codeaudit",
+  "@priyanshuchawda/codeaudit",
   "start"
 ]
 startup_timeout_sec = 20
@@ -97,7 +97,7 @@ args = [
   "--dir",
   "C:\\Users\\Admin\\Desktop\\skills\\codeaudit",
   "--filter",
-  "codeaudit",
+  "@priyanshuchawda/codeaudit",
   "start"
 ]
 startup_timeout_sec = 40
@@ -116,19 +116,19 @@ http_headers = { "Authorization" = "Bearer YOUR_API_KEY" }
 Run this command:
 
 ```sh
-claude mcp add --scope user codeaudit -- npx -y codeaudit
+claude mcp add --scope user codeaudit -- npx -y @priyanshuchawda/codeaudit
 ```
 
 Local checkout:
 
 ```sh
-claude mcp add --scope user codeaudit -- pnpm --dir /absolute/path/to/codeaudit --filter codeaudit start
+claude mcp add --scope user codeaudit -- pnpm --dir /absolute/path/to/codeaudit --filter @priyanshuchawda/codeaudit start
 ```
 
 Project-local setup:
 
 ```sh
-claude mcp add --scope project codeaudit -- pnpm --dir /absolute/path/to/codeaudit --filter codeaudit start
+claude mcp add --scope project codeaudit -- pnpm --dir /absolute/path/to/codeaudit --filter @priyanshuchawda/codeaudit start
 ```
 
 ## Cursor
@@ -140,7 +140,7 @@ Add this to your Cursor MCP config. Use `~/.cursor/mcp.json` for global setup or
   "mcpServers": {
     "codeaudit": {
       "command": "npx",
-      "args": ["-y", "codeaudit"]
+      "args": ["-y", "@priyanshuchawda/codeaudit"]
     }
   }
 }
@@ -173,7 +173,7 @@ Add this to `.vscode/mcp.json`:
     "codeaudit": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "codeaudit"]
+      "args": ["-y", "@priyanshuchawda/codeaudit"]
     }
   }
 }
@@ -204,7 +204,7 @@ Edit `claude_desktop_config.json`:
   "mcpServers": {
     "codeaudit": {
       "command": "npx",
-      "args": ["-y", "codeaudit"]
+      "args": ["-y", "@priyanshuchawda/codeaudit"]
     }
   }
 }
@@ -219,7 +219,7 @@ Open `~/.gemini/settings.json` and add:
   "mcpServers": {
     "codeaudit": {
       "command": "npx",
-      "args": ["-y", "codeaudit"]
+      "args": ["-y", "@priyanshuchawda/codeaudit"]
     }
   }
 }
@@ -234,7 +234,7 @@ Use this stdio configuration shape for clients that accept `mcpServers`:
   "mcpServers": {
     "codeaudit": {
       "command": "npx",
-      "args": ["-y", "codeaudit"],
+      "args": ["-y", "@priyanshuchawda/codeaudit"],
       "disabled": false
     }
   }
@@ -246,19 +246,19 @@ Use this stdio configuration shape for clients that accept `mcpServers`:
 Use MCP Inspector to verify the server locally:
 
 ```sh
-npx @modelcontextprotocol/inspector npx -y codeaudit
+npx @modelcontextprotocol/inspector npx -y @priyanshuchawda/codeaudit
 ```
 
 For local checkout development:
 
 ```sh
-npx @modelcontextprotocol/inspector pnpm --dir /absolute/path/to/codeaudit --filter codeaudit start
+npx @modelcontextprotocol/inspector pnpm --dir /absolute/path/to/codeaudit --filter @priyanshuchawda/codeaudit start
 ```
 
 For HTTP:
 
 ```sh
-CODEAUDIT_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/codeaudit --filter codeaudit start:http
+CODEAUDIT_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/codeaudit --filter @priyanshuchawda/codeaudit start:http
 ```
 
 Then connect Inspector to `http://127.0.0.1:3000/mcp` and pass:
@@ -324,7 +324,7 @@ The current repository verifies CodeAudit with:
 
 If the client reports a startup timeout:
 
-1. Run `npx -y codeaudit` manually in a terminal.
+1. Run `npx -y @priyanshuchawda/codeaudit` manually in a terminal.
 2. Confirm Node.js `20` or newer is installed.
 3. Clear the npm cache if `npx` downloads an old or corrupt package.
 4. Increase the client startup timeout to `40` seconds.

@@ -20,7 +20,7 @@ WORKDIR /app
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/mcp-server/package.json ./apps/mcp-server/package.json
-RUN pnpm install --frozen-lockfile --prod --filter codeaudit
+RUN pnpm install --frozen-lockfile --prod --filter @priyanshuchawda/codeaudit
 
 COPY --from=builder /app/apps/mcp-server/dist ./apps/mcp-server/dist
 
@@ -29,4 +29,4 @@ ENV CODEAUDIT_HOST=0.0.0.0
 ENV CODEAUDIT_PORT=3000
 EXPOSE 3000
 
-CMD ["pnpm", "--filter", "codeaudit", "start:http"]
+CMD ["pnpm", "--filter", "@priyanshuchawda/codeaudit", "start:http"]

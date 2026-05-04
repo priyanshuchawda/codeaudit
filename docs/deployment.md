@@ -4,13 +4,13 @@ CodeAudit can run as a local stdio MCP server or as a Streamable HTTP MCP server
 
 ## Free Public npm Distribution
 
-The cheapest production distribution is the public npm package `codeaudit`. It lets users run CodeAudit locally against their own filesystem without paid hosting or a GitHub clone:
+The cheapest production distribution is the public npm package `@priyanshuchawda/codeaudit`. It lets users run CodeAudit locally against their own filesystem without paid hosting or a GitHub clone:
 
 ```bash
-npx -y codeaudit
+npx -y @priyanshuchawda/codeaudit
 ```
 
-Current npm version: `0.1.2`.
+Current npm version: `0.1.3`.
 
 Publishing future versions is configured through `.github/workflows/publish-npm.yml`.
 
@@ -20,12 +20,12 @@ Before publishing a future version:
 2. Create a granular npm access token with package publish/write access and bypass 2FA enabled.
 3. Add it to GitHub repository secrets as `NPM_TOKEN`.
 4. Bump the package version.
-5. Create a GitHub release such as `v0.1.3`.
+5. Create a GitHub release such as `v0.1.4`.
 
 The package publishes as public/free via:
 
 ```bash
-pnpm --filter codeaudit publish --access public --provenance --no-git-checks
+pnpm --filter @priyanshuchawda/codeaudit publish --access public --provenance --no-git-checks
 ```
 
 If npm returns `Two-factor authentication or granular access token with bypass 2fa enabled is required`, replace `NPM_TOKEN` with a granular token that has bypass 2FA enabled, then rerun the failed GitHub Actions job.

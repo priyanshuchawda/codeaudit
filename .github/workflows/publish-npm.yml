@@ -38,6 +38,6 @@ jobs:
         run: pnpm build
 
       - name: Publish
-        run: pnpm --filter codeaudit publish --access public --provenance --no-git-checks
+        run: pnpm --filter @priyanshuchawda/codeaudit publish --access public --provenance --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

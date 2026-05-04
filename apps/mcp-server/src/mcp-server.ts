@@ -51,7 +51,7 @@ type ToolDefinition<Input extends z.ZodTypeAny, Output extends z.ZodTypeAny> = {
   handler: (input: z.infer<Input>) => Promise<z.infer<Output>>;
 };
 
-export const SERVER_VERSION = "0.1.2";
+export const SERVER_VERSION = "0.1.3";
 
 export function createCodeAuditServer(): McpServer {
   const server = new McpServer(

@@ -31,7 +31,7 @@ CodeAudit is a read-only MCP server and skills pack for repository detection, au
 - Test: `pnpm test`
 - Build: `pnpm build`
 - Full check: `pnpm check`
-- Run MCP server: `pnpm --filter codeaudit dev`
+- Run MCP server: `pnpm --filter @priyanshuchawda/codeaudit dev`
 
 ## Engineering Rules
 

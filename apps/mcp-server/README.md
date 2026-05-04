@@ -9,13 +9,13 @@ It detects and routes JavaScript/TypeScript and Python projects, including FastA
 Run directly from npm:
 
 ```bash
-npx -y codeaudit
+npx -y @priyanshuchawda/codeaudit
 ```
 
 Or with pnpm:
 
 ```bash
-pnpm dlx codeaudit
+pnpm dlx @priyanshuchawda/codeaudit
 ```
 
 Install the public CodeAudit agent skill:
@@ -31,14 +31,14 @@ Add this to `~/.codex/config.toml` or `.codex/config.toml`:
 ```toml
 [mcp_servers.codeaudit]
 command = "npx"
-args = ["-y", "codeaudit"]
+args = ["-y", "@priyanshuchawda/codeaudit"]
 startup_timeout_sec = 40
 ```
 
 ## HTTP
 
 ```bash
-CODEAUDIT_API_KEY=change-me npx -y codeaudit --transport http
+CODEAUDIT_API_KEY=change-me npx -y @priyanshuchawda/codeaudit --transport http
 ```
 
 Then connect to:

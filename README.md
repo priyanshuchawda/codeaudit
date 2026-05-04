@@ -35,7 +35,7 @@ Validated in this repository with `pnpm check`, `pnpm build`, HTTP health/metada
 Run the free public npm package directly:
 
 ```bash
-npx -y codeaudit
+npx -y @priyanshuchawda/codeaudit
 ```
 
 For local development from the GitHub checkout:
@@ -48,20 +48,20 @@ pnpm build
 Run local stdio:
 
 ```bash
-pnpm --filter codeaudit start
+pnpm --filter @priyanshuchawda/codeaudit start
 ```
 
 Run local development stdio:
 
 ```bash
-pnpm --filter codeaudit dev
+pnpm --filter @priyanshuchawda/codeaudit dev
 ```
 
 Run Streamable HTTP with API-key protection:
 
 ```bash
 pnpm build
-CODEAUDIT_API_KEY=change-me pnpm --filter codeaudit start:http
+CODEAUDIT_API_KEY=change-me pnpm --filter @priyanshuchawda/codeaudit start:http
 ```
 
 HTTP endpoints:
@@ -73,7 +73,7 @@ HTTP endpoints:
 Example MCP Inspector command:
 
 ```bash
-npx @modelcontextprotocol/inspector pnpm --filter codeaudit dev
+npx @modelcontextprotocol/inspector pnpm --filter @priyanshuchawda/codeaudit dev
 ```
 
 ## Add To Codex
@@ -83,7 +83,7 @@ Npm stdio config for `~/.codex/config.toml` or project-local `.codex/config.toml
 ```toml
 [mcp_servers.codeaudit]
 command = "npx"
-args = ["-y", "codeaudit"]
+args = ["-y", "@priyanshuchawda/codeaudit"]
 startup_timeout_sec = 40
 ```
 
@@ -96,7 +96,7 @@ args = [
   "--dir",
   "/absolute/path/to/codeaudit",
   "--filter",
-  "codeaudit",
+  "@priyanshuchawda/codeaudit",
   "start"
 ]
 startup_timeout_sec = 40
@@ -111,7 +111,7 @@ args = [
   "--dir",
   "C:\\Users\\Admin\\Desktop\\skills\\codeaudit",
   "--filter",
-  "codeaudit",
+  "@priyanshuchawda/codeaudit",
   "start"
 ]
 startup_timeout_sec = 40
@@ -140,12 +140,12 @@ Use CodeAudit MCP on this local project. First call detect_project, then route_s
 
 ## Free Public Distribution
 
-- Npm public package: `codeaudit`
-- Current npm version: `0.1.2`
+- Npm public package: `@priyanshuchawda/codeaudit`
+- Current npm version: `0.1.3`
 - Npm public packages are free to publish with `npm publish --access public`.
 - Release publishing is configured through `.github/workflows/publish-npm.yml`.
 - To publish, add a granular npm write token with bypass 2FA enabled as the GitHub secret `NPM_TOKEN`, then create a GitHub release.
-- Users can install and run without cloning GitHub by using `npx -y codeaudit`.
+- Users can install and run without cloning GitHub by using `npx -y @priyanshuchawda/codeaudit`.
 
 ## Skills CLI
 
