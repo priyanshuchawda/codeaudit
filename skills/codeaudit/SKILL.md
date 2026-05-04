@@ -5,7 +5,7 @@ description: Use when an AI coding agent needs to inspect a repository, choose t
 
 # CodeAudit
 
-CodeAudit is the public installable skill for repository intelligence. It coordinates project detection, skill routing, audits, evidence-backed planning, and safe implementation workflows.
+CodeAudit is the public installable skill for AI-agent repo audit and workflow routing. It coordinates project detection, skill routing, heuristic audits, docs evidence checks, issue/PR planning, and safe implementation workflows.
 
 ## Install
 
@@ -31,7 +31,7 @@ npx -y @priyanshuchawda/codeaudit
 ## Built-In Coverage
 
 - Orchestration: project detection, workflow routing, quality gates, and completion evidence.
-- Code quality: typed boundaries, maintainability, focused refactors, and tests.
+- Code quality: heuristic typed-boundary, maintainability, focused-refactor, and test coverage checks.
 - Python: `pyproject.toml`, `uv`, FastAPI, Django, Flask, pytest, typing, Pydantic, SQLAlchemy, and Python MCP servers.
 - Next.js: App Router, route handlers, middleware, env, headers, validation, logging, redirects, uploads, SSRF, auth, and rate limits.
 - AI apps: prompt injection, RAG grounding, tool calls, provider errors, telemetry, and secret redaction.

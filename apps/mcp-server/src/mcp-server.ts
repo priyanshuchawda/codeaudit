@@ -1,6 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { redactObject } from "./lib/redaction.js";
+import { assertProjectPathAllowed, normalizeAllowedRoots } from "./lib/safe-fs.js";
 import {
   AuditCodeQualityInputSchema,
   AuditDocsClaimsInputSchema,
@@ -51,9 +52,14 @@ type ToolDefinition<Input extends z.ZodTypeAny, Output extends z.ZodTypeAny> = {
   handler: (input: z.infer<Input>) => Promise<z.infer<Output>>;
 };
 
-export const SERVER_VERSION = "0.1.3";
+export type CodeAuditServerOptions = {
+  allowedRoots?: string[];
+};
 
-export function createCodeAuditServer(): McpServer {
+export const SERVER_VERSION = "0.1.4";
+
+export function createCodeAuditServer(options: CodeAuditServerOptions = {}): McpServer {
+  const allowedRoots = normalizeAllowedRoots(options.allowedRoots ?? []);
   const server = new McpServer(
     {
       name: "codeaudit",
@@ -61,11 +67,11 @@ export function createCodeAuditServer(): McpServer {
     },
     {
       instructions:
-        "Use CodeAudit to inspect local software projects, route to the right engineering skills, run read-only audits, and produce evidence-backed issue and PR plans. Start with detect_project, then route_skills. Follow workflowPhases, recommendedToolSequence, skillActivationOrder, and qualityGates before making project changes.",
+        "Use CodeAudit as a read-only MCP server for AI-agent repo inspection, workflow routing, skill routing, heuristic code/docs audits, and evidence-backed issue/PR planning. Start with detect_project, then route_skills. Follow workflowPhases, recommendedToolSequence, skillActivationOrder, and qualityGates before making project changes.",
     },
   );
 
-  registerReadOnlyTool(server, {
+  registerReadOnlyTool(server, allowedRoots, {
     name: "detect_project",
     title: "Detect Project",
     description:
@@ -75,7 +81,7 @@ export function createCodeAuditServer(): McpServer {
     handler: detectProjectTool,
   });
 
-  registerReadOnlyTool(server, {
+  registerReadOnlyTool(server, allowedRoots, {
     name: "route_skills",
     title: "Route Skills",
     description:
@@ -85,7 +91,7 @@ export function createCodeAuditServer(): McpServer {
     handler: routeSkillsTool,
   });
 
-  registerReadOnlyTool(server, {
+  registerReadOnlyTool(server, allowedRoots, {
     name: "scan_repo",
     title: "Scan Repository",
     description:
@@ -95,7 +101,7 @@ export function createCodeAuditServer(): McpServer {
     handler: scanRepoTool,
   });
 
-  registerReadOnlyTool(server, {
+  registerReadOnlyTool(server, allowedRoots, {
     name: "audit_code_quality",
     title: "Audit Code Quality",
     description:
@@ -105,7 +111,7 @@ export function createCodeAuditServer(): McpServer {
     handler: auditCodeQualityTool,
   });
 
-  registerReadOnlyTool(server, {
+  registerReadOnlyTool(server, allowedRoots, {
     name: "audit_nextjs_security",
     title: "Audit Next.js Security",
     description:
@@ -115,7 +121,7 @@ export function createCodeAuditServer(): McpServer {
     handler: auditNextjsSecurityTool,
   });
 
-  registerReadOnlyTool(server, {
+  registerReadOnlyTool(server, allowedRoots, {
     name: "audit_docs_claims",
     title: "Audit Documentation Claims",
     description: "Extract strong README/docs claims and map them to evidence or missing evidence.",
@@ -124,7 +130,7 @@ export function createCodeAuditServer(): McpServer {
     handler: auditDocsClaimsTool,
   });
 
-  registerReadOnlyTool(server, {
+  registerReadOnlyTool(server, allowedRoots, {
     name: "audit_tests",
     title: "Audit Tests",
     description:
@@ -134,7 +140,7 @@ export function createCodeAuditServer(): McpServer {
     handler: auditTestsTool,
   });
 
-  registerReadOnlyTool(server, {
+  registerReadOnlyTool(server, allowedRoots, {
     name: "audit_installed_skills",
     title: "Audit Installed Skills",
     description:
@@ -144,7 +150,7 @@ export function createCodeAuditServer(): McpServer {
     handler: auditInstalledSkillsTool,
   });
 
-  registerReadOnlyTool(server, {
+  registerReadOnlyTool(server, allowedRoots, {
     name: "official_docs_router",
     title: "Official Docs Router",
     description:
@@ -154,7 +160,7 @@ export function createCodeAuditServer(): McpServer {
     handler: officialDocsRouterTool,
   });
 
-  registerReadOnlyTool(server, {
+  registerReadOnlyTool(server, allowedRoots, {
     name: "generate_issue_plan",
     title: "Generate Issue Plan",
     description:
@@ -164,7 +170,7 @@ export function createCodeAuditServer(): McpServer {
     handler: generateIssuePlanTool,
   });
 
-  registerReadOnlyTool(server, {
+  registerReadOnlyTool(server, allowedRoots, {
     name: "generate_pr_plan",
     title: "Generate PR Plan",
     description: "Create a scoped PR workflow from selected findings or an issue candidate.",
@@ -173,7 +179,7 @@ export function createCodeAuditServer(): McpServer {
     handler: generatePrPlanTool,
   });
 
-  registerReadOnlyTool(server, {
+  registerReadOnlyTool(server, allowedRoots, {
     name: "generate_report",
     title: "Generate Report",
     description:
@@ -206,6 +212,7 @@ function registerServerResources(server: McpServer): void {
             "# CodeAudit MCP Documentation Index",
             "",
             "Use this resource to discover CodeAudit's operating model before changing a project.",
+            "CodeAudit is read-only and heuristic-based: it supports evidence-backed repo inspection, skill routing, docs-claim checks, and issue/PR planning for AI coding agents.",
             "",
             "## Core Docs",
             "",
@@ -223,6 +230,7 @@ function registerServerResources(server: McpServer): void {
             "3. Follow workflowPhases, recommendedToolSequence, skillActivationOrder, and qualityGates.",
             "4. Run relevant audits before edits in existing projects.",
             "5. Do not claim secure, production-ready, enterprise-grade, or fully tested without evidence.",
+            "6. In hosted HTTP deployments, keep projectPath under CODEAUDIT_ALLOWED_ROOTS.",
           ].join("\n"),
         },
       ],
@@ -274,7 +282,7 @@ function registerServerResources(server: McpServer): void {
 function registerReadOnlyTool<
   Input extends z.ZodObject<z.ZodRawShape>,
   Output extends z.ZodTypeAny,
->(server: McpServer, definition: ToolDefinition<Input, Output>): void {
+>(server: McpServer, allowedRoots: string[], definition: ToolDefinition<Input, Output>): void {
   server.registerTool(
     definition.name,
     {
@@ -291,6 +299,7 @@ function registerReadOnlyTool<
     async (input) => {
       try {
         const parsedInput = definition.inputSchema.parse(input);
+        await enforceAllowedProjectPath(parsedInput, allowedRoots);
         const output = definition.outputSchema.parse(await definition.handler(parsedInput));
         const safeOutput = redactObject(output);
         return {
@@ -306,4 +315,12 @@ function registerReadOnlyTool<
       }
     },
   );
+}
+
+async function enforceAllowedProjectPath(
+  input: Record<string, unknown>,
+  allowedRoots: string[],
+): Promise<void> {
+  if (typeof input.projectPath !== "string") return;
+  await assertProjectPathAllowed(input.projectPath, allowedRoots);
 }

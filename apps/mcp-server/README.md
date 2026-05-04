@@ -1,6 +1,6 @@
 # CodeAudit MCP Server
 
-CodeAudit is a read-only MCP server for local project inspection, skill routing, repository audits, documentation evidence checks, and issue/PR planning.
+CodeAudit is a read-only MCP server for AI coding agents: repo inspection, skill routing, heuristic code audits, docs evidence checks, and issue/PR planning.
 
 It detects and routes JavaScript/TypeScript and Python projects, including FastAPI, Django, Flask, and Python MCP SDK servers.
 
@@ -38,7 +38,7 @@ startup_timeout_sec = 40
 ## HTTP
 
 ```bash
-CODEAUDIT_API_KEY=change-me npx -y @priyanshuchawda/codeaudit --transport http
+CODEAUDIT_API_KEY=change-me CODEAUDIT_ALLOWED_ROOTS=/workspace npx -y @priyanshuchawda/codeaudit --transport http
 ```
 
 Then connect to:
@@ -61,4 +61,4 @@ Use CodeAudit MCP on this local project. First call detect_project, then route_s
 
 ## Safety
 
-CodeAudit is read-only by default. It does not expose unrestricted shell execution, auto-push, auto-merge, auto-delete, or remote repository mutation tools.
+CodeAudit is read-only by default. It does not expose unrestricted shell execution, auto-push, auto-merge, auto-delete, or remote repository mutation tools. Hosted HTTP deployments restrict `projectPath` to `CODEAUDIT_ALLOWED_ROOTS`.

@@ -13,11 +13,13 @@ CodeAudit's MVP is built around read-only repository inspection.
 - Stdio is the default transport for local use.
 - Streamable HTTP can require API-key/Bearer authentication with `CODEAUDIT_API_KEY`.
 - HTTP CORS is configurable with `CODEAUDIT_ALLOWED_ORIGINS`.
+- Hosted HTTP restricts `projectPath` to `CODEAUDIT_ALLOWED_ROOTS`; when unset in HTTP mode, it defaults to `process.cwd()`.
 
 ## Filesystem Rules
 
 - The caller supplies `projectPath`.
 - The server resolves it to an absolute root.
+- If allowed roots are configured, `projectPath` must be inside one of those roots after realpath normalization.
 - File traversal skips common heavy or sensitive folders such as `.git`, `node_modules`, `.next`, `dist`, and `coverage`.
 - Relative path joins are rejected if they escape the root.
 
@@ -29,6 +31,7 @@ Future write or GitHub mutation tools should require explicit user approval and 
 
 - Use HTTPS at the reverse proxy or hosting layer for remote deployments.
 - Set `CODEAUDIT_API_KEY` for any non-local HTTP deployment.
+- Set `CODEAUDIT_ALLOWED_ROOTS` to the mounted workspace or repository roots for hosted HTTP deployments.
 - Prefer a narrow `CODEAUDIT_ALLOWED_ORIGINS` list instead of `*` for browser-accessible deployments.
 - Do not expose CodeAudit HTTP directly to the public internet without authentication.
 - Treat API keys as secrets. Do not commit real keys to `.env`, docs, client configs, screenshots, or issue reports.

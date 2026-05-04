@@ -29,6 +29,21 @@ export async function resolveProjectRoot(projectPath: string): Promise<string> {
   return resolved;
 }
 
+export async function assertProjectPathAllowed(
+  projectPath: string,
+  allowedRoots: string[],
+): Promise<void> {
+  if (allowedRoots.length === 0) return;
+
+  const projectRoot = await realpathOrResolve(projectPath);
+  const allowedRealRoots = await Promise.all(allowedRoots.map(realpathOrResolve));
+  if (allowedRealRoots.some((allowedRoot) => isSameOrInsideRoot(projectRoot, allowedRoot))) {
+    return;
+  }
+
+  throw new Error(`Project path is outside CODEAUDIT_ALLOWED_ROOTS: ${path.resolve(projectPath)}`);
+}
+
 export async function pathExists(filePath: string): Promise<boolean> {
   return Boolean(await fs.stat(filePath).catch(() => null));
 }
@@ -111,6 +126,20 @@ export function safeJoin(root: string, relativePath: string): string {
     throw new Error(`Path escapes project root: ${relativePath}`);
   }
   return absolutePath;
+}
+
+export function normalizeAllowedRoots(roots: string[]): string[] {
+  return [...new Set(roots.map((root) => path.resolve(root)).filter(Boolean))];
+}
+
+function isSameOrInsideRoot(candidatePath: string, allowedRoot: string): boolean {
+  const relative = path.relative(allowedRoot, candidatePath);
+  return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
+}
+
+async function realpathOrResolve(filePath: string): Promise<string> {
+  const resolved = path.resolve(filePath);
+  return fs.realpath(resolved).catch(() => resolved);
 }
 
 function matchesAny(filePath: string, patterns: string[]): boolean {

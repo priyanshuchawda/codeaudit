@@ -7,6 +7,7 @@ describe("runtime config", () => {
     expect(result.transport).toBe("stdio");
     expect(result.port).toBe(3000);
     expect(result.requireApiKey).toBe(false);
+    expect(result.allowedRoots).toEqual([]);
   });
 
   test("parses http CLI options and enables auth when api key is set", () => {
@@ -32,6 +33,19 @@ describe("runtime config", () => {
       apiKey: "secret",
       requireApiKey: true,
       allowedOrigins: ["https://example.com"],
+      allowedRoots: [process.cwd()],
+    });
+  });
+
+  test("parses allowed roots from env and CLI", () => {
+    expect(
+      parseRuntimeConfig(["--transport", "http", "--allowed-roots", "/workspace,/repos"], {}),
+    ).toMatchObject({
+      allowedRoots: ["/workspace", "/repos"],
+    });
+
+    expect(parseRuntimeConfig([], { CODEAUDIT_ALLOWED_ROOTS: "/workspace" })).toMatchObject({
+      allowedRoots: ["/workspace"],
     });
   });
 

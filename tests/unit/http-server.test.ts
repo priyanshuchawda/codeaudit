@@ -31,7 +31,26 @@ describe("http server", () => {
     await expect(metadata.json()).resolves.toMatchObject({
       name: "codeaudit",
       transport: "streamable-http",
+      safetyModel: {
+        allowedRootsRequired: true,
+      },
     });
+  });
+
+  test("applies configured cors allowlist", async () => {
+    const baseUrl = await listen(
+      baseConfig({ requireApiKey: false, allowedOrigins: ["https://trusted.example"] }),
+    );
+
+    const allowed = await fetch(`${baseUrl}/health`, {
+      headers: { Origin: "https://trusted.example" },
+    });
+    expect(allowed.headers.get("access-control-allow-origin")).toBe("https://trusted.example");
+
+    const blocked = await fetch(`${baseUrl}/health`, {
+      headers: { Origin: "https://blocked.example" },
+    });
+    expect(blocked.headers.get("access-control-allow-origin")).toBeNull();
   });
 
   test("requires api key when configured", async () => {
@@ -63,6 +82,7 @@ function baseConfig(overrides: Partial<RuntimeConfig>): RuntimeConfig {
     publicBaseUrl: "http://127.0.0.1",
     requireApiKey: false,
     allowedOrigins: ["*"],
+    allowedRoots: [process.cwd()],
     ...overrides,
   };
 }

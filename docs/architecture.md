@@ -1,12 +1,12 @@
 # Architecture
 
-CodeAudit is split into a TypeScript MCP server and a reusable skills pack.
+CodeAudit is a read-only MCP server for AI-agent repository inspection, skill routing, heuristic code/docs audits, and issue/PR planning.
 
 ## Components
 
 - `apps/mcp-server/src/server.ts` starts the selected runtime transport.
 - `apps/mcp-server/src/mcp-server.ts` creates the MCP server and registers read-only tools.
-- `apps/mcp-server/src/http-server.ts` exposes Streamable HTTP, health, metadata, CORS, and API-key enforcement.
+- `apps/mcp-server/src/http-server.ts` exposes Streamable HTTP, health, metadata, CORS, API-key enforcement, and allowed-root metadata.
 - `apps/mcp-server/src/runtime-config.ts` parses CLI and environment runtime configuration.
 - `apps/mcp-server/src/tools/` contains one module per tool.
 - `apps/mcp-server/src/schemas/` contains zod input, output, and finding contracts.
@@ -23,6 +23,7 @@ CodeAudit is split into a TypeScript MCP server and a reusable skills pack.
 - The server is read-only by default and exposes no unrestricted shell tool.
 - The same tool registry is used for stdio and Streamable HTTP transports.
 - HTTP deployments can require API-key/Bearer authentication with `CODEAUDIT_API_KEY`.
+- HTTP deployments restrict `projectPath` to `CODEAUDIT_ALLOWED_ROOTS`, defaulting to `process.cwd()` when unset.
 
 ## Data Flow
 

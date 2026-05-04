@@ -1,7 +1,7 @@
 {
   "name": "@priyanshuchawda/codeaudit",
-  "version": "0.1.3",
-  "description": "CodeAudit read-only MCP server for project audits and skill routing.",
+  "version": "0.1.4",
+  "description": "Read-only MCP server for AI coding agents: repo inspection, skill routing, heuristic audits, docs evidence checks, and issue/PR planning.",
   "type": "module",
   "license": "MIT",
   "homepage": "https://github.com/priyanshuchawda/codeaudit#readme",
@@ -17,9 +17,16 @@
     "mcp",
     "model-context-protocol",
     "ai-agent",
+    "ai-agents",
     "codex",
     "claude",
+    "cursor",
+    "code-audit",
+    "code-review",
     "repository-audit",
+    "repository-analysis",
+    "repo-inspection",
+    "skill-routing",
     "skills"
   ],
   "bin": {

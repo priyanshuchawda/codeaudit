@@ -12,5 +12,7 @@ describe("audit_docs_claims", () => {
     expect(result.claims.length).toBeGreaterThan(0);
     expect(result.claims.map((claim) => claim.claim).join(" ")).toContain("secure");
     expect(result.claims.some((claim) => claim.evidenceMissing.length > 0)).toBe(true);
+    expect(result.claims.some((claim) => claim.evidenceFound.length > 0)).toBe(true);
+    expect(result.claims.map((claim) => claim.recommendation)).toContain("add-evidence");
   });
 });

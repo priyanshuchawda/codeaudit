@@ -10,7 +10,7 @@ The cheapest production distribution is the public npm package `@priyanshuchawda
 npx -y @priyanshuchawda/codeaudit
 ```
 
-Current npm version: `0.1.3`.
+Current npm version: `0.1.4`.
 
 Publishing future versions is configured through `.github/workflows/publish-npm.yml`.
 
@@ -20,7 +20,7 @@ Before publishing a future version:
 2. Create a granular npm access token with package publish/write access and bypass 2FA enabled.
 3. Add it to GitHub repository secrets as `NPM_TOKEN`.
 4. Bump the package version.
-5. Create a GitHub release such as `v0.1.4`.
+5. Create a GitHub release such as `v0.1.5`.
 
 The package publishes as public/free via:
 
@@ -37,31 +37,33 @@ Use Streamable HTTP behind HTTPS when multiple machines or remote clients need a
 Required controls:
 
 - Set `CODEAUDIT_API_KEY` for hosted HTTP deployments.
+- Set `CODEAUDIT_ALLOWED_ROOTS=/workspace,/repos` for hosted HTTP deployments.
 - Use HTTPS at the reverse proxy, load balancer, or hosting provider.
 - Set `CODEAUDIT_ALLOWED_ORIGINS` to trusted origins when browser clients are allowed.
-- Keep filesystem access scoped by passing explicit `projectPath` values to tools.
+- Keep filesystem access scoped by passing explicit `projectPath` values under an allowed root.
 - Do not expose write, push, merge, delete, or unrestricted command tools without a separate approval model.
 
 ## Environment
 
 See `.env.example`.
 
-| Variable                    | Default                | Purpose                                                             |
-| --------------------------- | ---------------------- | ------------------------------------------------------------------- |
-| `CODEAUDIT_TRANSPORT`       | `stdio`                | `stdio` or `http`.                                                  |
-| `CODEAUDIT_HOST`            | `127.0.0.1`            | HTTP bind host. Use `0.0.0.0` in containers.                        |
-| `CODEAUDIT_PORT` / `PORT`   | `3000`                 | HTTP port.                                                          |
-| `CODEAUDIT_PUBLIC_BASE_URL` | derived from host/port | Public base URL used in metadata.                                   |
-| `CODEAUDIT_REQUIRE_API_KEY` | `false`                | Require auth even when no API key is inferred.                      |
-| `CODEAUDIT_API_KEY`         | unset                  | API key for HTTP deployments. Enables API-key requirement when set. |
-| `CODEAUDIT_ALLOWED_ORIGINS` | `*`                    | Comma-separated CORS allowlist.                                     |
+| Variable                    | Default                                        | Purpose                                                             |
+| --------------------------- | ---------------------------------------------- | ------------------------------------------------------------------- |
+| `CODEAUDIT_TRANSPORT`       | `stdio`                                        | `stdio` or `http`.                                                  |
+| `CODEAUDIT_HOST`            | `127.0.0.1`                                    | HTTP bind host. Use `0.0.0.0` in containers.                        |
+| `CODEAUDIT_PORT` / `PORT`   | `3000`                                         | HTTP port.                                                          |
+| `CODEAUDIT_PUBLIC_BASE_URL` | derived from host/port                         | Public base URL used in metadata.                                   |
+| `CODEAUDIT_REQUIRE_API_KEY` | `false`                                        | Require auth even when no API key is inferred.                      |
+| `CODEAUDIT_API_KEY`         | unset                                          | API key for HTTP deployments. Enables API-key requirement when set. |
+| `CODEAUDIT_ALLOWED_ORIGINS` | `*`                                            | Comma-separated CORS allowlist.                                     |
+| `CODEAUDIT_ALLOWED_ROOTS`   | `process.cwd()` in HTTP, unrestricted in stdio | Comma-separated project roots allowed for `projectPath`.            |
 
 ## Local HTTP
 
 ```bash
 pnpm install
 pnpm build
-CODEAUDIT_API_KEY=change-me pnpm start:http
+CODEAUDIT_API_KEY=change-me CODEAUDIT_ALLOWED_ROOTS="$PWD" pnpm start:http
 ```
 
 Verify:
@@ -97,7 +99,9 @@ Run:
 
 ```bash
 docker run --rm -p 3000:3000 \
+  -v /absolute/path/to/target-project:/workspace:ro \
   -e CODEAUDIT_API_KEY=change-me \
+  -e CODEAUDIT_ALLOWED_ROOTS=/workspace \
   -e CODEAUDIT_PUBLIC_BASE_URL=https://your-host.example.com \
   codeaudit
 ```
@@ -110,6 +114,7 @@ docker run --rm -p 3000:3000 \
 - [ ] `/.well-known/codeaudit` shows the correct public MCP endpoint.
 - [ ] Hosted HTTP has HTTPS in front.
 - [ ] Hosted HTTP sets `CODEAUDIT_API_KEY`.
+- [ ] Hosted HTTP sets `CODEAUDIT_ALLOWED_ROOTS` to the mounted workspace/repo roots.
 - [ ] Browser-accessible HTTP has a narrow `CODEAUDIT_ALLOWED_ORIGINS`.
 - [ ] Client config sends `Authorization: Bearer <CODEAUDIT_API_KEY>`.
 - [ ] No raw secrets are committed to `.env`, docs, or client configs.

@@ -37,6 +37,8 @@ export function createHttpApp(config: RuntimeConfig): express.Express {
         : { type: "none" },
       safetyModel: {
         readOnlyTools: true,
+        allowedRootsRequired: true,
+        allowedRoots: config.allowedRoots,
         noUnrestrictedShell: true,
         noRemoteMutationTools: true,
         redactsSecrets: true,
@@ -85,7 +87,7 @@ export function createHttpApp(config: RuntimeConfig): express.Express {
       sessionIdGenerator: undefined,
       enableJsonResponse: true,
     });
-    const server = createCodeAuditServer();
+    const server = createCodeAuditServer({ allowedRoots: config.allowedRoots });
 
     res.on("close", () => {
       transport.close().catch(() => undefined);

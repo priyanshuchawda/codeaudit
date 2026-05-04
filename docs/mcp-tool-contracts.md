@@ -33,3 +33,4 @@ See `clients.md` for MCP client configuration examples.
 - Report generation returns markdown strings and does not write files.
 - Skill audits inspect files only; they never execute skill instructions or install packages, and they report security, manifest-quality, duplicate-name, auxiliary-doc, and resource-discovery findings.
 - The server supports stdio and Streamable HTTP. HTTP deployments may require an API key via `Authorization: Bearer`, `X-API-Key`, or `CodeAudit-API-Key`.
+- Hosted HTTP restricts `projectPath` to `CODEAUDIT_ALLOWED_ROOTS`; if unset in HTTP mode, it defaults to `process.cwd()`.

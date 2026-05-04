@@ -12,7 +12,7 @@ async function main(): Promise<void> {
     return;
   }
 
-  const server = createCodeAuditServer();
+  const server = createCodeAuditServer({ allowedRoots: config.allowedRoots });
   const transport = new StdioServerTransport();
   await server.connect(transport);
   console.error(`CodeAudit MCP v${SERVER_VERSION} running on stdio`);

@@ -2,17 +2,17 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.priyanshuchawda/codeaudit",
   "title": "CodeAudit MCP",
-  "description": "Read-only project detection, skill routing, audits, documentation evidence review, and issue/PR planning for AI coding agents.",
+  "description": "Read-only MCP server for AI coding agents: repo inspection, skill routing, heuristic code audits, docs evidence checks, and issue/PR planning.",
   "repository": {
     "url": "https://github.com/priyanshuchawda/codeaudit",
     "source": "github"
   },
-  "version": "0.1.3",
+  "version": "0.1.4",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@priyanshuchawda/codeaudit",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "transport": {
         "type": "stdio"
       },

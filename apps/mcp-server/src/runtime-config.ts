@@ -8,6 +8,7 @@ export type RuntimeConfig = {
   apiKey?: string;
   requireApiKey: boolean;
   allowedOrigins: string[];
+  allowedRoots: string[];
 };
 
 type Env = Record<string, string | undefined>;
@@ -27,6 +28,12 @@ export function parseRuntimeConfig(
   const requireApiKey =
     args.has("require-api-key") || env.CODEAUDIT_REQUIRE_API_KEY === "true" || Boolean(apiKey);
   const allowedOrigins = parseCsv(args.get("allow-origin") ?? env.CODEAUDIT_ALLOWED_ORIGINS ?? "*");
+  const allowedRootsValue = args.get("allowed-roots") ?? env.CODEAUDIT_ALLOWED_ROOTS;
+  const allowedRoots = allowedRootsValue
+    ? parseCsv(allowedRootsValue)
+    : transport === "http"
+      ? [process.cwd()]
+      : [];
   const publicBaseUrl =
     args.get("public-base-url") ?? env.CODEAUDIT_PUBLIC_BASE_URL ?? `http://${host}:${port}`;
 
@@ -48,6 +55,7 @@ export function parseRuntimeConfig(
     apiKey,
     requireApiKey,
     allowedOrigins,
+    allowedRoots,
   };
 }
 

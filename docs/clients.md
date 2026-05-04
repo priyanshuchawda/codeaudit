@@ -43,13 +43,13 @@ pnpm --dir /absolute/path/to/codeaudit --filter @priyanshuchawda/codeaudit dev
 Run the Streamable HTTP server:
 
 ```sh
-CODEAUDIT_TRANSPORT=http CODEAUDIT_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/codeaudit --filter @priyanshuchawda/codeaudit start:http
+CODEAUDIT_TRANSPORT=http CODEAUDIT_API_KEY=YOUR_API_KEY CODEAUDIT_ALLOWED_ROOTS=/absolute/path/to/target-project pnpm --dir /absolute/path/to/codeaudit --filter @priyanshuchawda/codeaudit start:http
 ```
 
 Or from npm:
 
 ```sh
-CODEAUDIT_API_KEY=YOUR_API_KEY npx -y @priyanshuchawda/codeaudit --transport http
+CODEAUDIT_API_KEY=YOUR_API_KEY CODEAUDIT_ALLOWED_ROOTS=/absolute/path/to/target-project npx -y @priyanshuchawda/codeaudit --transport http
 ```
 
 The default HTTP endpoint is:
@@ -258,7 +258,7 @@ npx @modelcontextprotocol/inspector pnpm --dir /absolute/path/to/codeaudit --fil
 For HTTP:
 
 ```sh
-CODEAUDIT_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/codeaudit --filter @priyanshuchawda/codeaudit start:http
+CODEAUDIT_API_KEY=YOUR_API_KEY CODEAUDIT_ALLOWED_ROOTS=/absolute/path/to/target-project pnpm --dir /absolute/path/to/codeaudit --filter @priyanshuchawda/codeaudit start:http
 ```
 
 Then connect Inspector to `http://127.0.0.1:3000/mcp` and pass:
@@ -308,6 +308,8 @@ Use CodeAudit MCP on this local project. First call detect_project, then route_s
 | OAuth           | Not implemented | Use API-key/Bearer auth until an identity provider is added.      |
 | API key headers | Supported       | Use `Authorization: Bearer`, `X-API-Key`, or `CodeAudit-API-Key`. |
 
+Hosted HTTP also restricts `projectPath` to `CODEAUDIT_ALLOWED_ROOTS`. Set it to the mounted workspace or repo roots, for example `/workspace,/repos`.
+
 ## Tested Status
 
 The current repository verifies CodeAudit with:
@@ -315,8 +317,10 @@ The current repository verifies CodeAudit with:
 - `pnpm check`
 - `pnpm build`
 - `npm pack --dry-run` for npm package contents
+- published `npx -y @priyanshuchawda/codeaudit --transport http` smoke test
 - built HTTP `/health` and `/.well-known/codeaudit` smoke test
 - MCP in-memory tool/resource test
+- allowed-root rejection test for hosted-style project paths
 - docs claims audit
 - installed skill audit
 

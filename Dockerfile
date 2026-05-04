@@ -17,6 +17,7 @@ RUN pnpm build
 FROM node:lts-alpine
 RUN corepack enable pnpm
 WORKDIR /app
+RUN mkdir -p /workspace
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/mcp-server/package.json ./apps/mcp-server/package.json
@@ -27,6 +28,7 @@ COPY --from=builder /app/apps/mcp-server/dist ./apps/mcp-server/dist
 ENV CODEAUDIT_TRANSPORT=http
 ENV CODEAUDIT_HOST=0.0.0.0
 ENV CODEAUDIT_PORT=3000
+ENV CODEAUDIT_ALLOWED_ROOTS=/workspace
 EXPOSE 3000
 
 CMD ["pnpm", "--filter", "@priyanshuchawda/codeaudit", "start:http"]
