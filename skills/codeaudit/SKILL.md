@@ -7,17 +7,9 @@ description: Use when an AI coding agent needs to inspect a repository, choose t
 
 CodeAudit is the public installable skill for AI-agent repo audit and workflow routing. It coordinates project detection, skill routing, heuristic audits, docs evidence checks, issue/PR planning, and safe implementation workflows.
 
-## Install
+## MCP Assumption
 
-```bash
-npx skills add priyanshuchawda/codeaudit --skill codeaudit
-```
-
-Use the MCP server for tool-backed audits:
-
-```bash
-npx -y @priyanshuchawda/codeaudit
-```
+This skill assumes CodeAudit is already installed or connected by the user. Use the MCP server for tool-backed audits when it is available; otherwise, follow the same read-only audit and planning workflow manually.
 
 ## Required Workflow
 
