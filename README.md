@@ -147,7 +147,7 @@ Use CodeAudit MCP on this local project. First call detect_project, then route_s
 ## Free Public Distribution
 
 - Npm public package: `@priyanshuchawda/codeaudit`
-- Current npm version: `0.1.4`
+- Current npm version: `0.1.5`
 - Npm public packages are free to publish with `npm publish --access public`.
 - Release publishing is configured through `.github/workflows/publish-npm.yml`.
 - To publish, add a granular npm write token with bypass 2FA enabled as the GitHub secret `NPM_TOKEN`, then create a GitHub release.

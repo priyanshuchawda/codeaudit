@@ -10,7 +10,7 @@ The cheapest production distribution is the public npm package `@priyanshuchawda
 npx -y @priyanshuchawda/codeaudit
 ```
 
-Current npm version: `0.1.4`.
+Current npm version: `0.1.5`.
 
 Publishing future versions is configured through `.github/workflows/publish-npm.yml`.
 
@@ -20,7 +20,7 @@ Before publishing a future version:
 2. Create a granular npm access token with package publish/write access and bypass 2FA enabled.
 3. Add it to GitHub repository secrets as `NPM_TOKEN`.
 4. Bump the package version.
-5. Create a GitHub release such as `v0.1.5`.
+5. Create a GitHub release such as `v0.1.6`.
 
 The package publishes as public/free via:
 

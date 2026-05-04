@@ -1,6 +1,6 @@
 {
   "name": "@priyanshuchawda/codeaudit",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Read-only MCP server for AI coding agents: repo inspection, skill routing, heuristic audits, docs evidence checks, and issue/PR planning.",
   "type": "module",
   "license": "MIT",
