@@ -1,6 +1,8 @@
 ---
 name: refactor-with-tests
-description: Guides safe behavior-preserving refactors with tests and focused scope. Use when splitting files, improving architecture, reducing duplication, or changing internals without intended behavior changes.
+description: Use when splitting files, improving architecture, reducing duplication, changing internals, or preserving behavior through focused tests during refactors.
+metadata:
+  internal: true
 ---
 
 # Refactor With Tests

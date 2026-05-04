@@ -1,6 +1,6 @@
 # Security Model
 
-RepoSentinel's MVP is built around read-only repository inspection.
+CodeAudit's MVP is built around read-only repository inspection.
 
 ## Defaults
 
@@ -11,8 +11,8 @@ RepoSentinel's MVP is built around read-only repository inspection.
 - Secret redaction is applied before returning structured output.
 - Skills are treated as untrusted input until reviewed or audited.
 - Stdio is the default transport for local use.
-- Streamable HTTP can require API-key/Bearer authentication with `REPOSENTINEL_API_KEY`.
-- HTTP CORS is configurable with `REPOSENTINEL_ALLOWED_ORIGINS`.
+- Streamable HTTP can require API-key/Bearer authentication with `CODEAUDIT_API_KEY`.
+- HTTP CORS is configurable with `CODEAUDIT_ALLOWED_ORIGINS`.
 
 ## Filesystem Rules
 
@@ -28,14 +28,14 @@ Future write or GitHub mutation tools should require explicit user approval and 
 ## HTTP Deployment Rules
 
 - Use HTTPS at the reverse proxy or hosting layer for remote deployments.
-- Set `REPOSENTINEL_API_KEY` for any non-local HTTP deployment.
-- Prefer a narrow `REPOSENTINEL_ALLOWED_ORIGINS` list instead of `*` for browser-accessible deployments.
-- Do not expose RepoSentinel HTTP directly to the public internet without authentication.
+- Set `CODEAUDIT_API_KEY` for any non-local HTTP deployment.
+- Prefer a narrow `CODEAUDIT_ALLOWED_ORIGINS` list instead of `*` for browser-accessible deployments.
+- Do not expose CodeAudit HTTP directly to the public internet without authentication.
 - Treat API keys as secrets. Do not commit real keys to `.env`, docs, client configs, screenshots, or issue reports.
 
 ## Production Status
 
-RepoSentinel is production-usable for read-only repository inspection and workflow routing when the HTTP deployment rules above are followed. OAuth, multi-tenant authorization, and write-side tools are intentionally outside the current production surface.
+CodeAudit is production-usable for read-only repository inspection and workflow routing when the HTTP deployment rules above are followed. OAuth, multi-tenant authorization, and write-side tools are intentionally outside the current production surface.
 
 ## Skill Supply-Chain Rules
 

@@ -1,6 +1,8 @@
 ---
 name: skill-supply-chain-auditor
-description: Audits agent skills for supply-chain, prompt-injection, secret-leakage, dependency-install, webhook, destructive-shell, manifest-quality, duplication, and resource-discovery risks. Use when reviewing installed skills, adding third-party skills, hardening agent workflows, checking skill correctness, removing duplicate skills, or investigating unsafe skill behavior.
+description: Use when reviewing installed skills, adding third-party skills, hardening agent workflows, checking skill correctness, removing duplicate skills, or investigating supply-chain, prompt-injection, secret-leakage, dependency-install, webhook, destructive-shell, manifest-quality, or resource-discovery risks.
+metadata:
+  internal: true
 ---
 
 # Skill Supply Chain Auditor

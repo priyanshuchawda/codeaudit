@@ -1,6 +1,8 @@
 ---
 name: enterprise-code-quality
-description: Applies strict maintainability standards for readable, typed, testable software. Use when auditing, reviewing, refactoring, or planning improvements to application or infrastructure code.
+description: Use when auditing, reviewing, refactoring, or planning improvements to application or infrastructure code that needs maintainability, typed boundaries, tests, or simpler architecture.
+metadata:
+  internal: true
 ---
 
 # Enterprise Code Quality

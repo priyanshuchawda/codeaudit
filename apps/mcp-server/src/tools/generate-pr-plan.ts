@@ -2,11 +2,17 @@ import type { GeneratePrPlanInput } from "../schemas/tool-inputs.js";
 import { slugify } from "../lib/markdown.js";
 
 export async function generatePrPlanTool(input: GeneratePrPlanInput) {
-  const findings = input.selectedIssue?.findings?.length ? input.selectedIssue.findings : input.findings;
-  const title = input.selectedIssue?.title ?? findings[0]?.title ?? "RepoSentinel scoped improvement";
+  const findings = input.selectedIssue?.findings?.length
+    ? input.selectedIssue.findings
+    : input.findings;
+  const title = input.selectedIssue?.title ?? findings[0]?.title ?? "CodeAudit scoped improvement";
   const priority = input.selectedIssue?.priority ?? "P1";
   const category = findings[0]?.category ?? "workflow";
-  const files = [...new Set(findings.map((finding) => finding.file).filter((file): file is string => Boolean(file)))];
+  const files = [
+    ...new Set(
+      findings.map((finding) => finding.file).filter((file): file is string => Boolean(file)),
+    ),
+  ];
 
   return {
     branchName: `${branchPrefix(category)}/${slugify(`${priority}-${title}`)}`,
@@ -50,12 +56,14 @@ function branchPrefix(category: string): string {
 
 function recommendedTests(category: string): string[] {
   if (category === "docs") return ["docs claim audit tests", "markdown lint/manual review"];
-  if (category === "security") return ["unit tests for validation/auth boundary", "security regression tests"];
+  if (category === "security")
+    return ["unit tests for validation/auth boundary", "security regression tests"];
   return ["unit tests", "typecheck"];
 }
 
 function docsFor(category: string): string[] {
-  if (category === "security") return ["SECURITY_REVIEW.md", "docs/threat-model.md if architecture changed"];
+  if (category === "security")
+    return ["SECURITY_REVIEW.md", "docs/threat-model.md if architecture changed"];
   if (category === "docs") return ["README.md", "DOCS_CLAIMS_EVIDENCE_MAP.md"];
   return ["README.md if public behavior changed", "architecture docs if module boundaries changed"];
 }

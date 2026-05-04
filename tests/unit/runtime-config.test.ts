@@ -37,7 +37,7 @@ describe("runtime config", () => {
 
   test("rejects http auth requirement without an api key", () => {
     expect(() => parseRuntimeConfig(["--transport", "http", "--require-api-key"], {})).toThrow(
-      "REPOSENTINEL_API_KEY",
+      "CODEAUDIT_API_KEY",
     );
   });
 

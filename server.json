@@ -1,18 +1,18 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.priyanshuchawda/reposentinel-mcp",
-  "title": "RepoSentinel MCP",
+  "name": "io.github.priyanshuchawda/codeaudit",
+  "title": "CodeAudit MCP",
   "description": "Read-only project detection, skill routing, audits, documentation evidence review, and issue/PR planning for AI coding agents.",
   "repository": {
-    "url": "https://github.com/priyanshuchawda/reposentinel-mcp",
+    "url": "https://github.com/priyanshuchawda/codeaudit",
     "source": "github"
   },
-  "version": "0.1.1",
+  "version": "0.1.2",
   "packages": [
     {
       "registryType": "npm",
-      "identifier": "reposentinel-mcp",
-      "version": "0.1.1",
+      "identifier": "codeaudit",
+      "version": "0.1.2",
       "transport": {
         "type": "stdio"
       },
@@ -22,11 +22,11 @@
   "remotes": [
     {
       "type": "streamable-http",
-      "url": "https://your-reposentinel-host.example.com/mcp",
+      "url": "https://your-codeaudit-host.example.com/mcp",
       "headers": [
         {
           "name": "Authorization",
-          "description": "Bearer token matching REPOSENTINEL_API_KEY for protected HTTP deployments.",
+          "description": "Bearer token matching CODEAUDIT_API_KEY for protected HTTP deployments.",
           "isRequired": true,
           "isSecret": true
         }

@@ -1,6 +1,8 @@
 ---
 name: nextjs-security-review
-description: Reviews Next.js applications for App Router, route handler, middleware, auth, validation, headers, environment, and deployment security risks. Use when a Next.js project is detected or the user requests a Next.js security audit.
+description: Use when a Next.js project or security audit involves App Router, route handlers, middleware, auth, validation, headers, environment variables, deployment, logging, redirects, SSRF, uploads, or rate limits.
+metadata:
+  internal: true
 ---
 
 # Next.js Security Review

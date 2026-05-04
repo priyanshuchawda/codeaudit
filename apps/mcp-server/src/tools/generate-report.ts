@@ -12,7 +12,7 @@ export async function generateReportTool(input: GenerateReportInput) {
   ]);
 
   const auditReport = [
-    heading(1, "RepoSentinel Audit Report"),
+    heading(1, "CodeAudit Audit Report"),
     "",
     heading(2, "Project Metadata"),
     "```json",
@@ -28,19 +28,34 @@ export async function generateReportTool(input: GenerateReportInput) {
       { fileName: "AUDIT_REPORT.md", markdown: auditReport },
       {
         fileName: "SECURITY_REVIEW.md",
-        markdown: sectionReport("Security Review", findings.filter((finding) => finding.category === "security")),
+        markdown: sectionReport(
+          "Security Review",
+          findings.filter((finding) => finding.category === "security"),
+        ),
       },
       {
         fileName: "CODE_QUALITY_REVIEW.md",
-        markdown: sectionReport("Code Quality Review", findings.filter((finding) => finding.category === "code-quality" || finding.category === "architecture")),
+        markdown: sectionReport(
+          "Code Quality Review",
+          findings.filter(
+            (finding) => finding.category === "code-quality" || finding.category === "architecture",
+          ),
+        ),
       },
       {
         fileName: "DOCS_CLAIMS_EVIDENCE_MAP.md",
-        markdown: sectionReport("Docs Claims Evidence Map", findings.filter((finding) => finding.category === "docs")),
+        markdown: sectionReport(
+          "Docs Claims Evidence Map",
+          findings.filter((finding) => finding.category === "docs"),
+        ),
       },
       {
         fileName: "ISSUES.md",
-        markdown: [heading(1, "Issue Candidates"), "", bullet(findings.map((finding) => `${finding.severity}: ${finding.title}`))].join("\n"),
+        markdown: [
+          heading(1, "Issue Candidates"),
+          "",
+          bullet(findings.map((finding) => `${finding.severity}: ${finding.title}`)),
+        ].join("\n"),
       },
       {
         fileName: "PR_PLAN.md",
@@ -55,7 +70,8 @@ export async function generateReportTool(input: GenerateReportInput) {
 }
 
 function sectionReport(title: string, findings: GenerateReportInput["findings"]): string {
-  if (findings.length === 0) return [heading(1, title), "", "No findings produced for this category."].join("\n");
+  if (findings.length === 0)
+    return [heading(1, title), "", "No findings produced for this category."].join("\n");
   return [
     heading(1, title),
     "",

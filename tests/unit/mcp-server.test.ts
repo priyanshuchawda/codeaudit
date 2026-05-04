@@ -1,13 +1,13 @@
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { describe, expect, test } from "vitest";
-import { createRepoSentinelServer } from "../../apps/mcp-server/src/mcp-server.js";
+import { createCodeAuditServer } from "../../apps/mcp-server/src/mcp-server.js";
 
 describe("mcp server", () => {
-  test("exposes tools and RepoSentinel resources", async () => {
+  test("exposes tools and CodeAudit resources", async () => {
     const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
-    const server = createRepoSentinelServer();
-    const client = new Client({ name: "reposentinel-test", version: "0.0.0" });
+    const server = createCodeAuditServer();
+    const client = new Client({ name: "codeaudit-test", version: "0.0.0" });
 
     await Promise.all([server.connect(serverTransport), client.connect(clientTransport)]);
     try {
@@ -18,10 +18,10 @@ describe("mcp server", () => {
 
       const resources = await client.listResources();
       expect(resources.resources.map((resource) => resource.uri)).toEqual(
-        expect.arrayContaining(["reposentinel://docs/llms", "reposentinel://skills/index"]),
+        expect.arrayContaining(["codeaudit://docs/llms", "codeaudit://skills/index"]),
       );
 
-      const docs = await client.readResource({ uri: "reposentinel://docs/llms" });
+      const docs = await client.readResource({ uri: "codeaudit://docs/llms" });
       expect(docs.contents[0]).toMatchObject({
         mimeType: "text/markdown",
       });

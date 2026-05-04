@@ -44,7 +44,7 @@ describe("audit_installed_skills", () => {
   });
 
   test("flags manifest quality, duplicate names, auxiliary docs, and undiscoverable resources", async () => {
-    const projectPath = await fs.mkdtemp(path.join(os.tmpdir(), "reposentinel-skills-"));
+    const projectPath = await fs.mkdtemp(path.join(os.tmpdir(), "codeaudit-skills-"));
     try {
       await fs.mkdir(path.join(projectPath, "skills", "duplicate-one"), { recursive: true });
       await fs.mkdir(path.join(projectPath, "skills", "duplicate-two"), { recursive: true });
@@ -73,6 +73,7 @@ describe("audit_installed_skills", () => {
           "---",
           "name: duplicate-skill",
           "description: Also short and missing trigger guidance.",
+          "audience: internal",
           "---",
           "# Duplicate Two",
         ].join("\n"),

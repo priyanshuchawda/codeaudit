@@ -15,9 +15,21 @@ export const RouteSkillsInputSchema = z.object({
 
 export const ScanRepoInputSchema = z.object({
   projectPath: z.string().min(1).describe("Absolute or relative path to the project root."),
-  maxDepth: z.number().int().min(1).max(12).default(5).describe("Maximum directory depth to traverse."),
-  includePatterns: z.array(z.string()).default([]).describe("Optional simple path patterns to include."),
-  excludePatterns: z.array(z.string()).default([]).describe("Optional simple path patterns to exclude."),
+  maxDepth: z
+    .number()
+    .int()
+    .min(1)
+    .max(12)
+    .default(5)
+    .describe("Maximum directory depth to traverse."),
+  includePatterns: z
+    .array(z.string())
+    .default([])
+    .describe("Optional simple path patterns to include."),
+  excludePatterns: z
+    .array(z.string())
+    .default([])
+    .describe("Optional simple path patterns to exclude."),
 });
 
 export const AuditCodeQualityInputSchema = z.object({
@@ -40,7 +52,11 @@ export const AuditTestsInputSchema = z.object({
 
 export const AuditInstalledSkillsInputSchema = z.object({
   projectPath: z.string().min(1).describe("Absolute or relative path to the project root."),
-  skillsPath: z.string().min(1).default("skills").describe("Project-relative path to the skills directory to audit."),
+  skillsPath: z
+    .string()
+    .min(1)
+    .default("skills")
+    .describe("Project-relative path to the skills directory to audit."),
   strictness: StrictnessSchema.describe("Audit strictness level."),
 });
 
@@ -64,12 +80,18 @@ export const GeneratePrPlanInputSchema = z.object({
     })
     .optional()
     .describe("Optional selected issue candidate to turn into a PR plan."),
-  findings: z.array(FindingSchema).default([]).describe("Findings to use when no selected issue is supplied."),
+  findings: z
+    .array(FindingSchema)
+    .default([])
+    .describe("Findings to use when no selected issue is supplied."),
 });
 
 export const GenerateReportInputSchema = z.object({
   findings: z.array(FindingSchema).describe("Findings to render into markdown reports."),
-  projectMetadata: z.record(z.unknown()).default({}).describe("Project metadata to include in the audit report."),
+  projectMetadata: z
+    .record(z.unknown())
+    .default({})
+    .describe("Project metadata to include in the audit report."),
 });
 
 export type DetectProjectInput = z.infer<typeof DetectProjectInputSchema>;

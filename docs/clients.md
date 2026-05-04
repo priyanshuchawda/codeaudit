@@ -1,15 +1,15 @@
 ## Documentation Index
 
 Fetch the complete documentation index at: `docs/llms.txt`
-Use this file to discover all available RepoSentinel pages before exploring further.
+Use this file to discover all available CodeAudit pages before exploring further.
 
 # MCP Clients
 
-> Local stdio and Streamable HTTP installation examples for RepoSentinel MCP clients.
+> Local stdio and Streamable HTTP installation examples for CodeAudit MCP clients.
 
-RepoSentinel supports local stdio and Streamable HTTP connections. The recommended setup is the public npm package `reposentinel-mcp`, which users can run without cloning the GitHub repository. HTTP deployments can be protected with `REPOSENTINEL_API_KEY` and client headers. RepoSentinel does not expose an OAuth flow, auto-push tool, auto-merge tool, or unrestricted shell execution.
+CodeAudit supports local stdio and Streamable HTTP connections. The recommended setup is the public npm package `codeaudit`, which users can run without cloning the GitHub repository. HTTP deployments can be protected with `CODEAUDIT_API_KEY` and client headers. CodeAudit does not expose an OAuth flow, auto-push tool, auto-merge tool, or unrestricted shell execution.
 
-> **Free npm package**: Use `npx -y reposentinel-mcp` for local stdio setup.
+> **Free npm package**: Use `npx -y codeaudit` for local stdio setup.
 
 > **Tip**: The `pnpm` commands are only needed for local checkout development:
 >
@@ -18,38 +18,38 @@ RepoSentinel supports local stdio and Streamable HTTP connections. The recommend
 > pnpm build
 > ```
 
-> **Note**: Replace `/absolute/path/to/reposentinel-mcp` with your local checkout path. On Windows, use a path like `C:\\Users\\Admin\\Desktop\\skills\\reposentinel`.
+> **Note**: Replace `/absolute/path/to/codeaudit` with your local checkout path. On Windows, use a path like `C:\\Users\\Admin\\Desktop\\skills\\codeaudit`.
 
 ## Server Command
 
 Use this command for most local MCP clients:
 
 ```sh
-npx -y reposentinel-mcp
+npx -y codeaudit
 ```
 
 For local checkout development after `pnpm build`:
 
 ```sh
-pnpm --dir /absolute/path/to/reposentinel-mcp --filter reposentinel-mcp start
+pnpm --dir /absolute/path/to/codeaudit --filter codeaudit start
 ```
 
 For development, use the TypeScript entrypoint:
 
 ```sh
-pnpm --dir /absolute/path/to/reposentinel-mcp --filter reposentinel-mcp dev
+pnpm --dir /absolute/path/to/codeaudit --filter codeaudit dev
 ```
 
 Run the Streamable HTTP server:
 
 ```sh
-REPOSENTINEL_TRANSPORT=http REPOSENTINEL_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/reposentinel-mcp --filter reposentinel-mcp start:http
+CODEAUDIT_TRANSPORT=http CODEAUDIT_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/codeaudit --filter codeaudit start:http
 ```
 
 Or from npm:
 
 ```sh
-REPOSENTINEL_API_KEY=YOUR_API_KEY npx -y reposentinel-mcp --transport http
+CODEAUDIT_API_KEY=YOUR_API_KEY npx -y codeaudit --transport http
 ```
 
 The default HTTP endpoint is:
@@ -67,22 +67,22 @@ Add this to your Codex configuration file, either `~/.codex/config.toml` or a pr
 Npm package:
 
 ```toml
-[mcp_servers.reposentinel]
+[mcp_servers.codeaudit]
 command = "npx"
-args = ["-y", "reposentinel-mcp"]
+args = ["-y", "codeaudit"]
 startup_timeout_sec = 40
 ```
 
 Local checkout:
 
 ```toml
-[mcp_servers.reposentinel]
+[mcp_servers.codeaudit]
 command = "pnpm"
 args = [
   "--dir",
-  "/absolute/path/to/reposentinel-mcp",
+  "/absolute/path/to/codeaudit",
   "--filter",
-  "reposentinel-mcp",
+  "codeaudit",
   "start"
 ]
 startup_timeout_sec = 20
@@ -91,13 +91,13 @@ startup_timeout_sec = 20
 Windows example:
 
 ```toml
-[mcp_servers.reposentinel]
+[mcp_servers.codeaudit]
 command = "pnpm"
 args = [
   "--dir",
-  "C:\\Users\\Admin\\Desktop\\skills\\reposentinel",
+  "C:\\Users\\Admin\\Desktop\\skills\\codeaudit",
   "--filter",
-  "reposentinel-mcp",
+  "codeaudit",
   "start"
 ]
 startup_timeout_sec = 40
@@ -106,8 +106,8 @@ startup_timeout_sec = 40
 Remote HTTP connection:
 
 ```toml
-[mcp_servers.reposentinel]
-url = "https://your-reposentinel-host.example.com/mcp"
+[mcp_servers.codeaudit]
+url = "https://your-codeaudit-host.example.com/mcp"
 http_headers = { "Authorization" = "Bearer YOUR_API_KEY" }
 ```
 
@@ -116,19 +116,19 @@ http_headers = { "Authorization" = "Bearer YOUR_API_KEY" }
 Run this command:
 
 ```sh
-claude mcp add --scope user reposentinel -- npx -y reposentinel-mcp
+claude mcp add --scope user codeaudit -- npx -y codeaudit
 ```
 
 Local checkout:
 
 ```sh
-claude mcp add --scope user reposentinel -- pnpm --dir /absolute/path/to/reposentinel-mcp --filter reposentinel-mcp start
+claude mcp add --scope user codeaudit -- pnpm --dir /absolute/path/to/codeaudit --filter codeaudit start
 ```
 
 Project-local setup:
 
 ```sh
-claude mcp add --scope project reposentinel -- pnpm --dir /absolute/path/to/reposentinel-mcp --filter reposentinel-mcp start
+claude mcp add --scope project codeaudit -- pnpm --dir /absolute/path/to/codeaudit --filter codeaudit start
 ```
 
 ## Cursor
@@ -138,9 +138,9 @@ Add this to your Cursor MCP config. Use `~/.cursor/mcp.json` for global setup or
 ```json
 {
   "mcpServers": {
-    "reposentinel": {
+    "codeaudit": {
       "command": "npx",
-      "args": ["-y", "reposentinel-mcp"]
+      "args": ["-y", "codeaudit"]
     }
   }
 }
@@ -153,8 +153,8 @@ Remote HTTP connection:
 ```json
 {
   "mcpServers": {
-    "reposentinel": {
-      "url": "https://your-reposentinel-host.example.com/mcp",
+    "codeaudit": {
+      "url": "https://your-codeaudit-host.example.com/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_API_KEY"
       }
@@ -170,10 +170,10 @@ Add this to `.vscode/mcp.json`:
 ```json
 {
   "servers": {
-    "reposentinel": {
+    "codeaudit": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "reposentinel-mcp"]
+      "args": ["-y", "codeaudit"]
     }
   }
 }
@@ -184,9 +184,9 @@ Remote HTTP connection:
 ```json
 {
   "servers": {
-    "reposentinel": {
+    "codeaudit": {
       "type": "http",
-      "url": "https://your-reposentinel-host.example.com/mcp",
+      "url": "https://your-codeaudit-host.example.com/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_API_KEY"
       }
@@ -202,9 +202,9 @@ Edit `claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "reposentinel": {
+    "codeaudit": {
       "command": "npx",
-      "args": ["-y", "reposentinel-mcp"]
+      "args": ["-y", "codeaudit"]
     }
   }
 }
@@ -217,9 +217,9 @@ Open `~/.gemini/settings.json` and add:
 ```json
 {
   "mcpServers": {
-    "reposentinel": {
+    "codeaudit": {
       "command": "npx",
-      "args": ["-y", "reposentinel-mcp"]
+      "args": ["-y", "codeaudit"]
     }
   }
 }
@@ -232,9 +232,9 @@ Use this stdio configuration shape for clients that accept `mcpServers`:
 ```json
 {
   "mcpServers": {
-    "reposentinel": {
+    "codeaudit": {
       "command": "npx",
-      "args": ["-y", "reposentinel-mcp"],
+      "args": ["-y", "codeaudit"],
       "disabled": false
     }
   }
@@ -246,19 +246,19 @@ Use this stdio configuration shape for clients that accept `mcpServers`:
 Use MCP Inspector to verify the server locally:
 
 ```sh
-npx @modelcontextprotocol/inspector npx -y reposentinel-mcp
+npx @modelcontextprotocol/inspector npx -y codeaudit
 ```
 
 For local checkout development:
 
 ```sh
-npx @modelcontextprotocol/inspector pnpm --dir /absolute/path/to/reposentinel-mcp --filter reposentinel-mcp start
+npx @modelcontextprotocol/inspector pnpm --dir /absolute/path/to/codeaudit --filter codeaudit start
 ```
 
 For HTTP:
 
 ```sh
-REPOSENTINEL_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/reposentinel-mcp --filter reposentinel-mcp start:http
+CODEAUDIT_API_KEY=YOUR_API_KEY pnpm --dir /absolute/path/to/codeaudit --filter codeaudit start:http
 ```
 
 Then connect Inspector to `http://127.0.0.1:3000/mcp` and pass:
@@ -293,29 +293,29 @@ Follow with:
 
 ## Recommended First Prompt
 
-After connecting RepoSentinel, ask the agent:
+After connecting CodeAudit, ask the agent:
 
 ```text
-Use RepoSentinel MCP on this local project. First call detect_project, then route_skills. Follow workflowPhases, recommendedToolSequence, skillActivationOrder, and qualityGates before making any changes.
+Use CodeAudit MCP on this local project. First call detect_project, then route_skills. Follow workflowPhases, recommendedToolSequence, skillActivationOrder, and qualityGates before making any changes.
 ```
 
 ## Current Transport Support
 
-| Transport       | Status          | Notes                                                                |
-| --------------- | --------------- | -------------------------------------------------------------------- |
-| Local stdio     | Supported       | Recommended for current use.                                         |
-| Streamable HTTP | Supported       | Use `/mcp`; protect hosted deployments with `REPOSENTINEL_API_KEY`.  |
-| OAuth           | Not implemented | Use API-key/Bearer auth until an identity provider is added.         |
-| API key headers | Supported       | Use `Authorization: Bearer`, `X-API-Key`, or `RepoSentinel-API-Key`. |
+| Transport       | Status          | Notes                                                             |
+| --------------- | --------------- | ----------------------------------------------------------------- |
+| Local stdio     | Supported       | Recommended for current use.                                      |
+| Streamable HTTP | Supported       | Use `/mcp`; protect hosted deployments with `CODEAUDIT_API_KEY`.  |
+| OAuth           | Not implemented | Use API-key/Bearer auth until an identity provider is added.      |
+| API key headers | Supported       | Use `Authorization: Bearer`, `X-API-Key`, or `CodeAudit-API-Key`. |
 
 ## Tested Status
 
-The current repository verifies RepoSentinel with:
+The current repository verifies CodeAudit with:
 
 - `pnpm check`
 - `pnpm build`
 - `npm pack --dry-run` for npm package contents
-- built HTTP `/health` and `/.well-known/reposentinel-mcp` smoke test
+- built HTTP `/health` and `/.well-known/codeaudit` smoke test
 - MCP in-memory tool/resource test
 - docs claims audit
 - installed skill audit
@@ -324,10 +324,10 @@ The current repository verifies RepoSentinel with:
 
 If the client reports a startup timeout:
 
-1. Run `npx -y reposentinel-mcp` manually in a terminal.
+1. Run `npx -y codeaudit` manually in a terminal.
 2. Confirm Node.js `20` or newer is installed.
 3. Clear the npm cache if `npx` downloads an old or corrupt package.
 4. Increase the client startup timeout to `40` seconds.
-5. If using local checkout development, run `pnpm install`, `pnpm build`, and confirm the path in `--dir` points to the RepoSentinel checkout, not the target project being audited.
+5. If using local checkout development, run `pnpm install`, `pnpm build`, and confirm the path in `--dir` points to the CodeAudit checkout, not the target project being audited.
 
-If tools are visible but return path errors, pass an absolute `projectPath` inside the target project you want RepoSentinel to inspect.
+If tools are visible but return path errors, pass an absolute `projectPath` inside the target project you want CodeAudit to inspect.

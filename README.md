@@ -1,16 +1,16 @@
-# RepoSentinel MCP
+# CodeAudit MCP
 
-RepoSentinel MCP is a TypeScript MCP server and skills pack for AI coding agents that need to inspect projects, route to the right engineering skills, run structured audits, map documentation claims to evidence, and prepare issue/PR plans.
+CodeAudit MCP is a TypeScript MCP server and skills pack for AI coding agents that need to inspect projects, route to the right engineering skills, run structured audits, map documentation claims to evidence, and prepare issue/PR plans.
 
 The current MVP is read-only by default. It supports local stdio and Streamable HTTP transports. It does not implement unrestricted shell execution, remote repository mutation, auto-push, auto-delete, or auto-merge.
 
 ## Production Status
 
-RepoSentinel is usable now for production-style read-only repository inspection and agent workflow routing when deployed with the documented controls:
+CodeAudit is usable now for production-style read-only repository inspection and agent workflow routing when deployed with the documented controls:
 
 - use `stdio` for local trusted agent clients, or Streamable HTTP behind HTTPS for remote clients
-- set `REPOSENTINEL_API_KEY` for any HTTP deployment that is not strictly local
-- restrict `REPOSENTINEL_ALLOWED_ORIGINS` for browser-accessible deployments
+- set `CODEAUDIT_API_KEY` for any HTTP deployment that is not strictly local
+- restrict `CODEAUDIT_ALLOWED_ORIGINS` for browser-accessible deployments
 - keep the server read-only; do not add write/GitHub mutation tools without an approval model
 
 Validated in this repository with `pnpm check`, `pnpm build`, HTTP health/metadata smoke testing, docs-claims audit, and installed-skill audit. OAuth multi-user identity is not implemented yet; use API-key/Bearer protection for hosted HTTP deployments.
@@ -28,14 +28,14 @@ Validated in this repository with `pnpm check`, `pnpm build`, HTTP health/metada
 - `audit_installed_skills` checks local agent skills for supply-chain, prompt-injection, secret-leakage, dependency-install, webhook, destructive-shell, manifest-quality, duplicate-name, auxiliary-doc, and resource-discovery risks.
 - `official_docs_router` recommends where to look up official/current docs.
 - `generate_issue_plan`, `generate_pr_plan`, and `generate_report` produce planning artifacts from findings.
-- Resources expose `reposentinel://docs/llms` and `reposentinel://skills/index` for MCP-native discovery.
+- Resources expose `codeaudit://docs/llms` and `codeaudit://skills/index` for MCP-native discovery.
 
 ## Quick Start
 
 Run the free public npm package directly:
 
 ```bash
-npx -y reposentinel-mcp
+npx -y codeaudit
 ```
 
 For local development from the GitHub checkout:
@@ -48,32 +48,32 @@ pnpm build
 Run local stdio:
 
 ```bash
-pnpm --filter reposentinel-mcp start
+pnpm --filter codeaudit start
 ```
 
 Run local development stdio:
 
 ```bash
-pnpm --filter reposentinel-mcp dev
+pnpm --filter codeaudit dev
 ```
 
 Run Streamable HTTP with API-key protection:
 
 ```bash
 pnpm build
-REPOSENTINEL_API_KEY=change-me pnpm --filter reposentinel-mcp start:http
+CODEAUDIT_API_KEY=change-me pnpm --filter codeaudit start:http
 ```
 
 HTTP endpoints:
 
 - MCP: `http://127.0.0.1:3000/mcp`
 - health: `http://127.0.0.1:3000/health`
-- metadata: `http://127.0.0.1:3000/.well-known/reposentinel-mcp`
+- metadata: `http://127.0.0.1:3000/.well-known/codeaudit`
 
 Example MCP Inspector command:
 
 ```bash
-npx @modelcontextprotocol/inspector pnpm --filter reposentinel-mcp dev
+npx @modelcontextprotocol/inspector pnpm --filter codeaudit dev
 ```
 
 ## Add To Codex
@@ -81,22 +81,22 @@ npx @modelcontextprotocol/inspector pnpm --filter reposentinel-mcp dev
 Npm stdio config for `~/.codex/config.toml` or project-local `.codex/config.toml`:
 
 ```toml
-[mcp_servers.reposentinel]
+[mcp_servers.codeaudit]
 command = "npx"
-args = ["-y", "reposentinel-mcp"]
+args = ["-y", "codeaudit"]
 startup_timeout_sec = 40
 ```
 
 Local checkout stdio config:
 
 ```toml
-[mcp_servers.reposentinel]
+[mcp_servers.codeaudit]
 command = "pnpm"
 args = [
   "--dir",
-  "/absolute/path/to/reposentinel-mcp",
+  "/absolute/path/to/codeaudit",
   "--filter",
-  "reposentinel-mcp",
+  "codeaudit",
   "start"
 ]
 startup_timeout_sec = 40
@@ -105,13 +105,13 @@ startup_timeout_sec = 40
 Windows example:
 
 ```toml
-[mcp_servers.reposentinel]
+[mcp_servers.codeaudit]
 command = "pnpm"
 args = [
   "--dir",
-  "C:\\Users\\Admin\\Desktop\\skills\\reposentinel",
+  "C:\\Users\\Admin\\Desktop\\skills\\codeaudit",
   "--filter",
-  "reposentinel-mcp",
+  "codeaudit",
   "start"
 ]
 startup_timeout_sec = 40
@@ -120,15 +120,15 @@ startup_timeout_sec = 40
 HTTP config:
 
 ```toml
-[mcp_servers.reposentinel]
-url = "https://your-reposentinel-host.example.com/mcp"
+[mcp_servers.codeaudit]
+url = "https://your-codeaudit-host.example.com/mcp"
 http_headers = { "Authorization" = "Bearer YOUR_API_KEY" }
 ```
 
 Recommended first prompt after connecting:
 
 ```text
-Use RepoSentinel MCP on this local project. First call detect_project, then route_skills. Follow workflowPhases, recommendedToolSequence, skillActivationOrder, and qualityGates before making any changes.
+Use CodeAudit MCP on this local project. First call detect_project, then route_skills. Follow workflowPhases, recommendedToolSequence, skillActivationOrder, and qualityGates before making any changes.
 ```
 
 ## Documentation
@@ -136,16 +136,32 @@ Use RepoSentinel MCP on this local project. First call detect_project, then rout
 - Start with `docs/llms.txt` for the complete documentation index.
 - Use `docs/clients.md` for Codex, Claude Code, Cursor, VS Code, Claude Desktop, Gemini CLI, and MCP Inspector setup examples.
 - Use `docs/deployment.md` for production HTTP deployment, Docker, environment variables, and verification.
-- RepoSentinel supports local stdio and Streamable HTTP MCP connections. HTTP deployments can be protected with an API key or Bearer token.
+- CodeAudit supports local stdio and Streamable HTTP MCP connections. HTTP deployments can be protected with an API key or Bearer token.
 
 ## Free Public Distribution
 
-- Npm public package: `reposentinel-mcp`
-- Current npm version: `0.1.1`
+- Npm public package: `codeaudit`
+- Current npm version: `0.1.2`
 - Npm public packages are free to publish with `npm publish --access public`.
 - Release publishing is configured through `.github/workflows/publish-npm.yml`.
 - To publish, add a granular npm write token with bypass 2FA enabled as the GitHub secret `NPM_TOKEN`, then create a GitHub release.
-- Users can install and run without cloning GitHub by using `npx -y reposentinel-mcp`.
+- Users can install and run without cloning GitHub by using `npx -y codeaudit`.
+
+## Skills CLI
+
+Install the public CodeAudit skill without cloning this repository:
+
+```bash
+npx skills add priyanshuchawda/codeaudit --skill codeaudit
+```
+
+List available public skills:
+
+```bash
+npx skills add priyanshuchawda/codeaudit --list
+```
+
+The public catalog shape intentionally exposes one skill, `codeaudit`. Specialist workflows under `skills/` are marked `metadata.internal: true` so CodeAudit can keep its internal routing vocabulary without duplicating public skills on skills.sh.
 
 ## Safety Model
 
@@ -162,7 +178,8 @@ Use RepoSentinel MCP on this local project. First call detect_project, then rout
 
 Custom skills live in `skills/`:
 
-- `reposentinel-orchestrator`
+- `codeaudit` public umbrella skill for `npx skills add`
+- `codeaudit-orchestrator`
 - `python-backend-quality`
 - `python-mcp-server-quality`
 - `enterprise-code-quality`

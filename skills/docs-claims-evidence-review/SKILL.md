@@ -1,6 +1,8 @@
 ---
 name: docs-claims-evidence-review
-description: Maps README and documentation claims to code, tests, and documentation evidence. Use when reviewing docs truthfulness, recruiter-facing claims, security claims, or production-readiness claims.
+description: Use when reviewing README or docs truthfulness, recruiter-facing claims, security claims, production-readiness claims, evidence maps, or unsupported project claims.
+metadata:
+  internal: true
 ---
 
 # Docs Claims Evidence Review

@@ -26,10 +26,10 @@ describe("http server", () => {
       auth: "none",
     });
 
-    const metadata = await fetch(`${baseUrl}/.well-known/reposentinel-mcp`);
+    const metadata = await fetch(`${baseUrl}/.well-known/codeaudit`);
     expect(metadata.status).toBe(200);
     await expect(metadata.json()).resolves.toMatchObject({
-      name: "reposentinel-mcp",
+      name: "codeaudit",
       transport: "streamable-http",
     });
   });
@@ -51,7 +51,7 @@ describe("http server", () => {
   test("extracts bearer and header api keys", () => {
     expect(extractApiKey({ headers: { authorization: "Bearer abc" } } as never)).toBe("abc");
     expect(extractApiKey({ headers: { "x-api-key": "def" } } as never)).toBe("def");
-    expect(extractApiKey({ headers: { "reposentinel-api-key": "ghi" } } as never)).toBe("ghi");
+    expect(extractApiKey({ headers: { "codeaudit-api-key": "ghi" } } as never)).toBe("ghi");
   });
 });
 

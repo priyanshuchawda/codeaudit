@@ -16,14 +16,14 @@ export async function routeSkillsTool(input: RouteSkillsInput) {
 
   add(
     recommendations,
-    "reposentinel-orchestrator",
+    "codeaudit-orchestrator",
     "Coordinates project detection, planning, audits, and evidence-backed outputs.",
     true,
   );
   add(
     recommendations,
     "enterprise-code-quality",
-    "Applies RepoSentinel maintainability standards and typed-boundary expectations.",
+    "Applies CodeAudit maintainability standards and typed-boundary expectations.",
     true,
   );
 
@@ -283,7 +283,7 @@ function greenfieldPhases(
       objective:
         "Confirm product goal, target users, framework, package manager, auth, database, AI, deployment, and non-goals before scaffolding.",
       skills: [
-        "reposentinel-orchestrator",
+        "codeaudit-orchestrator",
         ...skillsPresent(recommendations, ["official-docs-grounding"]),
       ],
       tools: ["detect_project", "route_skills", "official_docs_router"],
@@ -376,7 +376,7 @@ function repositoryAuditPhases(detected: DetectedProject): WorkflowPhase[] {
       id: "inventory",
       title: "Inventory Existing Project",
       objective: "Detect stack and map important files before changing behavior.",
-      skills: ["reposentinel-orchestrator"],
+      skills: ["codeaudit-orchestrator"],
       tools: ["detect_project", "route_skills", "scan_repo"],
       requiredEvidence: [
         "Detected stack",

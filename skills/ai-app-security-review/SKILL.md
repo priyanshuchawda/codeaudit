@@ -1,6 +1,8 @@
 ---
 name: ai-app-security-review
-description: Reviews AI applications for prompt injection, tool-call safety, retrieval grounding, provider error leakage, and telemetry redaction. Use when model providers, agents, RAG, tools, or AI SDKs are detected.
+description: Use when model providers, agents, RAG, tools, AI SDKs, prompt injection, tool-call safety, retrieval grounding, provider error leakage, or telemetry redaction matter.
+metadata:
+  internal: true
 ---
 
 # AI App Security Review

@@ -51,17 +51,17 @@ type ToolDefinition<Input extends z.ZodTypeAny, Output extends z.ZodTypeAny> = {
   handler: (input: z.infer<Input>) => Promise<z.infer<Output>>;
 };
 
-export const SERVER_VERSION = "0.1.1";
+export const SERVER_VERSION = "0.1.2";
 
-export function createRepoSentinelServer(): McpServer {
+export function createCodeAuditServer(): McpServer {
   const server = new McpServer(
     {
-      name: "reposentinel-mcp",
+      name: "codeaudit",
       version: SERVER_VERSION,
     },
     {
       instructions:
-        "Use RepoSentinel to inspect local software projects, route to the right engineering skills, run read-only audits, and produce evidence-backed issue and PR plans. Start with detect_project, then route_skills. Follow workflowPhases, recommendedToolSequence, skillActivationOrder, and qualityGates before making project changes.",
+        "Use CodeAudit to inspect local software projects, route to the right engineering skills, run read-only audits, and produce evidence-backed issue and PR plans. Start with detect_project, then route_skills. Follow workflowPhases, recommendedToolSequence, skillActivationOrder, and qualityGates before making project changes.",
     },
   );
 
@@ -190,11 +190,11 @@ export function createRepoSentinelServer(): McpServer {
 
 function registerServerResources(server: McpServer): void {
   server.registerResource(
-    "reposentinel_docs_index",
-    "reposentinel://docs/llms",
+    "codeaudit_docs_index",
+    "codeaudit://docs/llms",
     {
-      title: "RepoSentinel Documentation Index",
-      description: "Documentation index and recommended agent workflow for RepoSentinel MCP.",
+      title: "CodeAudit Documentation Index",
+      description: "Documentation index and recommended agent workflow for CodeAudit MCP.",
       mimeType: "text/markdown",
     },
     async (uri) => ({
@@ -203,9 +203,9 @@ function registerServerResources(server: McpServer): void {
           uri: uri.toString(),
           mimeType: "text/markdown",
           text: [
-            "# RepoSentinel MCP Documentation Index",
+            "# CodeAudit MCP Documentation Index",
             "",
-            "Use this resource to discover RepoSentinel's operating model before changing a project.",
+            "Use this resource to discover CodeAudit's operating model before changing a project.",
             "",
             "## Core Docs",
             "",
@@ -230,11 +230,11 @@ function registerServerResources(server: McpServer): void {
   );
 
   server.registerResource(
-    "reposentinel_skills_index",
-    "reposentinel://skills/index",
+    "codeaudit_skills_index",
+    "codeaudit://skills/index",
     {
-      title: "RepoSentinel Skills Index",
-      description: "Built-in RepoSentinel skills and when agents should use them.",
+      title: "CodeAudit Skills Index",
+      description: "Built-in CodeAudit skills and when agents should use them.",
       mimeType: "application/json",
     },
     async (uri) => ({
@@ -244,8 +244,11 @@ function registerServerResources(server: McpServer): void {
           mimeType: "application/json",
           text: JSON.stringify(
             {
+              publicSkill: "codeaudit",
+              installCommand: "npx skills add priyanshuchawda/codeaudit --skill codeaudit",
               skills: [
-                "reposentinel-orchestrator",
+                "codeaudit",
+                "codeaudit-orchestrator",
                 "python-backend-quality",
                 "python-mcp-server-quality",
                 "enterprise-code-quality",
@@ -295,10 +298,10 @@ function registerReadOnlyTool<
           structuredContent: safeOutput,
         };
       } catch (error) {
-        const message = error instanceof Error ? error.message : "Unknown RepoSentinel tool error";
+        const message = error instanceof Error ? error.message : "Unknown CodeAudit tool error";
         return {
           isError: true,
-          content: [{ type: "text", text: `RepoSentinel error: ${message}` }],
+          content: [{ type: "text", text: `CodeAudit error: ${message}` }],
         };
       }
     },

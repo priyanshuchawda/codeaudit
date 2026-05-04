@@ -1,7 +1,7 @@
 import type { Server as HttpServer } from "node:http";
 import express, { type NextFunction, type Request, type Response } from "express";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
-import { createRepoSentinelServer, SERVER_VERSION } from "./mcp-server.js";
+import { createCodeAuditServer, SERVER_VERSION } from "./mcp-server.js";
 import type { RuntimeConfig } from "./runtime-config.js";
 
 const MCP_PATH = "/mcp";
@@ -15,7 +15,7 @@ export function createHttpApp(config: RuntimeConfig): express.Express {
   app.get("/health", (_req, res) => {
     res.json({
       status: "ok",
-      name: "reposentinel-mcp",
+      name: "codeaudit",
       version: SERVER_VERSION,
       transport: "http",
       mcpEndpoint: MCP_PATH,
@@ -23,16 +23,16 @@ export function createHttpApp(config: RuntimeConfig): express.Express {
     });
   });
 
-  app.get("/.well-known/reposentinel-mcp", (_req, res) => {
+  app.get("/.well-known/codeaudit", (_req, res) => {
     res.json({
-      name: "reposentinel-mcp",
+      name: "codeaudit",
       version: SERVER_VERSION,
       mcpEndpoint: `${config.publicBaseUrl}${MCP_PATH}`,
       transport: "streamable-http",
       authentication: config.requireApiKey
         ? {
             type: "api-key",
-            headerNames: ["Authorization: Bearer <token>", "X-API-Key", "RepoSentinel-API-Key"],
+            headerNames: ["Authorization: Bearer <token>", "X-API-Key", "CodeAudit-API-Key"],
           }
         : { type: "none" },
       safetyModel: {
@@ -55,7 +55,7 @@ export function createHttpApp(config: RuntimeConfig): express.Express {
         jsonrpc: "2.0",
         error: {
           code: -32000,
-          message: "RepoSentinel does not expose server-initiated SSE streams.",
+          message: "CodeAudit does not expose server-initiated SSE streams.",
         },
         id: null,
       });
@@ -72,10 +72,10 @@ export function createHttpApp(config: RuntimeConfig): express.Express {
     }
 
     if (!isAuthorized(req, config)) {
-      res.setHeader("WWW-Authenticate", 'Bearer realm="RepoSentinel MCP"');
+      res.setHeader("WWW-Authenticate", 'Bearer realm="CodeAudit MCP"');
       res.status(401).json({
         jsonrpc: "2.0",
-        error: { code: -32001, message: "Authentication required for RepoSentinel HTTP MCP." },
+        error: { code: -32001, message: "Authentication required for CodeAudit HTTP MCP." },
         id: null,
       });
       return;
@@ -85,7 +85,7 @@ export function createHttpApp(config: RuntimeConfig): express.Express {
       sessionIdGenerator: undefined,
       enableJsonResponse: true,
     });
-    const server = createRepoSentinelServer();
+    const server = createCodeAuditServer();
 
     res.on("close", () => {
       transport.close().catch(() => undefined);
@@ -96,11 +96,11 @@ export function createHttpApp(config: RuntimeConfig): express.Express {
       await server.connect(transport);
       await transport.handleRequest(req, res, req.body);
     } catch (error) {
-      console.error("RepoSentinel HTTP transport error:", error);
+      console.error("CodeAudit HTTP transport error:", error);
       if (!res.headersSent) {
         res.status(500).json({
           jsonrpc: "2.0",
-          error: { code: -32603, message: "Internal RepoSentinel MCP server error." },
+          error: { code: -32603, message: "Internal CodeAudit MCP server error." },
           id: null,
         });
       }
@@ -110,7 +110,7 @@ export function createHttpApp(config: RuntimeConfig): express.Express {
   app.use((_req, res) => {
     res.status(404).json({
       error: "not_found",
-      message: "Endpoint not found. Use /health, /.well-known/reposentinel-mcp, or /mcp.",
+      message: "Endpoint not found. Use /health, /.well-known/codeaudit, or /mcp.",
     });
   });
 
@@ -124,7 +124,7 @@ export async function startHttpServer(config: RuntimeConfig): Promise<HttpServer
     httpServer.once("error", reject);
     httpServer.once("listening", () => {
       console.error(
-        `RepoSentinel MCP v${SERVER_VERSION} listening on http://${config.host}:${config.port}${MCP_PATH}`,
+        `CodeAudit MCP v${SERVER_VERSION} listening on http://${config.host}:${config.port}${MCP_PATH}`,
       );
       resolve(httpServer);
     });
@@ -135,9 +135,7 @@ export function extractApiKey(req: Request): string | undefined {
   const auth = headerValue(req.headers.authorization);
   if (auth?.startsWith("Bearer ")) return auth.slice("Bearer ".length).trim();
   return (
-    auth ??
-    headerValue(req.headers["x-api-key"]) ??
-    headerValue(req.headers["reposentinel-api-key"])
+    auth ?? headerValue(req.headers["x-api-key"]) ?? headerValue(req.headers["codeaudit-api-key"])
   );
 }
 
@@ -157,7 +155,7 @@ function corsMiddleware(config: RuntimeConfig) {
     res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
     res.setHeader(
       "Access-Control-Allow-Headers",
-      "Content-Type, Authorization, X-API-Key, RepoSentinel-API-Key, MCP-Protocol-Version, MCP-Session-Id",
+      "Content-Type, Authorization, X-API-Key, CodeAudit-API-Key, MCP-Protocol-Version, MCP-Session-Id",
     );
     res.setHeader("Access-Control-Expose-Headers", "MCP-Session-Id");
     if (req.method === "OPTIONS") {

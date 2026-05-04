@@ -20,19 +20,15 @@ export function parseRuntimeConfig(
   env: Env = process.env,
 ): RuntimeConfig {
   const args = parseArgs(argv);
-  const transport = parseTransport(args.get("transport") ?? env.REPOSENTINEL_TRANSPORT ?? "stdio");
-  const host = args.get("host") ?? env.REPOSENTINEL_HOST ?? DEFAULT_HOST;
-  const port = parsePort(
-    args.get("port") ?? env.PORT ?? env.REPOSENTINEL_PORT ?? `${DEFAULT_PORT}`,
-  );
-  const apiKey = args.get("api-key") ?? env.REPOSENTINEL_API_KEY;
+  const transport = parseTransport(args.get("transport") ?? env.CODEAUDIT_TRANSPORT ?? "stdio");
+  const host = args.get("host") ?? env.CODEAUDIT_HOST ?? DEFAULT_HOST;
+  const port = parsePort(args.get("port") ?? env.PORT ?? env.CODEAUDIT_PORT ?? `${DEFAULT_PORT}`);
+  const apiKey = args.get("api-key") ?? env.CODEAUDIT_API_KEY;
   const requireApiKey =
-    args.has("require-api-key") || env.REPOSENTINEL_REQUIRE_API_KEY === "true" || Boolean(apiKey);
-  const allowedOrigins = parseCsv(
-    args.get("allow-origin") ?? env.REPOSENTINEL_ALLOWED_ORIGINS ?? "*",
-  );
+    args.has("require-api-key") || env.CODEAUDIT_REQUIRE_API_KEY === "true" || Boolean(apiKey);
+  const allowedOrigins = parseCsv(args.get("allow-origin") ?? env.CODEAUDIT_ALLOWED_ORIGINS ?? "*");
   const publicBaseUrl =
-    args.get("public-base-url") ?? env.REPOSENTINEL_PUBLIC_BASE_URL ?? `http://${host}:${port}`;
+    args.get("public-base-url") ?? env.CODEAUDIT_PUBLIC_BASE_URL ?? `http://${host}:${port}`;
 
   if (transport === "stdio" && (args.has("port") || args.has("host") || args.has("allow-origin"))) {
     throw new Error("--port, --host, and --allow-origin are only valid with --transport http.");
@@ -40,7 +36,7 @@ export function parseRuntimeConfig(
 
   if (transport === "http" && requireApiKey && !apiKey) {
     throw new Error(
-      "HTTP API key protection was requested but REPOSENTINEL_API_KEY or --api-key was not provided.",
+      "HTTP API key protection was requested but CODEAUDIT_API_KEY or --api-key was not provided.",
     );
   }
 

@@ -1,6 +1,6 @@
 # Architecture
 
-RepoSentinel is split into a TypeScript MCP server and a reusable skills pack.
+CodeAudit is split into a TypeScript MCP server and a reusable skills pack.
 
 ## Components
 
@@ -22,7 +22,7 @@ RepoSentinel is split into a TypeScript MCP server and a reusable skills pack.
 - The MVP returns generated reports as strings rather than writing into target projects.
 - The server is read-only by default and exposes no unrestricted shell tool.
 - The same tool registry is used for stdio and Streamable HTTP transports.
-- HTTP deployments can require API-key/Bearer authentication with `REPOSENTINEL_API_KEY`.
+- HTTP deployments can require API-key/Bearer authentication with `CODEAUDIT_API_KEY`.
 
 ## Data Flow
 

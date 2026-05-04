@@ -1,17 +1,17 @@
 {
-  "name": "reposentinel-mcp",
-  "version": "0.1.1",
-  "description": "RepoSentinel read-only MCP server for project audits and skill routing.",
+  "name": "codeaudit",
+  "version": "0.1.2",
+  "description": "CodeAudit read-only MCP server for project audits and skill routing.",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://github.com/priyanshuchawda/reposentinel-mcp#readme",
+  "homepage": "https://github.com/priyanshuchawda/codeaudit#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/priyanshuchawda/reposentinel-mcp.git",
+    "url": "git+https://github.com/priyanshuchawda/codeaudit.git",
     "directory": "apps/mcp-server"
   },
   "bugs": {
-    "url": "https://github.com/priyanshuchawda/reposentinel-mcp/issues"
+    "url": "https://github.com/priyanshuchawda/codeaudit/issues"
   },
   "keywords": [
     "mcp",
@@ -23,7 +23,7 @@
     "skills"
   ],
   "bin": {
-    "reposentinel-mcp": "./dist/server.js"
+    "codeaudit": "./dist/server.js"
   },
   "main": "./dist/server.js",
   "files": [

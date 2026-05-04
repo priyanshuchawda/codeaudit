@@ -1,6 +1,6 @@
-# RepoSentinel MCP Documentation Index
+# CodeAudit MCP Documentation Index
 
-Use this file to discover the available RepoSentinel documentation before exploring further.
+Use this file to discover the available CodeAudit documentation before exploring further.
 
 ## Start Here
 
@@ -14,7 +14,7 @@ Use this file to discover the available RepoSentinel documentation before explor
   Allowed MCP tools, disallowed actions, capability boundaries, and future tool rules.
 
 - Agent soul: ../SOUL.md
-  RepoSentinel tone, priorities, and operating boundaries.
+  CodeAudit tone, priorities, and operating boundaries.
 
 ## MCP Setup
 
@@ -42,14 +42,15 @@ Use this file to discover the available RepoSentinel documentation before explor
   Route manifest fields, workflow phases, routing inputs, and workflow intent.
 
 - Official docs integration: official-docs-integration.md
-  How RepoSentinel routes agents to current official documentation.
+  How CodeAudit routes agents to current official documentation.
 
 - Roadmap: roadmap.md
   Planned improvements and future capabilities.
 
 ## Built-In Skills
 
-- reposentinel-orchestrator: ../skills/reposentinel-orchestrator/SKILL.md
+- codeaudit: ../skills/codeaudit/SKILL.md
+- codeaudit-orchestrator: ../skills/codeaudit-orchestrator/SKILL.md
 - python-backend-quality: ../skills/python-backend-quality/SKILL.md
 - python-mcp-server-quality: ../skills/python-mcp-server-quality/SKILL.md
 - enterprise-code-quality: ../skills/enterprise-code-quality/SKILL.md

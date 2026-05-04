@@ -35,7 +35,10 @@ export async function auditDocsClaimsTool(input: AuditDocsClaimsInput) {
   const root = await resolveProjectRoot(input.projectPath);
   const { files } = await listFiles(root, { maxDepth: 8 });
   const docFiles = files.filter((file) => isDocFile(file.relativePath));
-  const corpusIndex = await buildCorpusIndex(root, files.map((file) => file.relativePath));
+  const corpusIndex = await buildCorpusIndex(
+    root,
+    files.map((file) => file.relativePath),
+  );
   const claims: DocsClaim[] = [];
 
   for (const file of docFiles) {
@@ -50,7 +53,9 @@ export async function auditDocsClaimsTool(input: AuditDocsClaimsInput) {
     for (const sentence of sentences) {
       for (const rule of CLAIM_RULES) {
         if (!rule.pattern.test(sentence)) continue;
-        const evidenceFound = rule.evidence.filter((keyword) => corpusIndex.includes(keyword.toLowerCase()));
+        const evidenceFound = rule.evidence.filter((keyword) =>
+          corpusIndex.includes(keyword.toLowerCase()),
+        );
         const evidenceMissing = rule.evidence.filter((keyword) => !evidenceFound.includes(keyword));
         claims.push({
           claim: sentence.slice(0, 500),
@@ -58,7 +63,11 @@ export async function auditDocsClaimsTool(input: AuditDocsClaimsInput) {
           claimStrength: rule.strength,
           evidenceFound,
           evidenceMissing,
-          recommendation: recommendation(rule.strength, evidenceFound.length, evidenceMissing.length),
+          recommendation: recommendation(
+            rule.strength,
+            evidenceFound.length,
+            evidenceMissing.length,
+          ),
         });
         break;
       }
@@ -69,7 +78,9 @@ export async function auditDocsClaimsTool(input: AuditDocsClaimsInput) {
 }
 
 async function buildCorpusIndex(root: string, paths: string[]): Promise<string> {
-  const searchable = paths.filter((file) => /\.(md|mdx|ts|tsx|js|jsx|json|yml|yaml)$/i.test(file)).slice(0, 500);
+  const searchable = paths
+    .filter((file) => /\.(md|mdx|ts|tsx|js|jsx|json|yml|yaml)$/i.test(file))
+    .slice(0, 500);
   const chunks: string[] = [...searchable];
   for (const file of searchable) {
     try {

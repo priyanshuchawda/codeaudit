@@ -1,6 +1,8 @@
 ---
 name: github-issue-pr-workflow
-description: Defines RepoSentinel's issue-first GitHub branch, commit, PR, and merge workflow. Use when generating issue plans, PR plans, branch names, commit scopes, or GitHub workflow guidance.
+description: Use when generating GitHub issue plans, PR plans, branch names, commit scopes, review checklists, merge guidance, or issue-first workflow guidance.
+metadata:
+  internal: true
 ---
 
 # GitHub Issue PR Workflow

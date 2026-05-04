@@ -1,4 +1,4 @@
-# TOOLS.md - RepoSentinel Tool Policy
+# TOOLS.md - CodeAudit Tool Policy
 
 ## Allowed MCP Tools
 

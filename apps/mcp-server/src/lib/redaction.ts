@@ -4,8 +4,14 @@ const SECRET_PATTERNS: Array<[RegExp, string]> = [
   [/\bAIza[0-9A-Za-z_-]{20,}\b/g, "GOOGLE_KEY_REDACTED"],
   [/\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b/g, "JWT_REDACTED"],
   [/\b[A-Za-z0-9._%+-]+:[A-Za-z0-9._%+-]+@[\w.-]+\.[A-Za-z]{2,}\b/g, "CREDENTIAL_URL_REDACTED"],
-  [/(api[_-]?key|token|secret|password|cookie|authorization)\s*[:=]\s*["']?[^"'\s]+/gi, "$1=REDACTED"],
-  [/-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?-----END [A-Z ]*PRIVATE KEY-----/g, "PRIVATE_KEY_REDACTED"],
+  [
+    /(api[_-]?key|token|secret|password|cookie|authorization)\s*[:=]\s*["']?[^"'\s]+/gi,
+    "$1=REDACTED",
+  ],
+  [
+    /-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?-----END [A-Z ]*PRIVATE KEY-----/g,
+    "PRIVATE_KEY_REDACTED",
+  ],
 ];
 
 export function redactSecrets(value: string): string {

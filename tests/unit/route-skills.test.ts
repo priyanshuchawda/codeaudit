@@ -19,7 +19,7 @@ describe("route_skills", () => {
     expect(result.projectState).toBe("empty");
     expect(result.requiredWorkflow).toBe("initialize_project");
     expect(result.recommendedSkills.map((item) => item.skill)).toEqual(
-      expect.arrayContaining(["reposentinel-orchestrator", "senior-fullstack", "tdd"]),
+      expect.arrayContaining(["codeaudit-orchestrator", "senior-fullstack", "tdd"]),
     );
     expect(result.workflowPhases.map((phase) => phase.id)).toEqual([
       "intent-and-stack",
@@ -57,7 +57,7 @@ describe("route_skills", () => {
     expect(result.recommendedToolSequence).toEqual(
       expect.arrayContaining(["scan_repo", "audit_code_quality", "audit_tests"]),
     );
-    expect(result.skillActivationOrder[0]).toBe("reposentinel-orchestrator");
+    expect(result.skillActivationOrder[0]).toBe("codeaudit-orchestrator");
   });
 
   test("routes docs audit request", async () => {

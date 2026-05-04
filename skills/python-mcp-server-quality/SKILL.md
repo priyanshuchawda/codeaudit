@@ -1,6 +1,8 @@
 ---
 name: python-mcp-server-quality
 description: Use when creating, auditing, or improving Python MCP servers, FastMCP tools, resources, prompts, stdio transports, streamable HTTP transports, MCP Inspector setup, or Python tool schemas.
+metadata:
+  internal: true
 ---
 
 # Python MCP Server Quality

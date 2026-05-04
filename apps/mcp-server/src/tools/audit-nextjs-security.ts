@@ -33,28 +33,71 @@ export async function auditNextjsSecurityTool(input: AuditNextjsSecurityInput) {
   const middlewareFiles = paths.filter((file) => /(^|\/)middleware\.[cm]?[jt]s$/.test(file));
   if (detected.framework === "nextjs" && middlewareFiles.length === 0) {
     middlewareRisks.push("No middleware file was detected.");
-    findings.push(finding("nextjs-missing-middleware", "Middleware boundary not detected", "medium", "No middleware.ts/js file found.", "Add middleware or document why route-level controls fully cover auth/security boundaries."));
+    findings.push(
+      finding(
+        "nextjs-missing-middleware",
+        "Middleware boundary not detected",
+        "medium",
+        "No middleware.ts/js file found.",
+        "Add middleware or document why route-level controls fully cover auth/security boundaries.",
+      ),
+    );
   }
 
   if (!paths.some((file) => /env\.(ts|js)$/.test(file) || file.includes("env.schema"))) {
     envSecretRisks.push("No environment validation module was detected.");
-    findings.push(finding("nextjs-env-validation-missing", "Environment validation not detected", "medium", "No env.ts/env.js or env.schema file found.", "Validate required environment variables with a schema and never expose secrets to client bundles."));
+    findings.push(
+      finding(
+        "nextjs-env-validation-missing",
+        "Environment validation not detected",
+        "medium",
+        "No env.ts/env.js or env.schema file found.",
+        "Validate required environment variables with a schema and never expose secrets to client bundles.",
+      ),
+    );
   }
 
   const configFiles = files.filter((file) => /next\.config\.[cm]?[jt]s$/.test(file.relativePath));
-  const configText = (await Promise.all(configFiles.map((file) => readTextFile(root, file.relativePath)))).join("\n");
-  if (detected.framework === "nextjs" && !/headers\s*\(/.test(configText) && !/Content-Security-Policy|X-Frame-Options|frame-ancestors/.test(configText)) {
+  const configText = (
+    await Promise.all(configFiles.map((file) => readTextFile(root, file.relativePath)))
+  ).join("\n");
+  if (
+    detected.framework === "nextjs" &&
+    !/headers\s*\(/.test(configText) &&
+    !/Content-Security-Policy|X-Frame-Options|frame-ancestors/.test(configText)
+  ) {
     securityHeaderGaps.push("Security headers were not detected in next.config.");
-    findings.push(finding("nextjs-security-headers-missing", "Security headers not detected", "medium", "next.config does not show headers() or common security headers.", "Add explicit security headers or document the deployment layer that applies them."));
+    findings.push(
+      finding(
+        "nextjs-security-headers-missing",
+        "Security headers not detected",
+        "medium",
+        "next.config does not show headers() or common security headers.",
+        "Add explicit security headers or document the deployment layer that applies them.",
+      ),
+    );
   }
 
-  const routeFiles = files.filter((file) => /app\/api\/.*route\.[cm]?[jt]s$|pages\/api\/.*\.[cm]?[jt]s$/.test(file.relativePath));
+  const routeFiles = files.filter((file) =>
+    /app\/api\/.*route\.[cm]?[jt]s$|pages\/api\/.*\.[cm]?[jt]s$/.test(file.relativePath),
+  );
   for (const route of routeFiles) {
     const text = await readTextFile(root, route.relativePath);
-    if (/POST|PUT|PATCH/.test(text) && !/safeParse|zod|valibot|schema\.parse|parseAsync/.test(text)) {
-      routeHandlerRisks.push(`${route.relativePath}: mutation handler without obvious schema validation.`);
+    if (
+      /POST|PUT|PATCH/.test(text) &&
+      !/safeParse|zod|valibot|schema\.parse|parseAsync/.test(text)
+    ) {
+      routeHandlerRisks.push(
+        `${route.relativePath}: mutation handler without obvious schema validation.`,
+      );
       findings.push({
-        ...finding(`nextjs-route-validation-${slug(route.relativePath)}`, "Route handler lacks obvious input validation", "high", "Mutation route does not show schema validation keywords.", "Validate request bodies and query parameters with a schema before using them."),
+        ...finding(
+          `nextjs-route-validation-${slug(route.relativePath)}`,
+          "Route handler lacks obvious input validation",
+          "high",
+          "Mutation route does not show schema validation keywords.",
+          "Validate request bodies and query parameters with a schema before using them.",
+        ),
         file: route.relativePath,
       });
     }
@@ -67,18 +110,37 @@ export async function auditNextjsSecurityTool(input: AuditNextjsSecurityInput) {
     if (/console\.(log|error|warn)\([^)]*(error|err|token|secret|request|headers)/i.test(text)) {
       unsafeLoggingRisks.push(`${route.relativePath}: logging may include sensitive context.`);
       findings.push({
-        ...finding(`nextjs-unsafe-logging-${slug(route.relativePath)}`, "Potentially unsafe logging", "medium", "Route logs error/request/token-like context.", "Log redacted structured fields and avoid raw provider errors, headers, cookies, or request bodies."),
+        ...finding(
+          `nextjs-unsafe-logging-${slug(route.relativePath)}`,
+          "Potentially unsafe logging",
+          "medium",
+          "Route logs error/request/token-like context.",
+          "Log redacted structured fields and avoid raw provider errors, headers, cookies, or request bodies.",
+        ),
         file: route.relativePath,
       });
     }
-    if (/redirect\([^)]*searchParams|NextResponse\.redirect\([^)]*request|new URL\([^)]*request/.test(text)) {
-      ssrfOpenRedirectFileUploadRisks.push(`${route.relativePath}: redirect may depend on request-controlled input.`);
+    if (
+      /redirect\([^)]*searchParams|NextResponse\.redirect\([^)]*request|new URL\([^)]*request/.test(
+        text,
+      )
+    ) {
+      ssrfOpenRedirectFileUploadRisks.push(
+        `${route.relativePath}: redirect may depend on request-controlled input.`,
+      );
     }
     if (/fetch\([^)]*(url|href|request|searchParams|body)/i.test(text)) {
-      ssrfOpenRedirectFileUploadRisks.push(`${route.relativePath}: outbound fetch may depend on request-controlled input.`);
+      ssrfOpenRedirectFileUploadRisks.push(
+        `${route.relativePath}: outbound fetch may depend on request-controlled input.`,
+      );
     }
-    if (/formData\(|File|Blob|upload/i.test(text) && !/size|mime|content-type|fileType|virus|scan/i.test(text)) {
-      ssrfOpenRedirectFileUploadRisks.push(`${route.relativePath}: upload path lacks obvious file validation.`);
+    if (
+      /formData\(|File|Blob|upload/i.test(text) &&
+      !/size|mime|content-type|fileType|virus|scan/i.test(text)
+    ) {
+      ssrfOpenRedirectFileUploadRisks.push(
+        `${route.relativePath}: upload path lacks obvious file validation.`,
+      );
     }
   }
 
@@ -95,10 +157,19 @@ export async function auditNextjsSecurityTool(input: AuditNextjsSecurityInput) {
   };
 }
 
-function finding(id: string, title: string, severity: Finding["severity"], evidence: string, recommendation: string): Finding {
+function finding(
+  id: string,
+  title: string,
+  severity: Finding["severity"],
+  evidence: string,
+  recommendation: string,
+): Finding {
   return { id, title, category: "security", severity, evidence, recommendation, confidence: 0.72 };
 }
 
 function slug(value: string): string {
-  return value.replace(/[^a-z0-9]+/gi, "-").replace(/^-+|-+$/g, "").toLowerCase();
+  return value
+    .replace(/[^a-z0-9]+/gi, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
 }

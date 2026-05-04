@@ -1,9 +1,11 @@
 ---
-name: reposentinel-orchestrator
-description: Coordinates RepoSentinel project detection, skill routing, audits, planning, and evidence-backed implementation. Use when initializing, auditing, refactoring, securing, documenting, testing, or preparing PR workflows for a software repository.
+name: codeaudit-orchestrator
+description: Use when initializing, auditing, refactoring, securing, documenting, testing, planning, or preparing PR workflows for a software repository with CodeAudit project detection and skill routing.
+metadata:
+  internal: true
 ---
 
-# RepoSentinel Orchestrator
+# CodeAudit Orchestrator
 
 ## Required Workflow
 

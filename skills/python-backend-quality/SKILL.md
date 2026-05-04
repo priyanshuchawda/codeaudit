@@ -1,6 +1,8 @@
 ---
 name: python-backend-quality
 description: Use when reviewing, creating, or improving Python services, CLIs, libraries, FastAPI, Django, Flask, pytest, uv, pyproject, typing, Pydantic, SQLAlchemy, async code, packaging, or deployment.
+metadata:
+  internal: true
 ---
 
 # Python Backend Quality

@@ -33,7 +33,11 @@ export async function pathExists(filePath: string): Promise<boolean> {
   return Boolean(await fs.stat(filePath).catch(() => null));
 }
 
-export async function readTextFile(root: string, relativePath: string, maxBytes = 250_000): Promise<string> {
+export async function readTextFile(
+  root: string,
+  relativePath: string,
+  maxBytes = 250_000,
+): Promise<string> {
   const absolutePath = safeJoin(root, relativePath);
   const stat = await fs.stat(absolutePath);
   if (!stat.isFile()) throw new Error(`Not a file: ${relativePath}`);
@@ -89,7 +93,8 @@ export async function listFiles(
       }
 
       if (!entry.isFile()) continue;
-      if (options.includePatterns?.length && !matchesAny(relativePath, options.includePatterns)) continue;
+      if (options.includePatterns?.length && !matchesAny(relativePath, options.includePatterns))
+        continue;
       const stat = await fs.stat(absolutePath);
       files.push({ absolutePath, relativePath, depth, size: stat.size });
     }

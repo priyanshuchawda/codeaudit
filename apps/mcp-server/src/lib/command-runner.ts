@@ -7,7 +7,11 @@ const ALLOWED_ARGS = new Map<string, RegExp[]>([
   ["pnpm", [/^--version$/]],
 ]);
 
-export async function runAllowlistedCommand(command: string, args: string[], cwd: string): Promise<string> {
+export async function runAllowlistedCommand(
+  command: string,
+  args: string[],
+  cwd: string,
+): Promise<string> {
   if (!ALLOWED_COMMANDS.has(command)) {
     throw new Error(`Command is not allowlisted: ${command}`);
   }

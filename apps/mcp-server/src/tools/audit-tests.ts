@@ -7,7 +7,9 @@ export async function auditTestsTool(input: AuditTestsInput) {
   const root = await resolveProjectRoot(input.projectPath);
   const detected = await detectProject(root);
   const { files } = await listFiles(root, { maxDepth: 8 });
-  const testFiles = files.filter((file) => isTestFile(file.relativePath)).map((file) => file.relativePath);
+  const testFiles = files
+    .filter((file) => isTestFile(file.relativePath))
+    .map((file) => file.relativePath);
   const weakTests: string[] = [];
 
   for (const file of testFiles.slice(0, 120)) {
@@ -18,13 +20,20 @@ export async function auditTestsTool(input: AuditTestsInput) {
   }
 
   const missingTestAreas: string[] = [];
-  if (detected.framework === "nextjs" && !testFiles.some((file) => file.includes("api") || file.includes("route"))) {
+  if (
+    detected.framework === "nextjs" &&
+    !testFiles.some((file) => file.includes("api") || file.includes("route"))
+  ) {
     missingTestAreas.push("API route handler tests");
   }
   if (detected.auth && !testFiles.some((file) => file.toLowerCase().includes("auth"))) {
     missingTestAreas.push("auth/authorization tests");
   }
-  if (!testFiles.some((file) => file.toLowerCase().includes("redact") || file.toLowerCase().includes("secret"))) {
+  if (
+    !testFiles.some(
+      (file) => file.toLowerCase().includes("redact") || file.toLowerCase().includes("secret"),
+    )
+  ) {
     missingTestAreas.push("secret redaction/security utility tests");
   }
 

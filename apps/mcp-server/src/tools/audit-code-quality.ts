@@ -28,7 +28,8 @@ export async function auditCodeQualityTool(input: AuditCodeQualityInput) {
         severity: input.strictness === "strict" ? "medium" : "low",
         file: file.relativePath,
         evidence: `${file.relativePath} has ${lines.length} lines.`,
-        recommendation: "Split the file around cohesive responsibilities and preserve behavior with focused tests.",
+        recommendation:
+          "Split the file around cohesive responsibilities and preserve behavior with focused tests.",
         confidence: 0.8,
       });
     }
@@ -40,7 +41,10 @@ export async function auditCodeQualityTool(input: AuditCodeQualityInput) {
       mixedResponsibilityCandidates.push(file.relativePath);
     }
 
-    if (/app\/api\/.*route\.[tj]s$|pages\/api\/.*\.[tj]s$/.test(file.relativePath) && !/zod|safeParse|parse\(|valibot|yup/.test(text)) {
+    if (
+      /app\/api\/.*route\.[tj]s$|pages\/api\/.*\.[tj]s$/.test(file.relativePath) &&
+      !/zod|safeParse|parse\(|valibot|yup/.test(text)
+    ) {
       weakTypingOrSchemaBoundaries.push(file.relativePath);
       findings.push({
         id: `code-quality-schema-boundary-${slug(file.relativePath)}`,
@@ -54,7 +58,10 @@ export async function auditCodeQualityTool(input: AuditCodeQualityInput) {
       });
     }
 
-    if (/catch\s*\([^)]*\)\s*{\s*}/.test(text) || /catch\s*\([^)]*\)\s*{\s*return\s+null/.test(text)) {
+    if (
+      /catch\s*\([^)]*\)\s*{\s*}/.test(text) ||
+      /catch\s*\([^)]*\)\s*{\s*return\s+null/.test(text)
+    ) {
       findings.push({
         id: `code-quality-error-handling-${slug(file.relativePath)}`,
         title: "Weak error handling",
@@ -62,7 +69,8 @@ export async function auditCodeQualityTool(input: AuditCodeQualityInput) {
         severity: "low",
         file: file.relativePath,
         evidence: "Catch block appears to swallow errors or return null without context.",
-        recommendation: "Return typed errors or log redacted diagnostic context at a controlled boundary.",
+        recommendation:
+          "Return typed errors or log redacted diagnostic context at a controlled boundary.",
         confidence: 0.65,
       });
     }
@@ -76,7 +84,8 @@ export async function auditCodeQualityTool(input: AuditCodeQualityInput) {
       category: "testing",
       severity: "medium",
       evidence: "No *.test.* or *.spec.* files were found.",
-      recommendation: "Add focused tests for detection, security-sensitive boundaries, and changed behavior.",
+      recommendation:
+        "Add focused tests for detection, security-sensitive boundaries, and changed behavior.",
       confidence: 0.9,
     });
   }
@@ -93,5 +102,8 @@ export async function auditCodeQualityTool(input: AuditCodeQualityInput) {
 }
 
 function slug(value: string): string {
-  return value.replace(/[^a-z0-9]+/gi, "-").replace(/^-+|-+$/g, "").toLowerCase();
+  return value
+    .replace(/[^a-z0-9]+/gi, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
 }

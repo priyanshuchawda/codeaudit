@@ -4,13 +4,13 @@
   "riskLevel": "medium",
   "recommendedSkills": [
     {
-      "skill": "reposentinel-orchestrator",
+      "skill": "codeaudit-orchestrator",
       "reason": "Coordinates project detection, planning, audits, and evidence-backed outputs.",
       "required": true
     },
     {
       "skill": "enterprise-code-quality",
-      "reason": "Applies RepoSentinel maintainability standards and typed-boundary expectations.",
+      "reason": "Applies CodeAudit maintainability standards and typed-boundary expectations.",
       "required": true
     },
     {

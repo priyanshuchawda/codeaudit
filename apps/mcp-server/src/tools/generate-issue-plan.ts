@@ -18,7 +18,7 @@ export async function generateIssuePlanTool(input: GenerateIssuePlanInput) {
       title,
       priority: priority as "P0" | "P1" | "P2",
       severity: first.severity,
-      labels: [...new Set([category, first.severity, "reposentinel"])],
+      labels: [...new Set([category, first.severity, "codeaudit"])],
       suggestedBranchName: `${branchPrefix(category)}/${slugify(title)}`,
       findings,
     };

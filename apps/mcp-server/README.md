@@ -1,6 +1,6 @@
-# RepoSentinel MCP Server
+# CodeAudit MCP Server
 
-RepoSentinel is a read-only MCP server for local project inspection, skill routing, repository audits, documentation evidence checks, and issue/PR planning.
+CodeAudit is a read-only MCP server for local project inspection, skill routing, repository audits, documentation evidence checks, and issue/PR planning.
 
 It detects and routes JavaScript/TypeScript and Python projects, including FastAPI, Django, Flask, and Python MCP SDK servers.
 
@@ -9,13 +9,19 @@ It detects and routes JavaScript/TypeScript and Python projects, including FastA
 Run directly from npm:
 
 ```bash
-npx -y reposentinel-mcp
+npx -y codeaudit
 ```
 
 Or with pnpm:
 
 ```bash
-pnpm dlx reposentinel-mcp
+pnpm dlx codeaudit
+```
+
+Install the public CodeAudit agent skill:
+
+```bash
+npx skills add priyanshuchawda/codeaudit --skill codeaudit
 ```
 
 ## Codex
@@ -23,16 +29,16 @@ pnpm dlx reposentinel-mcp
 Add this to `~/.codex/config.toml` or `.codex/config.toml`:
 
 ```toml
-[mcp_servers.reposentinel]
+[mcp_servers.codeaudit]
 command = "npx"
-args = ["-y", "reposentinel-mcp"]
+args = ["-y", "codeaudit"]
 startup_timeout_sec = 40
 ```
 
 ## HTTP
 
 ```bash
-REPOSENTINEL_API_KEY=change-me npx -y reposentinel-mcp --transport http
+CODEAUDIT_API_KEY=change-me npx -y codeaudit --transport http
 ```
 
 Then connect to:
@@ -50,9 +56,9 @@ Authorization: Bearer change-me
 ## First Prompt
 
 ```text
-Use RepoSentinel MCP on this local project. First call detect_project, then route_skills. Follow workflowPhases, recommendedToolSequence, skillActivationOrder, and qualityGates before making any changes.
+Use CodeAudit MCP on this local project. First call detect_project, then route_skills. Follow workflowPhases, recommendedToolSequence, skillActivationOrder, and qualityGates before making any changes.
 ```
 
 ## Safety
 
-RepoSentinel is read-only by default. It does not expose unrestricted shell execution, auto-push, auto-merge, auto-delete, or remote repository mutation tools.
+CodeAudit is read-only by default. It does not expose unrestricted shell execution, auto-push, auto-merge, auto-delete, or remote repository mutation tools.

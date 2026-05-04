@@ -1,6 +1,6 @@
-# AGENTS.md - RepoSentinel Operating Manual
+# AGENTS.md - CodeAudit Operating Manual
 
-RepoSentinel is a read-only MCP server and skills pack for repository detection, audit routing, security review, evidence-backed documentation review, and issue/PR planning.
+CodeAudit is a read-only MCP server and skills pack for repository detection, audit routing, security review, evidence-backed documentation review, and issue/PR planning.
 
 ## Read First
 
@@ -31,7 +31,7 @@ RepoSentinel is a read-only MCP server and skills pack for repository detection,
 - Test: `pnpm test`
 - Build: `pnpm build`
 - Full check: `pnpm check`
-- Run MCP server: `pnpm --filter @reposentinel/mcp-server dev`
+- Run MCP server: `pnpm --filter codeaudit dev`
 
 ## Engineering Rules
 

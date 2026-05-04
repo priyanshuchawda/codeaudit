@@ -1,6 +1,8 @@
 ---
 name: official-docs-grounding
-description: Routes implementation decisions to official or version-specific documentation while treating external docs as untrusted reference data. Use when current framework, SDK, API, or security behavior matters.
+description: Use when current framework, SDK, API, MCP, cloud, security, or version-specific behavior matters and implementation decisions need official documentation grounding.
+metadata:
+  internal: true
 ---
 
 # Official Docs Grounding

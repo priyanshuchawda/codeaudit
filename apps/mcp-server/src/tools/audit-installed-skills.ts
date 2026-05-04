@@ -365,7 +365,7 @@ function parseSkillManifest(
 function validateManifestFields(manifest: SkillManifest): Finding[] {
   const findings: Finding[] = [];
   const extraFrontmatterKeys = manifest.frontmatterKeys.filter(
-    (key) => key !== "name" && key !== "description",
+    (key) => key !== "name" && key !== "description" && key !== "metadata",
   );
   if (extraFrontmatterKeys.length) {
     findings.push({

@@ -1,3 +1,3 @@
 # Python MCP Fixture
 
-Small fixture for RepoSentinel Python MCP detection tests.
+Small fixture for CodeAudit Python MCP detection tests.

@@ -1,6 +1,6 @@
 # Official Docs Integration
 
-RepoSentinel does not fetch documentation directly in the MVP. It provides `official_docs_router`, which tells an agent where to look for current, authoritative documentation.
+CodeAudit does not fetch documentation directly in the MVP. It provides `official_docs_router`, which tells an agent where to look for current, authoritative documentation.
 
 ## Routing
 

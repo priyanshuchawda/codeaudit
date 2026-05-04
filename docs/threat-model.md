@@ -1,6 +1,6 @@
 # Threat Model
 
-RepoSentinel is an MCP server that reads repository files and returns structured analysis to AI agents. Its main risks come from excessive tool permissions, prompt injection through repository content, and accidental secret exposure.
+CodeAudit is an MCP server that reads repository files and returns structured analysis to AI agents. Its main risks come from excessive tool permissions, prompt injection through repository content, and accidental secret exposure.
 
 ## Assets
 
